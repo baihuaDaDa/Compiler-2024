@@ -13,14 +13,14 @@ classBuild : Identifier LeftParen RightParen suite;
 suite : LeftBrace (statement)* RightBrace;
 
 statement
-    : varDef #varStmt
+    : varDef #varDefStmt
     | expression Semi #exprStmt
-    | If LeftParen expression RightParen (statement | suite) (Else (statement | suite))? #ifStmt
-    | For LeftParen (varDef | expression)? Semi expression? Semi expression? RightParen (statement | suite) #forStmt
-    | While LeftParen expression RightParen (statement | suite) #whileStmt
+    | If LeftParen expression RightParen statement (Else statement)? #ifStmt
+    | For LeftParen (varDef | expression)? Semi expression? Semi expression? RightParen statement #forStmt
+    | While LeftParen expression RightParen statement #whileStmt
     | Break Semi #breakStmt
     | Continue Semi #continueStmt
-    | Return expression? Semi #retStmt
+    | Return expression? Semi #returnStmt
     | Semi #emptyStmt
     | suite #suiteStmt
     ;
@@ -28,8 +28,8 @@ statement
 varDef : type Identifier (Assign expression)? (Comma Identifier (Assign expression)?)* Semi;
 
 expression
-    : New baseType (LeftBracket RightBracket)+ array #newExpr
-    | New baseType ((LeftBracket DecInt RightBracket)* (LeftBracket RightBracket)*) #newExpr
+    : New baseType (LeftBracket RightBracket)+ constArray #newExpr
+    | New baseType ((LeftBracket ConstDecInt RightBracket)* (LeftBracket RightBracket)*) #newExpr
     | New baseType LeftParen RightParen #newExpr
     | expression op=Dot Identifier #memberExpr
     | expression LeftParen (expression (Comma expression)*)? RightParen #funcCallExpr
@@ -37,23 +37,23 @@ expression
     | expression op=(Increment | Decrement) #sucSelfExpr
     | <assoc=right> op=(Minus | Not | LogicNot) expression #unaryExpr
     | <assoc=right> op=(Increment | Decrement) expression #preSelfExpr
-    | expression op=(Mul | Div | Mod) expression #binExpr
-    | expression op=(Plus | Minus) expression #binExpr
-    | expression op=(Sla | Sra) expression #binExpr
-    | expression op=(Gt | Lt | Gte | Lte) expression #binExpr
-    | expression op=(Eq | Neq) expression #binExpr
-    | expression op=And expression #binExpr
-    | expression op=Xor expression #binExpr
-    | expression op=Or expression #binExpr
-    | expression op=LogicAnd expression #binExpr
-    | expression op=LogicOr expression #binExpr
+    | expression op=(Mul | Div | Mod) expression #binaryexpr
+    | expression op=(Plus | Minus) expression #binaryexpr
+    | expression op=(Sla | Sra) expression #binaryexpr
+    | expression op=(Gt | Lt | Gte | Lte) expression #binaryexpr
+    | expression op=(Eq | Neq) expression #binaryexpr
+    | expression op=And expression #binaryexpr
+    | expression op=Xor expression #binaryexpr
+    | expression op=Or expression #binaryexpr
+    | expression op=LogicAnd expression #binaryexpr
+    | expression op=LogicOr expression #binaryexpr
     | <assoc=right> expression Query expression Colon expression #ternaryExpr
     | <assoc=right> expression op=Assign expression #assignExpr
     | LeftParen expression RightParen #parenExpr
     | Identifier #atomExpr
     | This #atomExpr
     | literal #atomExpr
-    | fString #fStrExpr
+    | ((Quote2Dollar expression (Dollar2Dollar expression)*? Dollar2Quote) | Quote2Quote) #fStringExpr
     ;
 
 type : baseType (LeftBracket RightBracket)*;
@@ -61,16 +61,15 @@ baseType : defaultType | Identifier;
 defaultType : Bool | Int | String;
 
 // fString
-fString : (Quote2Dollar expression (Dollar2Dollar expression)*? Dollar2Quote) | Quote2Quote;
 Quote2Dollar : 'f"' (Escape | '$$' | ~[\\"\n\t\f\r$])* '$';
 Dollar2Dollar : '$' (Escape | '$$' | ~[\\"\n\t\f\r$])* '$';
 Dollar2Quote : '$' (Escape | '$$' | ~[\\"\n\t\f\r$])*? '"';
 Quote2Quote : 'f"' (Escape | '$$' | ~[\\"\n\t\f\r$])*? '"';
 
 // literal
-literal : DecInt | Str | logic | array | Null;
+literal : ConstDecInt | ConstString | logic | constArray | Null;
 logic : True | False;
-array : LeftBrace (literal (Comma literal)*)? RightBrace;
+constArray : LeftBrace (literal (Comma literal)*)? RightBrace;
 
 // reserved words
 Void : 'void';
@@ -138,9 +137,9 @@ BlockComment : '/*' .*? '*/' -> skip;
 Identifier : [a-zA-Z_] [a-zA-Z0-9_]*;
 
 // literals
-DecInt : '0' | [1-9] [0-9]*;
+ConstDecInt : '0' | [1-9] [0-9]*;
 // string
 Quote : '"';
 Escape : '\\\\' | '\\n' | '\\"';
-Str : Quote (Escape | ~[\\"\n\f\r\t])*? Quote; // end
+ConstString : Quote (Escape | ~[\\"\n\f\r\t])*? Quote; // end
 /* Null */

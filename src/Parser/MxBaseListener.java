@@ -1,5 +1,6 @@
-// Generated from D:/Desktop/IdeaProjects/Compiler-2024/parser/Mx.g4 by ANTLR 4.13.1
+// Generated from D:/Desktop/IdeaProjects/Compiler-2024/src/Parser/Mx.g4 by ANTLR 4.13.1
 package Parser;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -76,13 +77,13 @@ public class MxBaseListener implements MxListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarStmt(MxParser.VarStmtContext ctx) { }
+	@Override public void enterVarDefStmt(MxParser.VarDefStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarStmt(MxParser.VarStmtContext ctx) { }
+	@Override public void exitVarDefStmt(MxParser.VarDefStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -160,13 +161,13 @@ public class MxBaseListener implements MxListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRetStmt(MxParser.RetStmtContext ctx) { }
+	@Override public void enterReturnStmt(MxParser.ReturnStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRetStmt(MxParser.RetStmtContext ctx) { }
+	@Override public void exitReturnStmt(MxParser.ReturnStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -220,18 +221,6 @@ public class MxBaseListener implements MxListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinExpr(MxParser.BinExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBinExpr(MxParser.BinExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSucSelfExpr(MxParser.SucSelfExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -275,6 +264,18 @@ public class MxBaseListener implements MxListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAtomExpr(MxParser.AtomExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFStringExpr(MxParser.FStringExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFStringExpr(MxParser.FStringExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -340,13 +341,13 @@ public class MxBaseListener implements MxListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFStrExpr(MxParser.FStrExprContext ctx) { }
+	@Override public void enterBinaryexpr(MxParser.BinaryexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFStrExpr(MxParser.FStrExprContext ctx) { }
+	@Override public void exitBinaryexpr(MxParser.BinaryexprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -436,13 +437,13 @@ public class MxBaseListener implements MxListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArray(MxParser.ArrayContext ctx) { }
+	@Override public void enterConstArray(MxParser.ConstArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArray(MxParser.ArrayContext ctx) { }
+	@Override public void exitConstArray(MxParser.ConstArrayContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

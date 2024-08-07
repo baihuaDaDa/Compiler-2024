@@ -1,4 +1,5 @@
-// Generated from D:/Desktop/IdeaProjects/Compiler-2024/parser/Mx.g4 by ANTLR 4.13.1
+// Generated from D:/Desktop/IdeaProjects/Compiler-2024/src/Parser/Mx.g4 by ANTLR 4.13.1
+package Parser;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -24,8 +25,8 @@ public class MxLexer extends Lexer {
 		Or=39, Xor=40, Not=41, Assign=42, Increment=43, Decrement=44, Dot=45, 
 		LeftBracket=46, RightBracket=47, LeftParen=48, RightParen=49, Query=50, 
 		Colon=51, Semi=52, Comma=53, LeftBrace=54, RightBrace=55, Whitespace=56, 
-		LineComment=57, BlockComment=58, Identifier=59, DecInt=60, Quote=61, Escape=62, 
-		Str=63;
+		LineComment=57, BlockComment=58, Identifier=59, ConstDecInt=60, Quote=61, 
+		Escape=62, ConstString=63;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -44,7 +45,7 @@ public class MxLexer extends Lexer {
 			"Not", "Assign", "Increment", "Decrement", "Dot", "LeftBracket", "RightBracket", 
 			"LeftParen", "RightParen", "Query", "Colon", "Semi", "Comma", "LeftBrace", 
 			"RightBrace", "Whitespace", "LineComment", "BlockComment", "Identifier", 
-			"DecInt", "Quote", "Escape", "Str"
+			"ConstDecInt", "Quote", "Escape", "ConstString"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -71,7 +72,7 @@ public class MxLexer extends Lexer {
 			"Not", "Assign", "Increment", "Decrement", "Dot", "LeftBracket", "RightBracket", 
 			"LeftParen", "RightParen", "Query", "Colon", "Semi", "Comma", "LeftBrace", 
 			"RightBrace", "Whitespace", "LineComment", "BlockComment", "Identifier", 
-			"DecInt", "Quote", "Escape", "Str"
+			"ConstDecInt", "Quote", "Escape", "ConstString"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();

@@ -125,10 +125,10 @@ Whitespace
 LineComment
 BlockComment
 Identifier
-DecInt
+ConstDecInt
 Quote
 Escape
-Str
+ConstString
 
 rule names:
 Quote2Dollar
@@ -190,10 +190,10 @@ Whitespace
 LineComment
 BlockComment
 Identifier
-DecInt
+ConstDecInt
 Quote
 Escape
-Str
+ConstString
 
 channel names:
 DEFAULT_TOKEN_CHANNEL
