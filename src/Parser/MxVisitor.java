@@ -1,4 +1,5 @@
-// Generated from D:/Desktop/IdeaProjects/Compiler-2024/Parser/Mx.g4 by ANTLR 4.13.1
+// Generated from D:/Desktop/IdeaProjects/Compiler-2024/parser/Mx.g4 by ANTLR 4.13.1
+package Parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -40,11 +41,75 @@ public interface MxVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSuite(MxParser.SuiteContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MxParser#statement}.
+	 * Visit a parse tree produced by the {@code varStmt}
+	 * labeled alternative in {@link MxParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatement(MxParser.StatementContext ctx);
+	T visitVarStmt(MxParser.VarStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code exprStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprStmt(MxParser.ExprStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ifStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStmt(MxParser.IfStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code forStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForStmt(MxParser.ForStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code whileStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStmt(MxParser.WhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code breakStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBreakStmt(MxParser.BreakStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code continueStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContinueStmt(MxParser.ContinueStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code retStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRetStmt(MxParser.RetStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code emptyStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmptyStmt(MxParser.EmptyStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code suiteStmt}
+	 * labeled alternative in {@link MxParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSuiteStmt(MxParser.SuiteStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MxParser#varDef}.
 	 * @param ctx the parse tree

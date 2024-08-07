@@ -13,16 +13,16 @@ classBuild : Identifier LeftParen RightParen suite;
 suite : LeftBrace (statement)* RightBrace;
 
 statement
-    : varDef
-    | expression Semi
-    | If LeftParen expression RightParen (statement | suite) (Else (statement | suite))?
-    | For LeftParen (varDef | expression)? Semi expression? Semi expression? RightParen (statement | suite)
-    | While LeftParen expression RightParen (statement | suite)
-    | Break Semi
-    | Continue Semi
-    | Return expression? Semi
-    | Semi
-    | suite
+    : varDef #varStmt
+    | expression Semi #exprStmt
+    | If LeftParen expression RightParen (statement | suite) (Else (statement | suite))? #ifStmt
+    | For LeftParen (varDef | expression)? Semi expression? Semi expression? RightParen (statement | suite) #forStmt
+    | While LeftParen expression RightParen (statement | suite) #whileStmt
+    | Break Semi #breakStmt
+    | Continue Semi #continueStmt
+    | Return expression? Semi #retStmt
+    | Semi #emptyStmt
+    | suite #suiteStmt
     ;
 
 varDef : type Identifier (Assign expression)? (Comma Identifier (Assign expression)?)* Semi;
