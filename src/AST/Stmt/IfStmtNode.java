@@ -5,8 +5,8 @@ import AST.Expr.ExprNode;
 import Util.Position;
 
 public class IfStmtNode extends StmtNode {
-    private ExprNode condition = null;
-    private StmtNode thenStmt = null, elseStmt = null;
+    public ExprNode condition = null;
+    public StmtNode thenStmt = null, elseStmt = null;
 
     public IfStmtNode(Position pos, ExprNode condition, StmtNode thenStmt, StmtNode elseStmt) {
         super(pos);

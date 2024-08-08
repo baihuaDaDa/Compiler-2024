@@ -2,10 +2,12 @@ package AST.Expr;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
+import Util.Type.ExprType;
 import Util.Position;
 
 abstract public class ExprNode extends ASTNode {
-    private boolean isLeftValue = false;
+    public ExprType type = null;
+    public boolean isLeftValue = false;
 
     public ExprNode(Position pos) {
         super(pos);

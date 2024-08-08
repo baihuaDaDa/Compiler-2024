@@ -5,11 +5,11 @@ import Util.Position;
 import AST.ASTVisitor;
 
 public class LiteralNode extends ASTNode {
-    private boolean isInt = false, isString = false, isLogic = false, isArray = false, isNull = false;
-    private int constInt = 0;
-    private String constString = null;
-    private boolean constLogic = false;
-    private ConstArrayNode constArray = null;
+    public boolean isInt = false, isString = false, isLogic = false, isArray = false, isNull = false;
+    public int constInt = 0;
+    public String constString = null;
+    public boolean constLogic = false;
+    public ConstArrayNode constArray = null;
 
     public LiteralNode(Position pos, boolean isInt, int constInt,
                        boolean isString, String constString,

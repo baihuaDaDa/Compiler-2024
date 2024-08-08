@@ -30,7 +30,7 @@ public interface ASTVisitor {
     void visit(SuiteStmtNode node);
 
     void visit(ExprNode node);
-    void visit(NewExprNode node);
+    void visit(NewTypeExprNode node);
     void visit(FuncCallExprNode node);
     void visit(MemberExprNode node);
     void visit(IndexExprNode node);

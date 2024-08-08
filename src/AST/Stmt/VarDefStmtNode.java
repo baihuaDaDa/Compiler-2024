@@ -5,7 +5,7 @@ import AST.VarDef.VarDefNode;
 import Util.Position;
 
 public class VarDefStmtNode extends StmtNode {
-    private VarDefNode varDef;
+    public VarDefNode varDef;
 
     public VarDefStmtNode(Position pos, VarDefNode varDef) {
         super(pos);

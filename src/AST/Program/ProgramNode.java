@@ -10,9 +10,9 @@ import Util.Position;
 import java.util.ArrayList;
 
 public class ProgramNode extends ASTNode {
-    private ArrayList<FuncDefNode> funcDefs = null;
-    private ArrayList<ClassDefNode> classDefs = null;
-    private ArrayList<VarDefStmtNode> varDefs = null;
+    public ArrayList<FuncDefNode> funcDefs = null;
+    public ArrayList<ClassDefNode> classDefs = null;
+    public ArrayList<VarDefStmtNode> varDefs = null;
 
     public ProgramNode(Position pos) {
         super(pos);

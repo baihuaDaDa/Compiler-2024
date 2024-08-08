@@ -2,14 +2,15 @@ package AST.Expr;
 
 import AST.ASTVisitor;
 import Util.Position;
+import Util.Type.Type;
 
 import java.util.ArrayList;
 
-public class FuncCallExprNode extends ExprNode {
-    public ExprNode func = null;
-    public ArrayList<ExprNode> args = null;
+public class NewEmptyArrayExprNode extends ExprNode {
+    public Type type = null;
+    public ArrayList<ExprNode> sizeList = null;
 
-    public FuncCallExprNode(Position pos) {
+    public NewEmptyArrayExprNode(Position pos) {
         super(pos);
     }
 

@@ -4,7 +4,7 @@ import AST.ASTVisitor;
 import Util.Position;
 
 public class TernaryExprNode extends ExprNode {
-    private ExprNode condition = null, thenExpr = null, elseExpr = null;
+    public ExprNode condition = null, thenExpr = null, elseExpr = null;
 
     public TernaryExprNode(Position pos, ExprNode condition, ExprNode thenExpr, ExprNode elseExpr) {
         super(pos);

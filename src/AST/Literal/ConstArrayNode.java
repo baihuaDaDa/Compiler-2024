@@ -7,7 +7,7 @@ import Util.Position;
 import java.util.ArrayList;
 
 public class ConstArrayNode extends ASTNode {
-    ArrayList<LiteralNode> constArray = null;
+    public ArrayList<LiteralNode> constArray = null;
 
     public ConstArrayNode(Position pos) {
         super(pos);

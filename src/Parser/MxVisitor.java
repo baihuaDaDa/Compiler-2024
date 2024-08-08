@@ -117,19 +117,19 @@ public interface MxVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarDef(MxParser.VarDefContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code newExpr}
-	 * labeled alternative in {@link MxParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNewExpr(MxParser.NewExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code sucSelfExpr}
 	 * labeled alternative in {@link MxParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSucSelfExpr(MxParser.SucSelfExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newEmptyArrayExpr}
+	 * labeled alternative in {@link MxParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewEmptyArrayExpr(MxParser.NewEmptyArrayExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code preSelfExpr}
 	 * labeled alternative in {@link MxParser#expression}.
@@ -208,6 +208,20 @@ public interface MxVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignExpr(MxParser.AssignExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code newArrayExpr}
+	 * labeled alternative in {@link MxParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewArrayExpr(MxParser.NewArrayExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newTypeExpr}
+	 * labeled alternative in {@link MxParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewTypeExpr(MxParser.NewTypeExprContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MxParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -225,12 +239,6 @@ public interface MxVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDefaultType(MxParser.DefaultTypeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MxParser#fString}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFString(MxParser.FStringContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MxParser#literal}.
 	 * @param ctx the parse tree

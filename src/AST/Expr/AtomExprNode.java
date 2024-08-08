@@ -5,9 +5,9 @@ import AST.Literal.LiteralNode;
 import Util.Position;
 
 public class AtomExprNode extends ExprNode {
-    private boolean isThis = false, isIdentifier = false, isLiteral = false;
-    private LiteralNode literal = null;
-    private String identifier = null;
+    public boolean isThis = false, isIdentifier = false, isLiteral = false;
+    public LiteralNode literal = null;
+    public String identifier = null;
 
     public AtomExprNode(Position pos, boolean isThis, boolean isIdentifier, boolean isLiteral, LiteralNode literal, String identifier) {
         super(pos);

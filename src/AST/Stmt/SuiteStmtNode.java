@@ -6,7 +6,7 @@ import Util.Position;
 import java.util.ArrayList;
 
 public class SuiteStmtNode extends StmtNode {
-    ArrayList<StmtNode> stmts = null;
+    public ArrayList<StmtNode> stmts = null;
 
     public SuiteStmtNode(Position pos) {
         super(pos);

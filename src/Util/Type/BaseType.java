@@ -1,8 +1,8 @@
-package AST.Type;
+package Util.Type;
 
 public class BaseType {
-    private boolean isInt = false, isBool = false, isString = false, isClass = false;
-    private String classname;
+    public boolean isInt = false, isBool = false, isString = false, isClass = false;
+    public String classname;
 
     public BaseType(String typename) {
         classname = typename;
@@ -19,5 +19,11 @@ public class BaseType {
         isBool = other.isBool;
         isString = other.isString;
         isClass = other.isClass;
+        classname = other.classname;
+    }
+
+    public boolean isSameType(BaseType other) {
+        return (isInt && other.isInt) || (isBool && other.isBool) || (isString && other.isString)
+                || (isClass && other.isClass && classname.equals(other.classname));
     }
 }

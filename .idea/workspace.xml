@@ -4,34 +4,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish parser and lexer.">
-      <change afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Parser/MxLexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Parser/MxLexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/ASTNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Mx.interp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/Mx.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxLexer.interp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxLexer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/MxVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxVisitor.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish AST nodes.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AST/Expr/NewArrayExprNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AST/Expr/NewEmptyArrayExprNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AST/Expr/NewTypeExprNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Type/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ClassBuild/ClassBuildNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassBuild/ClassBuildNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/AssignExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/AssignExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/AtomExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/AtomExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/BinaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/BinaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/ExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/ExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FuncCallExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FuncCallExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/IndexExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/IndexExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewExprNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/TernaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/TernaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/UnaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/UnaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/FString/FStringNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/FString/FStringNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/FuncDef/FuncDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/FuncDef/FuncDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Program/ProgramNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Program/ProgramNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ReturnStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ReturnStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Type/BaseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/BaseType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/VarDef/VarDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/VarDef/VarDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxVisitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PerforceDirect.Settings">
+    <option name="CHARSET" value="无" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -51,13 +88,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
+    "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -70,6 +107,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src\Parser" />
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src" />
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\Parser" />
     </key>
@@ -125,7 +163,8 @@
       <workItem from="1723006089173" duration="104000" />
       <workItem from="1723009808050" duration="754000" />
       <workItem from="1723010570904" duration="214000" />
-      <workItem from="1723010789747" duration="41000" />
+      <workItem from="1723010789747" duration="20653000" />
+      <workItem from="1723089265608" duration="19869000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -135,7 +174,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723001742235</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Upd: finish the configuration of Module: Compiler-2024.">
+      <option name="closed" value="true" />
+      <created>1723010943500</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723010943500</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Upd: finish half of the definitions of the AST nodes.">
+      <option name="closed" value="true" />
+      <created>1723055074963</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723055074963</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +198,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Upd: finish parser and lexer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish parser and lexer." />
+    <MESSAGE value="Upd: finish the configuration of Module: Compiler-2024." />
+    <MESSAGE value="Upd: finish half of the definitions of the AST nodes." />
+    <MESSAGE value="Upd: finish AST nodes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish AST nodes." />
   </component>
 </project>

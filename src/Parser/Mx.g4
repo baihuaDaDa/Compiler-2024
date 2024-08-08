@@ -28,9 +28,9 @@ statement
 varDef : type Identifier (Assign expression)? (Comma Identifier (Assign expression)?)* Semi;
 
 expression
-    : New baseType (LeftBracket RightBracket)+ constArray #newExpr
-    | New baseType ((LeftBracket ConstDecInt RightBracket)* (LeftBracket RightBracket)*) #newExpr
-    | New baseType LeftParen RightParen #newExpr
+    : New baseType (LeftBracket RightBracket)+ constArray #newArrayExpr
+    | New baseType ((LeftBracket ConstDecInt RightBracket)+ (LeftBracket RightBracket)*) #newEmptyArrayExpr
+    | New baseType (LeftParen RightParen)? #newTypeExpr
     | expression op=Dot Identifier #memberExpr
     | expression LeftParen (expression (Comma expression)*)? RightParen #funcCallExpr
     | expression LeftBracket expression RightBracket #indexExpr

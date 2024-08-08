@@ -4,7 +4,7 @@ import AST.ASTVisitor;
 import Util.Position;
 
 public class IndexExprNode extends ExprNode {
-    private ExprNode array = null, index = null;
+    public ExprNode array = null, index = null;
 
     public IndexExprNode(Position pos, ExprNode array, ExprNode index) {
         super(pos);
