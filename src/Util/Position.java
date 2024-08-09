@@ -32,4 +32,8 @@ public class Position {
     public int col() {
         return col;
     }
+
+    public String toString() {
+        return String.format("row %d, column %d", row, col);
+    }
 }
