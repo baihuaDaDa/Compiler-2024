@@ -37,16 +37,16 @@ expression
     | expression op=(Increment | Decrement) #sucSelfExpr
     | <assoc=right> op=(Minus | Not | LogicNot) expression #unaryExpr
     | <assoc=right> op=(Increment | Decrement) expression #preSelfExpr
-    | expression op=(Mul | Div | Mod) expression #binaryexpr
-    | expression op=(Plus | Minus) expression #binaryexpr
-    | expression op=(Sla | Sra) expression #binaryexpr
-    | expression op=(Gt | Lt | Gte | Lte) expression #binaryexpr
-    | expression op=(Eq | Neq) expression #binaryexpr
-    | expression op=And expression #binaryexpr
-    | expression op=Xor expression #binaryexpr
-    | expression op=Or expression #binaryexpr
-    | expression op=LogicAnd expression #binaryexpr
-    | expression op=LogicOr expression #binaryexpr
+    | expression op=(Mul | Div | Mod) expression #binaryExpr
+    | expression op=(Plus | Minus) expression #binaryExpr
+    | expression op=(Sla | Sra) expression #binaryExpr
+    | expression op=(Gt | Lt | Gte | Lte) expression #binaryExpr
+    | expression op=(Eq | Neq) expression #binaryExpr
+    | expression op=And expression #binaryExpr
+    | expression op=Xor expression #binaryExpr
+    | expression op=Or expression #binaryExpr
+    | expression op=LogicAnd expression #binaryExpr
+    | expression op=LogicOr expression #binaryExpr
     | <assoc=right> expression Query expression Colon expression #ternaryExpr
     | <assoc=right> expression op=Assign expression #assignExpr
     | LeftParen expression RightParen #parenExpr
