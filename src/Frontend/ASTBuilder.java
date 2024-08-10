@@ -1,10 +1,26 @@
 package Frontend;
 
 import AST.ASTNode;
+import AST.Stmt.*;
+import AST.Literal.*;
+import AST.Expr.*;
+import AST.FString.*;
+import AST.ClassDef.*;
+import AST.ClassBuild.*;
+import AST.FuncDef.*;
+import AST.Program.*;
+import AST.VarDef.*;
 import Parser.MxBaseVisitor;
 import Parser.MxParser;
+import Util.Scope.GlobalScope;
 
 public class ASTBuilder extends MxBaseVisitor<ASTNode> {
+    public GlobalScope gScope;
+
+    public ASTBuilder(GlobalScope gScope) {
+        this.gScope = gScope;
+    }
+
     @Override
     public ASTNode visitProgram(MxParser.ProgramContext ctx) {
     }
@@ -43,6 +59,10 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitWhileStmt(MxParser.WhileStmtContext ctx) {
+        WhileStmtNode whileStmt = new WhileStmtNode(new Position(ctx));
+        whileStmt.cond = (ExprNode) visit(ctx.expression());
+        whileStmt.body = (StmtNode) visit(ctx.statement());
+        return whileStmt;
     }
 
     @Override

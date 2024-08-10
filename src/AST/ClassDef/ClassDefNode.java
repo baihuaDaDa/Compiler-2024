@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ClassDefNode extends ASTNode {
     public String className = null;
-    public ClassBuildNode classBuilder = null;
+    public ArrayList<ClassBuildNode> classBuilder = null;
     public ArrayList<VarDefNode> varDefList = null;
     public ArrayList<FuncDefNode> funcDefList = null;
 
