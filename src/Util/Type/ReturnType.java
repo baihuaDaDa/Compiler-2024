@@ -1,5 +1,7 @@
 package Util.Type;
 
+import Parser.MxParser;
+
 public class ReturnType extends Type {
     public boolean isVoid = false;
 
@@ -15,6 +17,11 @@ public class ReturnType extends Type {
             isClass = false;
             isVoid = true;
         }
+    }
+
+    public ReturnType(MxParser.ReturnTypeContext ctx) {
+        this(ctx.type() == null ? "void" : ctx.type().baseType().getText(),
+                ctx.type() == null ? 0 : ctx.type().LeftBracket().size());
     }
 
     @Override

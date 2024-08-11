@@ -3,11 +3,11 @@ package AST.Expr;
 import AST.ASTVisitor;
 import Util.Position;
 
-public class MemberExprNode extends ExprNode {
-    public ExprNode classExpr = null;
-    public String memberName = null;
+public class PreSelfExprNode extends ExprNode {
+    public boolean isIncrement;
+    public ExprNode expr = null;
 
-    public MemberExprNode(Position pos) {
+    public PreSelfExprNode(Position pos) {
         super(pos);
     }
 

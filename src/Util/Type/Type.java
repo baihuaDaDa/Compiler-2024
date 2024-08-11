@@ -1,5 +1,7 @@
 package Util.Type;
 
+import Parser.MxParser;
+
 public class Type extends BaseType {
     public int dim = 0;
 
@@ -12,6 +14,10 @@ public class Type extends BaseType {
         super(other);
         if (other instanceof Type)
             this.dim = ((Type) other).dim;
+    }
+
+    public Type(MxParser.TypeContext ctx) {
+        this(ctx.baseType().getText(), ctx.LeftBracket().size());
     }
 
     @Override

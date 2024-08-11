@@ -7,11 +7,8 @@ public class BinaryExprNode extends ExprNode {
     public String op = null;
     public ExprNode lhs = null, rhs = null;
 
-    public BinaryExprNode(Position pos, String op, ExprNode lhs, ExprNode rhs) {
+    public BinaryExprNode(Position pos) {
         super(pos);
-        this.op = op;
-        this.lhs = lhs;
-        this.rhs = rhs;
     }
 
     @Override

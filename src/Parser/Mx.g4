@@ -4,7 +4,7 @@ program
     : (funcDef | classDef | varDef)* EOF
     ;
 
-funcDef : (type | Void) Identifier LeftParen (type Identifier (Comma type Identifier)*)? RightParen suite;
+funcDef : returnType Identifier LeftParen (type Identifier (Comma type Identifier)*)? RightParen suite;
 
 classDef : Class Identifier LeftBrace (varDef | classBuild | funcDef)* RightBrace Semi;
 
@@ -15,9 +15,9 @@ suite : LeftBrace (statement)* RightBrace;
 statement
     : varDef #varDefStmt
     | expression Semi #exprStmt
-    | If LeftParen expression RightParen statement (Else statement)? #ifStmt
-    | For LeftParen (varDef | expression)? Semi expression? Semi expression? RightParen statement #forStmt
-    | While LeftParen expression RightParen statement #whileStmt
+    | If LeftParen condition=expression RightParen thenStmt=statement (Else elseStmt=statement)? #ifStmt
+    | For LeftParen init=statement? cond=expression? Semi step=expression? RightParen body=statement #forStmt
+    | While LeftParen condition=expression RightParen statement #whileStmt
     | Break Semi #breakStmt
     | Continue Semi #continueStmt
     | Return expression? Semi #returnStmt
@@ -25,16 +25,17 @@ statement
     | suite #suiteStmt
     ;
 
-varDef : type Identifier (Assign expression)? (Comma Identifier (Assign expression)?)* Semi;
+varDef : type varDefUnit (Comma varDefUnit)* Semi;
+varDefUnit : Identifier (Assign expression)?;
 
 expression
     : New baseType (LeftBracket RightBracket)+ constArray #newArrayExpr
-    | New baseType ((LeftBracket ConstDecInt RightBracket)+ (LeftBracket RightBracket)*) #newEmptyArrayExpr
+    | New baseType (LeftBracket expression? RightBracket)+ #newEmptyArrayExpr
     | New baseType (LeftParen RightParen)? #newTypeExpr
     | expression op=Dot Identifier #memberExpr
-    | expression LeftParen (expression (Comma expression)*)? RightParen #funcCallExpr
-    | expression LeftBracket expression RightBracket #indexExpr
-    | expression op=(Increment | Decrement) #sucSelfExpr
+    | func=expression LeftParen (expression (Comma expression)*)? RightParen #funcCallExpr
+    | array=expression LeftBracket index=expression RightBracket #indexExpr
+    | expression op=(Increment | Decrement) #unaryExpr
     | <assoc=right> op=(Minus | Not | LogicNot) expression #unaryExpr
     | <assoc=right> op=(Increment | Decrement) expression #preSelfExpr
     | expression op=(Mul | Div | Mod) expression #binaryExpr
@@ -47,20 +48,22 @@ expression
     | expression op=Or expression #binaryExpr
     | expression op=LogicAnd expression #binaryExpr
     | expression op=LogicOr expression #binaryExpr
-    | <assoc=right> expression Query expression Colon expression #ternaryExpr
+    | <assoc=right> condition=expression Query thenExpr=expression Colon elseExpr=expression #ternaryExpr
     | <assoc=right> expression op=Assign expression #assignExpr
     | LeftParen expression RightParen #parenExpr
     | Identifier #atomExpr
     | This #atomExpr
     | literal #atomExpr
-    | ((Quote2Dollar expression (Dollar2Dollar expression)*? Dollar2Quote) | Quote2Quote) #fStringExpr
+    | fString #fStringExpr
     ;
 
+returnType : Void | type;
 type : baseType (LeftBracket RightBracket)*;
 baseType : defaultType | Identifier;
 defaultType : Bool | Int | String;
 
 // fString
+fString : ((Quote2Dollar expression (Dollar2Dollar expression)*? Dollar2Quote) | Quote2Quote);
 Quote2Dollar : 'f"' (Escape | '$$' | ~[\\"\n\t\f\r$])* '$';
 Dollar2Dollar : '$' (Escape | '$$' | ~[\\"\n\t\f\r$])* '$';
 Dollar2Quote : '$' (Escape | '$$' | ~[\\"\n\t\f\r$])*? '"';

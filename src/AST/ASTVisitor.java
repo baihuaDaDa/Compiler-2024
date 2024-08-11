@@ -7,7 +7,6 @@ import AST.FuncDef.*;
 import AST.Stmt.*;
 import AST.Expr.*;
 import AST.VarDef.*;
-import AST.FString.*;
 import AST.Literal.*;
 
 public interface ASTVisitor {
@@ -41,7 +40,7 @@ public interface ASTVisitor {
 
     void visit(VarDefNode node);
 
-    void visit(FStringNode node);
+    void visit(FStringExprNode node);
 
     void visit(LiteralNode node);
     void visit(ConstArrayNode node);

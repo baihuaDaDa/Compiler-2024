@@ -9,10 +9,8 @@ public class NewArrayExprNode extends ExprNode {
     public Type type = null;
     public ConstArrayNode constArray = null;
 
-    public NewArrayExprNode(Position pos, Type type, ConstArrayNode constArray) {
+    public NewArrayExprNode(Position pos) {
         super(pos);
-        this.type = type;
-        this.constArray = constArray;
     }
 
     @Override

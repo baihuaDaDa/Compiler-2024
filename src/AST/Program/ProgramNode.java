@@ -4,7 +4,7 @@ import AST.ASTNode;
 import AST.ASTVisitor;
 import AST.ClassDef.ClassDefNode;
 import AST.FuncDef.FuncDefNode;
-import AST.Stmt.VarDefStmtNode;
+import AST.VarDef.VarDefNode;
 import Util.Position;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ProgramNode extends ASTNode {
     public ArrayList<FuncDefNode> funcDefs = null;
     public ArrayList<ClassDefNode> classDefs = null;
-    public ArrayList<VarDefStmtNode> varDefs = null;
+    public ArrayList<VarDefNode> varDefs = null;
 
     public ProgramNode(Position pos) {
         super(pos);

@@ -11,27 +11,8 @@ public class LiteralNode extends ASTNode {
     public boolean constLogic = false;
     public ConstArrayNode constArray = null;
 
-    public LiteralNode(Position pos, boolean isInt, int constInt,
-                       boolean isString, String constString,
-                       boolean isLogic, boolean constLogic,
-                       boolean isArray, ConstArrayNode constArray,
-                       boolean isNull) {
+    public LiteralNode(Position pos) {
         super(pos);
-        if (isInt) {
-            this.isInt = true;
-            this.constInt = constInt;
-        } else if (isString) {
-            this.isString = true;
-            this.constString = constString;
-        } else if (isLogic) {
-            this.isLogic = true;
-            this.constLogic = constLogic;
-        } else if (isArray) {
-            this.isArray = true;
-            this.constArray = constArray;
-        } else if (isNull) {
-            this.isNull = true;
-        }
     }
 
     @Override

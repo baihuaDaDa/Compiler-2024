@@ -4,17 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish AST nodes.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish symbol collector.">
+      <change afterPath="$PROJECT_DIR$/src/AST/Expr/PreSelfExprNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AST/Stmt/ExprStmtNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/AssignExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/AssignExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/AtomExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/AtomExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/BinaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/BinaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/IndexExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/IndexExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewArrayExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewArrayExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewTypeExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewTypeExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/TernaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/TernaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/UnaryExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/UnaryExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/FString/FStringNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ReturnStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ReturnStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/VarDef/VarDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/VarDef/VarDefNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/BaseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/BaseType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/Type.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +54,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="PerforceDirect.Settings">
-    <option name="CHARSET" value="无" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -81,6 +102,7 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler-2024" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -89,6 +111,7 @@
     <configuration default="true" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler-2024" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -132,7 +155,8 @@
       <workItem from="1723089265608" duration="21520000" />
       <workItem from="1723182079850" duration="4451000" />
       <workItem from="1723267313556" duration="83000" />
-      <workItem from="1723267403693" duration="10680000" />
+      <workItem from="1723267403693" duration="23799000" />
+      <workItem from="1723353516211" duration="14265000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -166,7 +190,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723137872089</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Upd: finish global scope.">
+      <option name="closed" value="true" />
+      <created>1723300826264</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723300826264</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Upd: finish symbol collector.">
+      <option name="closed" value="true" />
+      <created>1723315246732</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723315246732</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +217,8 @@
     <MESSAGE value="Upd: finish the configuration of Module: Compiler-2024." />
     <MESSAGE value="Upd: finish half of the definitions of the AST nodes." />
     <MESSAGE value="Upd: finish AST nodes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish AST nodes." />
+    <MESSAGE value="Upd: finish global scope." />
+    <MESSAGE value="Upd: finish symbol collector." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish symbol collector." />
   </component>
 </project>

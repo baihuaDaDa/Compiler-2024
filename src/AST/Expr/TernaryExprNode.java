@@ -6,11 +6,8 @@ import Util.Position;
 public class TernaryExprNode extends ExprNode {
     public ExprNode condition = null, thenExpr = null, elseExpr = null;
 
-    public TernaryExprNode(Position pos, ExprNode condition, ExprNode thenExpr, ExprNode elseExpr) {
+    public TernaryExprNode(Position pos) {
         super(pos);
-        this.condition = condition;
-        this.thenExpr = thenExpr;
-        this.elseExpr = elseExpr;
     }
 
     @Override

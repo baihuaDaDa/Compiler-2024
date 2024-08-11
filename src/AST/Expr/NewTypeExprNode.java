@@ -7,9 +7,8 @@ import Util.Position;
 public class NewTypeExprNode extends ExprNode {
     public BaseType type = null;
 
-    public NewTypeExprNode(Position pos, BaseType type) {
+    public NewTypeExprNode(Position pos) {
         super(pos);
-        this.type = type;
     }
 
     @Override

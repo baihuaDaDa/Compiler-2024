@@ -9,10 +9,8 @@ public class ClassBuildNode extends ASTNode {
     public String className = null;
     public SuiteStmtNode body = null;
 
-    public ClassBuildNode(Position pos, String className, SuiteStmtNode body) {
+    public ClassBuildNode(Position pos) {
         super(pos);
-        this.className = className;
-        this.body = body;
     }
 
     @Override

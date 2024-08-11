@@ -188,17 +188,15 @@ public interface MxListener extends ParseTreeListener {
 	 */
 	void exitVarDef(MxParser.VarDefContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code sucSelfExpr}
-	 * labeled alternative in {@link MxParser#expression}.
+	 * Enter a parse tree produced by {@link MxParser#varDefUnit}.
 	 * @param ctx the parse tree
 	 */
-	void enterSucSelfExpr(MxParser.SucSelfExprContext ctx);
+	void enterVarDefUnit(MxParser.VarDefUnitContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code sucSelfExpr}
-	 * labeled alternative in {@link MxParser#expression}.
+	 * Exit a parse tree produced by {@link MxParser#varDefUnit}.
 	 * @param ctx the parse tree
 	 */
-	void exitSucSelfExpr(MxParser.SucSelfExprContext ctx);
+	void exitVarDefUnit(MxParser.VarDefUnitContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code newEmptyArrayExpr}
 	 * labeled alternative in {@link MxParser#expression}.
@@ -368,6 +366,16 @@ public interface MxListener extends ParseTreeListener {
 	 */
 	void exitNewTypeExpr(MxParser.NewTypeExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MxParser#returnType}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnType(MxParser.ReturnTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MxParser#returnType}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnType(MxParser.ReturnTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MxParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -397,6 +405,16 @@ public interface MxListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDefaultType(MxParser.DefaultTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MxParser#fString}.
+	 * @param ctx the parse tree
+	 */
+	void enterFString(MxParser.FStringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MxParser#fString}.
+	 * @param ctx the parse tree
+	 */
+	void exitFString(MxParser.FStringContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MxParser#literal}.
 	 * @param ctx the parse tree

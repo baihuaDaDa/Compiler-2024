@@ -4,11 +4,10 @@ import AST.ASTVisitor;
 import AST.Expr.ExprNode;
 import Util.Position;
 
-public class WhileStmtNode extends StmtNode {
-    public ExprNode condition = null;
-    public StmtNode body = null;
+public class ExprStmtNode extends StmtNode {
+    public ExprNode expr;
 
-    public WhileStmtNode(Position pos) {
+    public ExprStmtNode(Position pos) {
         super(pos);
     }
 

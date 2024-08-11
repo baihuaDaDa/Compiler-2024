@@ -7,9 +7,8 @@ import Util.Position;
 public class VarDefStmtNode extends StmtNode {
     public VarDefNode varDef;
 
-    public VarDefStmtNode(Position pos, VarDefNode varDef) {
+    public VarDefStmtNode(Position pos) {
         super(pos);
-        this.varDef = varDef;
     }
 
     @Override

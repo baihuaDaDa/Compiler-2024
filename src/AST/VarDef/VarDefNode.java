@@ -15,6 +15,7 @@ public class VarDefNode extends ASTNode {
 
     public VarDefNode(Position pos) {
         super(pos);
+        vars = new ArrayList<>();
     }
 
     @Override

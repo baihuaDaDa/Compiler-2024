@@ -1,15 +1,20 @@
 package AST.Expr;
 
+import AST.ASTNode;
 import AST.ASTVisitor;
-import AST.FString.FStringNode;
 import Util.Position;
+import org.antlr.v4.runtime.misc.Pair;
 
-public class FStringExprNode extends ExprNode {
-    public FStringNode fString = null;
+import java.util.ArrayList;
 
-    public FStringExprNode(Position pos, FStringNode fString) {
+public class FStringExprNode extends ASTNode {
+    public String front = null, back = null;
+    public ArrayList<Pair<String, ExprNode>> exprList = null;
+    public boolean isExpr = false;
+
+    public FStringExprNode(Position pos) {
         super(pos);
-        this.fString = fString;
+        exprList = new ArrayList<>();
     }
 
     @Override

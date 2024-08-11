@@ -4,7 +4,7 @@ import AST.ASTVisitor;
 import AST.ClassBuild.ClassBuildNode;
 import AST.ClassDef.ClassDefNode;
 import AST.Expr.*;
-import AST.FString.FStringNode;
+import AST.Expr.FStringExprNode;
 import AST.FuncDef.FuncDefNode;
 import AST.Literal.ConstArrayNode;
 import AST.Literal.LiteralNode;
@@ -61,7 +61,7 @@ public class SymbolCollector implements ASTVisitor {
 
     public void visit(VarDefNode node) {}
 
-    public void visit(FStringNode node) {}
+    public void visit(FStringExprNode node) {}
 
     public void visit(LiteralNode node) {}
     public void visit(ConstArrayNode node) {}

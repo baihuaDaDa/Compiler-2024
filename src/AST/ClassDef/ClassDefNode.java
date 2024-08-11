@@ -11,12 +11,15 @@ import java.util.ArrayList;
 
 public class ClassDefNode extends ASTNode {
     public String className = null;
-    public ArrayList<ClassBuildNode> classBuilder = null;
+    public ArrayList<ClassBuildNode> classBuild = null;
     public ArrayList<VarDefNode> varDefList = null;
     public ArrayList<FuncDefNode> funcDefList = null;
 
     public ClassDefNode(Position pos) {
         super(pos);
+        classBuild = new ArrayList<>();
+        varDefList = new ArrayList<>();
+        funcDefList = new ArrayList<>();
     }
 
     @Override

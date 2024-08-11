@@ -6,10 +6,8 @@ import Util.Position;
 public class IndexExprNode extends ExprNode {
     public ExprNode array = null, index = null;
 
-    public IndexExprNode(Position pos, ExprNode array, ExprNode index) {
+    public IndexExprNode(Position pos) {
         super(pos);
-        this.array = array;
-        this.index = index;
     }
 
     @Override

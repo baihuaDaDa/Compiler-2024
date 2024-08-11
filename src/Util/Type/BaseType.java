@@ -1,5 +1,7 @@
 package Util.Type;
 
+import Parser.MxParser;
+
 public class BaseType {
     public boolean isInt = false, isBool = false, isString = false, isClass = false;
     public String classname;
@@ -20,6 +22,10 @@ public class BaseType {
         isString = other.isString;
         isClass = other.isClass;
         classname = other.classname;
+    }
+
+    public BaseType(MxParser.BaseTypeContext ctx) {
+        this(ctx.getText());
     }
 
     public boolean isSameType(BaseType other) {

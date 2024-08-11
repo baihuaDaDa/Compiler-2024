@@ -6,10 +6,8 @@ import Util.Position;
 public class AssignExprNode extends ExprNode {
     public ExprNode lhs = null, rhs = null;
 
-    public AssignExprNode(Position pos, ExprNode lhs, ExprNode rhs) {
+    public AssignExprNode(Position pos) {
         super(pos);
-        this.lhs = lhs;
-        this.rhs = rhs;
     }
 
     @Override

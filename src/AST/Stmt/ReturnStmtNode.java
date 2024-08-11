@@ -6,14 +6,9 @@ import Util.Position;
 
 public class ReturnStmtNode extends StmtNode {
     public ExprNode returnValue = null;
-    public boolean isVoid = false;
 
-    ReturnStmtNode(Position pos, boolean isVoid, ExprNode returnValue) {
+    public ReturnStmtNode(Position pos) {
         super(pos);
-        if (isVoid) {
-            this.isVoid = true;
-            this.returnValue = returnValue;
-        }
     }
 
     @Override

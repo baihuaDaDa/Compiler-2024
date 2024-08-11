@@ -18,6 +18,7 @@ public class FuncDefNode extends ASTNode {
 
     public FuncDefNode(Position pos) {
         super(pos);
+        paramList = new ArrayList<>();
     }
 
     @Override

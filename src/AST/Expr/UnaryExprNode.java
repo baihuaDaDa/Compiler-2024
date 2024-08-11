@@ -7,10 +7,8 @@ public class UnaryExprNode extends ExprNode {
     public String op = null;
     public ExprNode expr = null;
 
-    public UnaryExprNode(Position pos, String op, ExprNode expr) {
+    public UnaryExprNode(Position pos) {
         super(pos);
-        this.op = op;
-        this.expr = expr;
     }
 
     @Override
