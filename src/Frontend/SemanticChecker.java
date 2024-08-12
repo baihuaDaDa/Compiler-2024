@@ -16,22 +16,16 @@ import Util.Scope.GlobalScope;
 public class SemanticChecker implements ASTVisitor {
     GlobalScope gScope;
 
-    public SymbolCollector(GlobalScope gScope) {
+    public SemanticChecker(GlobalScope gScope) {
         this.gScope = gScope;
     }
 
     public void visit(ProgramNode node) {
-        for (ClassDefNode classDef : node.classDefs)
-            classDef.accept(this);
-        for (FuncDefNode funcDef : node.funcDefs)
-            funcDef.accept(this);
     }
 
     public void visit(ClassBuildNode node) {}
 
     public void visit(ClassDefNode node) {
-        gScope.defineClass(node.className, node.pos);
-
     }
 
     public void visit(FuncDefNode node) {}

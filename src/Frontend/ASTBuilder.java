@@ -11,6 +11,7 @@ import AST.Expr.*;
 import AST.VarDef.*;
 import Parser.MxBaseVisitor;
 import Parser.MxParser;
+import Util.Error.SemanticError;
 import Util.Position;
 import Util.Type.BaseType;
 import Util.Type.ReturnType;
@@ -18,7 +19,6 @@ import Util.Type.Type;
 import org.antlr.v4.runtime.misc.Pair;
 
 // TODO 转义字符的转换
-// TODO newEmptyArrayExpr
 // TODO 保留词
 
 public class ASTBuilder extends MxBaseVisitor<ASTNode> {
@@ -51,8 +51,10 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitClassDef(MxParser.ClassDefContext ctx) {
         ClassDefNode classDef = new ClassDefNode(new Position(ctx));
         classDef.className = ctx.Identifier().getText();
-        for (var classBuild : ctx.classBuild())
-            classDef.classBuild.add((ClassBuildNode) visit(classBuild));
+        if (ctx.classBuild().size() > 1)
+            throw new SemanticError("Multiple class constructors.", new Position(ctx));
+        else if (!ctx.classBuild().isEmpty())
+            classDef.classBuild = (ClassBuildNode) visit(ctx.classBuild(0));
         for (var funcDef : ctx.funcDef())
             classDef.funcDefList.add((FuncDefNode) visit(funcDef));
         for (var varDef : ctx.varDef())
@@ -162,6 +164,20 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitNewEmptyArrayExpr(MxParser.NewEmptyArrayExprContext ctx) {
         NewEmptyArrayExprNode newEmptyArrayExpr = new NewEmptyArrayExprNode(new Position(ctx));
         newEmptyArrayExpr.type = new Type(ctx.baseType().getText(), ctx.LeftBracket().size());
+        boolean noSize = false;
+        for (int i = 0 ; i < ctx.children.size() ; i++) {
+            if (ctx.children.get(i).getText().equals("[")) {
+                if (noSize) {
+                    if (ctx.children.get(++i) instanceof MxParser.ExpressionContext)
+                        throw new SemanticError("New Array error.", new Position(ctx));
+                } else {
+                    if (ctx.children.get(++i) instanceof MxParser.ExpressionContext) {
+                        newEmptyArrayExpr.sizeList.add((ExprNode) visit(ctx.children.get(i)));
+                    } else noSize = true;
+                }
+            }
+        }
+        return newEmptyArrayExpr;
     }
 
     @Override

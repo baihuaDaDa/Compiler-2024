@@ -25,7 +25,6 @@ public class GlobalScope extends Scope {
         functions.put("getInt", new FuncDecl(new ReturnType("int", 0), new ArrayList<>()));
         functions.put("toString", new FuncDecl(new ReturnType("string", 0), new ArrayList<>(List.of(new Type("int", 0)))));
         ClassDecl stringClass = new ClassDecl();
-        stringClass.builderCnt = 1;
         stringClass.methods.put("length", new FuncDecl(new ReturnType("int", 0), new ArrayList<>()));
         stringClass.methods.put("substring", new FuncDecl(new ReturnType("string", 0), new ArrayList<>(List.of(new Type("int", 0), new Type("int", 0)))));
         stringClass.methods.put("parseInt", new FuncDecl(new ReturnType("int", 0), new ArrayList<>()));
