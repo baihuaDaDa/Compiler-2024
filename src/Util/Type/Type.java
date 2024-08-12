@@ -22,7 +22,17 @@ public class Type extends BaseType {
 
     @Override
     public boolean isSameType(BaseType other) {
+        if (other instanceof ExprType otherType) {
+            if (otherType.isVoid) return false;
+            if (otherType.isNull) return dim > 0 || isClass;
+            if (otherType.isArbitrary) return otherType.dim <= dim;
+        }
         Type otherType = new Type(other);
         return super.isSameType(other) && this.dim == otherType.dim;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "[]".repeat(dim);
     }
 }

@@ -4,10 +4,10 @@ import Parser.MxParser;
 
 public class BaseType {
     public boolean isInt = false, isBool = false, isString = false, isClass = false;
-    public String classname;
+    public String baseTypename;
 
     public BaseType(String typename) {
-        classname = typename;
+        this.baseTypename = typename;
         switch (typename) {
             case "int": isInt = true; break;
             case "bool": isBool = true; break;
@@ -21,7 +21,7 @@ public class BaseType {
         isBool = other.isBool;
         isString = other.isString;
         isClass = other.isClass;
-        classname = other.classname;
+        baseTypename = other.baseTypename;
     }
 
     public BaseType(MxParser.BaseTypeContext ctx) {
@@ -30,6 +30,11 @@ public class BaseType {
 
     public boolean isSameType(BaseType other) {
         return (isInt && other.isInt) || (isBool && other.isBool) || (isString && other.isString)
-                || (isClass && other.isClass && classname.equals(other.classname));
+                || (isClass && other.isClass && baseTypename.equals(other.baseTypename));
+    }
+
+    @Override
+    public String toString() {
+        return baseTypename;
     }
 }

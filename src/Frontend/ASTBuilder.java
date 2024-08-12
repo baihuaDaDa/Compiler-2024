@@ -14,6 +14,7 @@ import Parser.MxParser;
 import Util.Error.SemanticError;
 import Util.Position;
 import Util.Type.BaseType;
+import Util.Type.ExprType;
 import Util.Type.ReturnType;
 import Util.Type.Type;
 import org.antlr.v4.runtime.misc.Pair;
@@ -56,7 +57,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         else if (!ctx.classBuild().isEmpty())
             classDef.classBuild = (ClassBuildNode) visit(ctx.classBuild(0));
         for (var funcDef : ctx.funcDef())
-            classDef.funcDefList.add((FuncDefNode) visit(funcDef));
+            classDef.methodDefList.add((FuncDefNode) visit(funcDef));
         for (var varDef : ctx.varDef())
             classDef.varDefList.add((VarDefNode) visit(varDef));
         return classDef;
@@ -304,26 +305,37 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         LiteralNode literal = new LiteralNode(new Position(ctx));
         if (ctx.ConstDecInt() != null) {
             literal.constInt = Integer.parseInt(ctx.ConstDecInt().getText());
-            literal.isInt = true;
+            literal.type = new ExprType("int", 0);
         } else if (ctx.ConstString() != null) {
             literal.constString = ctx.ConstString().getText();
             literal.constString = literal.constString.substring(1, literal.constString.length() - 1);
-            literal.isString = true;
+            literal.type = new ExprType("string", 0);
         } else if (ctx.logic() != null) {
             literal.constLogic = ctx.logic().True() != null;
-            literal.isLogic = true;
+            literal.type = new ExprType("bool", 0);
         } else if (ctx.constArray() != null) {
             literal.constArray = (ConstArrayNode) visit(ctx.constArray());
-            literal.isArray = true;
-        }
+            literal.type = new ExprType(literal.constArray.elemType.baseTypename, literal.constArray.elemType.dim + 1);
+        } else if (ctx.Null() != null)
+            literal.type = new ExprType("null", 0);
         return literal;
     }
 
     @Override
     public ASTNode visitConstArray(MxParser.ConstArrayContext ctx) {
         ConstArrayNode constArray = new ConstArrayNode(new Position(ctx));
-        for (var literal : ctx.literal())
-            constArray.constArray.add((LiteralNode) visit(literal));
+        if (ctx.literal().isEmpty())
+            constArray.elemType = new ExprType("", 0);
+        else {
+            for (var literal : ctx.literal()) {
+                var literalNode = (LiteralNode) visit(literal);
+                if (constArray.elemType == null)
+                    constArray.elemType = literalNode.type;
+                else if (!constArray.elemType.isSameType(literalNode.type))
+                    throw new SemanticError("Inconsistent types in const array", new Position(ctx));
+                constArray.constArray.add(literalNode);
+            }
+        }
         return constArray;
     }
 

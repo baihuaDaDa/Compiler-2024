@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish AST builder">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: revise the class set of Types at the aim of processing empty const arrays.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/BaseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/BaseType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/Type.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +34,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PerforceDirect.Settings">
+    <option name="CHARSET" value="无" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -124,7 +140,7 @@
       <workItem from="1723267313556" duration="83000" />
       <workItem from="1723267403693" duration="23799000" />
       <workItem from="1723353516211" duration="16097000" />
-      <workItem from="1723436591743" duration="669000" />
+      <workItem from="1723436591743" duration="33042000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -182,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723406526497</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Upd: finish Main (Semantic Part).">
+      <option name="closed" value="true" />
+      <created>1723444666697</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723444666697</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +220,8 @@
     <MESSAGE value="Upd: finish global scope." />
     <MESSAGE value="Upd: finish symbol collector." />
     <MESSAGE value="Upd: finish AST builder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish AST builder" />
+    <MESSAGE value="Upd: finish Main (Semantic Part)." />
+    <MESSAGE value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
   </component>
 </project>
