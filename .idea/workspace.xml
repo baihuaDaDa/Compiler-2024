@@ -6,19 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: revise the class set of Types at the aim of processing empty const arrays.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/LiteralNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/BaseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/BaseType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Type/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/local_judge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/local_judge.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +141,7 @@
       <workItem from="1723267313556" duration="83000" />
       <workItem from="1723267403693" duration="23799000" />
       <workItem from="1723353516211" duration="16097000" />
-      <workItem from="1723436591743" duration="33042000" />
+      <workItem from="1723436591743" duration="39981000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -206,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723444666697</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Upd: revise the class set of Types at the aim of processing empty const arrays.">
+      <option name="closed" value="true" />
+      <created>1723487425404</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723487425404</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -3,7 +3,6 @@ package Util.Decl;
 import AST.ClassDef.ClassDefNode;
 import Util.Type.Type;
 
-import javax.swing.text.html.parser.Parser;
 import java.util.HashMap;
 
 public class ClassDecl {
@@ -21,7 +20,7 @@ public class ClassDecl {
         for (var varDef : classDef.varDefList)
             for (var var : varDef.vars)
                 members.put(var.a, varDef.type);
-        for (var funcDef : classDef.funcDefList)
+        for (var funcDef : classDef.methodDefList)
             methods.put(funcDef.funcName, new FuncDecl(funcDef));
     }
 }

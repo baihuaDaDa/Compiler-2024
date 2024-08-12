@@ -18,8 +18,8 @@ public interface ASTVisitor {
 
     void visit(FuncDefNode node);
 
-    void visit(StmtNode node);
     void visit(VarDefStmtNode node);
+    void visit(ExprStmtNode node);
     void visit(IfStmtNode node);
     void visit(ForStmtNode node);
     void visit(WhileStmtNode node);
@@ -28,19 +28,21 @@ public interface ASTVisitor {
     void visit(ContinueStmtNode node);
     void visit(SuiteStmtNode node);
 
-    void visit(ExprNode node);
+    void visit(NewArrayExprNode node);
+    void visit(NewEmptyArrayExprNode node);
     void visit(NewTypeExprNode node);
     void visit(FuncCallExprNode node);
     void visit(MemberExprNode node);
     void visit(IndexExprNode node);
+    void visit(PreSelfExprNode node);
     void visit(UnaryExprNode node);
     void visit(BinaryExprNode node);
+    void visit(TernaryExprNode node);
     void visit(AssignExprNode node);
     void visit(AtomExprNode node);
+    void visit(FStringExprNode node);
 
     void visit(VarDefNode node);
-
-    void visit(FStringExprNode node);
 
     void visit(LiteralNode node);
     void visit(ConstArrayNode node);

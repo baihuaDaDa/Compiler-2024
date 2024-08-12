@@ -13,12 +13,12 @@ public class ClassDefNode extends ASTNode {
     public String className = null;
     public ClassBuildNode classBuild = null;
     public ArrayList<VarDefNode> varDefList = null;
-    public ArrayList<FuncDefNode> funcDefList = null;
+    public ArrayList<FuncDefNode> methodDefList = null;
 
     public ClassDefNode(Position pos) {
         super(pos);
         varDefList = new ArrayList<>();
-        funcDefList = new ArrayList<>();
+        methodDefList = new ArrayList<>();
     }
 
     @Override

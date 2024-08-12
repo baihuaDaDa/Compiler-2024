@@ -1,8 +1,12 @@
 package Util.Type;
 
+import Util.Decl.FuncDecl;
+
 public class ExprType extends ReturnType {
     public boolean isNull = false;
     public boolean isArbitrary = false;
+    public boolean isFunc = false;
+    public FuncDecl funcDecl;
 
     public ExprType(BaseType other) {
         super(other);
@@ -23,12 +27,20 @@ public class ExprType extends ReturnType {
         }
     }
 
+    public ExprType(String funcName, FuncDecl funcDecl) {
+        super(funcName, 0);
+        isClass = false;
+        isFunc = true;
+        this.funcDecl = funcDecl;
+    }
+
     @Override
     public boolean isSameType(BaseType other) {
         ExprType otherType = new ExprType(other);
+        if (otherType.isFunc || isFunc) return false;
         if (otherType.isNull) return dim > 0 || isClass;
         if (isNull) return otherType.dim > 0 || otherType.isClass;
-        if (otherType.isArbitrary || isArbitrary)
+        if ((otherType.isArbitrary || isArbitrary) && !otherType.isVoid && !isVoid)
             // 空数组可以兼容不小于自己维度的数组
             return (otherType.isArbitrary && otherType.dim <= dim) || (isArbitrary && dim <= otherType.dim);
         return super.isSameType(other);
@@ -36,6 +48,8 @@ public class ExprType extends ReturnType {
 
     @Override
     public String toString() {
-        return isNull ? "null" : super.toString();
+        if (isNull) return "null";
+        else if (isArbitrary) return "{".repeat(dim) + "}".repeat(dim);
+        else return super.toString();
     }
 }

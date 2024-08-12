@@ -27,8 +27,9 @@ public class ReturnType extends Type {
     @Override
     public boolean isSameType(BaseType other) {
         if (other instanceof ExprType otherType) {
+            if (otherType.isFunc) return false;
             if (otherType.isNull) return dim > 0 || isClass;
-            if (otherType.isArbitrary) return otherType.dim <= dim;
+            if (otherType.isArbitrary && !isVoid) return otherType.dim <= dim;
         }
         ReturnType otherType = new ReturnType(other);
         if (isVoid && otherType.isVoid)

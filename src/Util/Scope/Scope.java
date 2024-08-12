@@ -2,6 +2,8 @@ package Util.Scope;
 
 import Util.Error.SemanticError;
 import Util.Position;
+import Util.Type.BaseType;
+import Util.Type.ReturnType;
 import Util.Type.Type;
 
 import java.util.HashMap;
@@ -9,10 +11,47 @@ import java.util.HashMap;
 public class Scope {
     protected HashMap<String, Type> vars = null;
     protected Scope parent = null;
+    public boolean isInClass = false;
+    public boolean isInGlobalClass = false; // 是否是类的全局作用域（不可被子节点继承）
+    public boolean isInFunc = false;
+    public boolean isInLoop = false;
+    public boolean isFuncScope = false; // 是否是函数或构造函数的作用域（不可被子节点继承）
+    public BaseType classType = null;
+    public ReturnType returnType = null;
+    public boolean isReturned = false; // 需要上传给父节点
+    public Position loopPos = null; // 循环语句位置
 
     public Scope(Scope parent) {
         this.parent = parent;
         this.vars = new HashMap<>();
+        isInClass = parent.isInClass;
+        isInFunc = parent.isInFunc;
+        isInLoop = parent.isInLoop;
+        classType = parent.classType;
+        returnType = parent.returnType;
+        isReturned = parent.isReturned;
+        loopPos = parent.loopPos;
+    }
+
+    public Scope(Scope parent, BaseType type) {
+        this(parent);
+        if (type instanceof ReturnType) {
+            isInFunc = true;
+            isFuncScope = true;
+            returnType = (ReturnType) type;
+            if (returnType.isSameType(new ReturnType("void", 0)))
+                isReturned = true;
+        } else {
+            isInClass = true;
+            isInGlobalClass = true;
+            classType = type;
+        }
+    }
+
+    public Scope(Scope parent, Position loopPos) {
+        this(parent);
+        isInLoop = true;
+        this.loopPos = loopPos;
     }
 
     public void defineVar(String name, Type type, Position pos) {
@@ -25,5 +64,10 @@ public class Scope {
         if (vars.containsKey(name)) return vars.get(name);
         else if (parent != null) return parent.getVar(name);
         else return null;
+    }
+
+    public Scope getParent() {
+        parent.isReturned |= isReturned;
+        return parent;
     }
 }

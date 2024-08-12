@@ -39,8 +39,8 @@ public class SymbolCollector implements ASTVisitor {
         gScope.defineFunc(node.funcName, new FuncDecl(node), node.pos);
     }
 
-    public void visit(StmtNode node) {}
     public void visit(VarDefStmtNode node) {}
+    public void visit(ExprStmtNode node) {}
     public void visit(IfStmtNode node) {}
     public void visit(ForStmtNode node) {}
     public void visit(WhileStmtNode node) {}
@@ -49,19 +49,21 @@ public class SymbolCollector implements ASTVisitor {
     public void visit(ContinueStmtNode node) {}
     public void visit(SuiteStmtNode node) {}
 
-    public void visit(ExprNode node) {}
+    public void visit(NewArrayExprNode node) {}
+    public void visit(NewEmptyArrayExprNode node) {}
     public void visit(NewTypeExprNode node) {}
     public void visit(FuncCallExprNode node) {}
     public void visit(MemberExprNode node) {}
     public void visit(IndexExprNode node) {}
+    public void visit(PreSelfExprNode node) {}
     public void visit(UnaryExprNode node) {}
     public void visit(BinaryExprNode node) {}
+    public void visit(TernaryExprNode node) {}
     public void visit(AssignExprNode node) {}
     public void visit(AtomExprNode node) {}
+    public void visit(FStringExprNode node) {}
 
     public void visit(VarDefNode node) {}
-
-    public void visit(FStringExprNode node) {}
 
     public void visit(LiteralNode node) {}
     public void visit(ConstArrayNode node) {}

@@ -4,6 +4,7 @@ import Util.Decl.ClassDecl;
 import Util.Decl.FuncDecl;
 import Util.Error.SemanticError;
 import Util.Position;
+import Util.Type.ExprType;
 import Util.Type.ReturnType;
 import Util.Type.Type;
 
@@ -85,15 +86,15 @@ public class GlobalScope extends Scope {
         return null;
     }
 
-    public FuncDecl getClassMethod(String className, String funcName) {
+    public ExprType getClassMethod(String className, String funcName) {
         if (classes.get(className).methods.containsKey(funcName))
-            return classes.get(className).methods.get(funcName);
+            return new ExprType(funcName, classes.get(className).methods.get(funcName));
         return null;
     }
 
-    public FuncDecl getFunc(String name) {
+    public ExprType getFunc(String name) {
         if (functions.containsKey(name))
-            return functions.get(name);
+            return new ExprType(name, functions.get(name));
         return null;
     }
 
