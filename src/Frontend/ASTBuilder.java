@@ -156,7 +156,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitNewArrayExpr(MxParser.NewArrayExprContext ctx) {
         NewArrayExprNode newArrayExpr = new NewArrayExprNode(new Position(ctx));
-        newArrayExpr.type = new Type(ctx.baseType().getText(), ctx.LeftBracket().size());
+        newArrayExpr.arrayType = new Type(ctx.baseType().getText(), ctx.LeftBracket().size());
         newArrayExpr.constArray = (ConstArrayNode) visit(ctx.constArray());
         return newArrayExpr;
     }
@@ -164,7 +164,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitNewEmptyArrayExpr(MxParser.NewEmptyArrayExprContext ctx) {
         NewEmptyArrayExprNode newEmptyArrayExpr = new NewEmptyArrayExprNode(new Position(ctx));
-        newEmptyArrayExpr.type = new Type(ctx.baseType().getText(), ctx.LeftBracket().size());
+        newEmptyArrayExpr.arrayType = new Type(ctx.baseType().getText(), ctx.LeftBracket().size());
         boolean noSize = false;
         for (int i = 0 ; i < ctx.children.size() ; i++) {
             if (ctx.children.get(i).getText().equals("[")) {
@@ -184,7 +184,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitNewTypeExpr(MxParser.NewTypeExprContext ctx) {
         NewTypeExprNode newTypeExpr = new NewTypeExprNode(new Position(ctx));
-        newTypeExpr.type = new BaseType(ctx.baseType());
+        newTypeExpr.newType = new BaseType(ctx.baseType());
         return newTypeExpr;
     }
 
@@ -315,7 +315,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
             literal.type = new ExprType("bool", 0);
         } else if (ctx.constArray() != null) {
             literal.constArray = (ConstArrayNode) visit(ctx.constArray());
-            literal.type = new ExprType(literal.constArray.elemType.baseTypename, literal.constArray.elemType.dim + 1);
+            literal.type = new ExprType(literal.constArray.arrayType);
         } else if (ctx.Null() != null)
             literal.type = new ExprType("null", 0);
         return literal;
@@ -325,17 +325,20 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitConstArray(MxParser.ConstArrayContext ctx) {
         ConstArrayNode constArray = new ConstArrayNode(new Position(ctx));
         if (ctx.literal().isEmpty())
-            constArray.elemType = new ExprType("", 0);
+            constArray.arrayType = new ExprType("", 0);
         else {
             for (var literal : ctx.literal()) {
                 var literalNode = (LiteralNode) visit(literal);
-                if (constArray.elemType == null)
-                    constArray.elemType = literalNode.type;
-                else if (!constArray.elemType.isSameType(literalNode.type))
+                if (constArray.arrayType == null)
+                    constArray.arrayType = literalNode.type;
+                else if (!constArray.arrayType.isSameType(literalNode.type))
                     throw new SemanticError("Inconsistent types in const array", new Position(ctx));
+                if ((constArray.arrayType.isArbitrary || constArray.arrayType.isNull) && !literalNode.type.isNull && !literalNode.type.isArbitrary)
+                    constArray.arrayType = literalNode.type;
                 constArray.constArray.add(literalNode);
             }
         }
+        constArray.arrayType.dim++;
         return constArray;
     }
 

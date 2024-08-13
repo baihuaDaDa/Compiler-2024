@@ -8,7 +8,7 @@ import Util.Type.ExprType;
 import java.util.ArrayList;
 
 public class ConstArrayNode extends ASTNode {
-    public ExprType elemType = null;
+    public ExprType arrayType = null;
     public ArrayList<LiteralNode> constArray;
 
     public ConstArrayNode(Position pos) {

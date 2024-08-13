@@ -11,7 +11,6 @@ import AST.Literal.LiteralNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
 import AST.VarDef.VarDefNode;
-import Util.Decl.FuncDecl;
 import Util.Error.SemanticError;
 import Util.Scope.GlobalScope;
 import Util.Scope.Scope;
@@ -141,9 +140,32 @@ public class SemanticChecker implements ASTVisitor {
             curScope = curScope.getParent();
     }
 
-    public void visit(NewArrayExprNode node) {}
-    public void visit(NewEmptyArrayExprNode node) {}
-    public void visit(NewTypeExprNode node) {}
+    public void visit(NewArrayExprNode node) {
+        if (node.arrayType.isClass && !gScope.isClassDefined(node.arrayType.baseTypename))
+            throw new SemanticError("Class " + node.arrayType.baseTypename + " not defined", node.pos);
+        node.constArray.accept(this);
+        if (!node.constArray.arrayType.isSameType(node.arrayType))
+            throw new SemanticError("Type of the const array is " + node.constArray.arrayType.toString() + " instead of " + node.arrayType.toString(), node.pos);
+        node.type = new ExprType(node.arrayType);
+        node.isLeftValue = false;
+    }
+    public void visit(NewEmptyArrayExprNode node) {
+        if (node.arrayType.isClass && !gScope.isClassDefined(node.arrayType.baseTypename))
+            throw new SemanticError("Class " + node.arrayType.baseTypename + " not defined", node.pos);
+        for (var size : node.sizeList) {
+            size.accept(this);
+            if (!size.type.isSameType(new ExprType("int", 0)))
+                throw new SemanticError("Size of array is " + size.type.toString() + " instead of int", node.pos);
+        }
+        node.type = new ExprType(node.arrayType);
+        node.isLeftValue = false;
+    }
+    public void visit(NewTypeExprNode node) {
+        if (node.newType.isClass && !gScope.isClassDefined(node.newType.baseTypename))
+            throw new SemanticError("Class " + node.newType.baseTypename + " not defined", node.pos);
+        node.type = new ExprType(node.newType);
+        node.isLeftValue = false;
+    }
     public void visit(FuncCallExprNode node) {
         node.func.accept(this);
         if (!node.func.type.isFunc)
@@ -212,6 +234,35 @@ public class SemanticChecker implements ASTVisitor {
         node.rhs.accept(this);
         if (!node.lhs.type.isSameType(node.rhs.type))
             throw new SemanticError("Type of lhs and rhs of binary expression should be same instead of " + node.lhs.type.toString() + " and " + node.rhs.type.toString(), node.pos);
+        if (node.lhs.type.dim > 0 || node.rhs.type.dim > 0 || node.lhs.type.isClass || node.rhs.type.isClass) {
+            if (node.op.equals("==") || node.op.equals("!=")) {
+                node.type = new ExprType("bool", 0);
+                node.isLeftValue = false;
+                return;
+            }
+            throw new SemanticError("Cannot compute array", node.pos);
+        }
+        if (node.lhs.type.isSameType(new ExprType("string", 0))) {
+            switch (node.op) {
+                case "+" -> node.type = new ExprType("string", 0);
+                case "==", "!=", "<", ">", "<=", ">=" -> node.type = new ExprType("bool", 0);
+                default -> throw new SemanticError("Cannot compute string", node.pos);
+            }
+            return;
+        }
+        if (node.lhs.type.isSameType(new ExprType("bool", 0))) {
+            if (node.op.equals("&&") || node.op.equals("||") || node.op.equals("!=") || node.op.equals("==")) {
+                node.type = new ExprType("bool", 0);
+                node.isLeftValue = false;
+                return;
+            }
+            throw new SemanticError("Cannot compute bool", node.pos);
+        }
+        switch (node.op) {
+            case "*", "/", "%", "+", "-", "<<", ">>", "&", "|", "^", "~" -> node.type = new ExprType("int", 0);
+            case "&&", "||", "!", "==", "!=", "<", ">", "<=", ">=" -> node.type = new ExprType("bool", 0);
+        }
+        node.isLeftValue = false;
     }
     public void visit(TernaryExprNode node) {
         node.condition.accept(this);

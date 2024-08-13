@@ -7,7 +7,7 @@ import Util.Type.Type;
 import java.util.ArrayList;
 
 public class NewEmptyArrayExprNode extends ExprNode {
-    public Type type = null;
+    public Type arrayType = null;
     public ArrayList<ExprNode> sizeList = null;
 
     public NewEmptyArrayExprNode(Position pos) {

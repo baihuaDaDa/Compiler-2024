@@ -5,7 +5,7 @@ import Util.Type.BaseType;
 import Util.Position;
 
 public class NewTypeExprNode extends ExprNode {
-    public BaseType type = null;
+    public BaseType newType = null;
 
     public NewTypeExprNode(Position pos) {
         super(pos);

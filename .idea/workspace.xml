@@ -4,22 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: revise the class set of Types at the aim of processing empty const arrays.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: almost finish the semantic checker.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FStringExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewArrayExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewArrayExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewEmptyArrayExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewEmptyArrayExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewTypeExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewTypeExprNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Literal/ConstArrayNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ReturnType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/Type.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/local_judge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/local_judge.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +50,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -141,7 +133,9 @@
       <workItem from="1723267313556" duration="83000" />
       <workItem from="1723267403693" duration="23799000" />
       <workItem from="1723353516211" duration="16097000" />
-      <workItem from="1723436591743" duration="39981000" />
+      <workItem from="1723436591743" duration="40390000" />
+      <workItem from="1723525296643" duration="93000" />
+      <workItem from="1723525396993" duration="2997000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -215,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723487425404</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Upd: almost finish the semantic checker.">
+      <option name="closed" value="true" />
+      <created>1723495466178</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723495466178</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +233,7 @@
     <MESSAGE value="Upd: finish AST builder" />
     <MESSAGE value="Upd: finish Main (Semantic Part)." />
     <MESSAGE value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
+    <MESSAGE value="Upd: almost finish the semantic checker." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: almost finish the semantic checker." />
   </component>
 </project>
