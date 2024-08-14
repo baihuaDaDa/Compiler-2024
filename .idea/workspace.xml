@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish the semantic checker.">
-      <change afterPath="$PROJECT_DIR$/src/AST/Suite/SuiteNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: some problems about calling class methods.">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-2024.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-2024.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/ClassBuild/ClassBuildNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ClassBuild/ClassBuildNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Expr/FuncCallExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/FuncCallExprNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Expr/NewEmptyArrayExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/NewEmptyArrayExprNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/FuncDef/FuncDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/FuncDef/FuncDefNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Error/SemanticError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Error/SemanticError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Error/SyntaxError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Error/SyntaxError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +135,7 @@
       <workItem from="1723663942134" duration="432000" />
       <workItem from="1723664478846" duration="154000" />
       <workItem from="1723664656940" duration="115000" />
-      <workItem from="1723664799690" duration="929000" />
+      <workItem from="1723664799690" duration="2054000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -241,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723528532433</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fix: some problems about calling class methods.">
+      <option name="closed" value="true" />
+      <created>1723666169720</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723666169720</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +251,8 @@
     <MESSAGE value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
     <MESSAGE value="Upd: almost finish the semantic checker." />
     <MESSAGE value="Upd: finish the semantic checker." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish the semantic checker." />
+    <MESSAGE value="Fix: some problems about calling class methods." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: some problems about calling class methods." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -272,7 +265,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
           <line>139</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
+          <properties class="Frontend.SemanticChecker">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
