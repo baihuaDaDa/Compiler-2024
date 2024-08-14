@@ -1,15 +1,35 @@
-# Change the src to the path of your java source files
-JAVA_SRC = $(shell find src -name '*.java')
-# Change this to the path of your antlr jar
-ANTLR_JAR = /ulib
+# Makefile for a Java project
 
-.PHONY: all
-all: Compiler
+# Variables
+SRC_DIR := src
+BIN_DIR := bin
+LIB_DIR := /ulib
+CLASSPATH := $(shell find $(LIB_DIR) -name '*.jar' | tr '\n' ':')$(BIN_DIR)
+MAIN_CLASS := Main
 
-.PHONY: Compiler
-Compiler: $(JAVA_SRC)
-	javac -d bin $(JAVA_SRC) -cp $(ANTLR_JAR) -encoding UTF-8
+# Find all Java files
+JAVA_FILES := $(shell find $(SRC_DIR) -name '*.java')
 
-.PHONY: clean
+# Find all class files
+CLASSES := $(JAVA_FILES:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
+
+# Default target
+all: build
+
+# Build target
+build: $(CLASSES)
+
+$(BIN_DIR)/%.class: $(SRC_DIR)/%.java
+    @mkdir -p $(BIN_DIR)
+    @find $(SRC_DIR) -name '*.java' | xargs javac -d $(BIN_DIR) -cp $(CLASSPATH)
+
+# Run target
+run: build
+    java -cp $(CLASSPATH) $(MAIN_CLASS)
+
+# Clean build artifacts
 clean:
-	find bin -name '*.class' -or -name '*.jar' | xargs rm -f
+    @rm -rf $(BIN_DIR)
+
+# Phony targets
+.PHONY: all build run clean
