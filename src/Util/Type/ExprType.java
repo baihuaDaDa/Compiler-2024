@@ -13,6 +13,7 @@ public class ExprType extends ReturnType {
         if (other instanceof ExprType) {
             isNull = ((ExprType) other).isNull;
             isArbitrary = ((ExprType) other).isArbitrary;
+            isFunc = ((ExprType) other).isFunc;
         }
     }
 

@@ -10,6 +10,7 @@ import AST.Literal.ConstArrayNode;
 import AST.Literal.LiteralNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
+import AST.Suite.SuiteNode;
 import AST.VarDef.VarDefNode;
 import Util.Decl.ClassDecl;
 import Util.Decl.FuncDecl;
@@ -38,6 +39,8 @@ public class SymbolCollector implements ASTVisitor {
     public void visit(FuncDefNode node) {
         gScope.defineFunc(node.funcName, new FuncDecl(node), node.pos);
     }
+
+    public void visit(SuiteNode node) {}
 
     public void visit(VarDefStmtNode node) {}
     public void visit(ExprStmtNode node) {}

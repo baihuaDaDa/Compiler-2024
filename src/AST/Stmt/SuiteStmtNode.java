@@ -1,16 +1,16 @@
 package AST.Stmt;
 
 import AST.ASTVisitor;
+import AST.Suite.SuiteNode;
 import Util.Position;
 
 import java.util.ArrayList;
 
 public class SuiteStmtNode extends StmtNode {
-    public ArrayList<StmtNode> stmts = null;
+    public SuiteNode suite;
 
     public SuiteStmtNode(Position pos) {
         super(pos);
-        stmts = new ArrayList<>();
     }
 
     @Override

@@ -11,6 +11,7 @@ public class FuncCallExprNode extends ExprNode {
 
     public FuncCallExprNode(Position pos) {
         super(pos);
+        args = new ArrayList<>();
     }
 
     @Override

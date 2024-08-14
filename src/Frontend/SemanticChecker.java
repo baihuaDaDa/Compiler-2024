@@ -10,6 +10,7 @@ import AST.Literal.ConstArrayNode;
 import AST.Literal.LiteralNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
+import AST.Suite.SuiteNode;
 import AST.VarDef.VarDefNode;
 import Util.Error.SemanticError;
 import Util.Scope.GlobalScope;
@@ -79,6 +80,11 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Function " + node.funcName + " have not returned yet", node.pos);
     }
 
+    public void visit(SuiteNode node) {
+        for (var stmt : node.stmts)
+            stmt.accept(this);
+    }
+
     public void visit(VarDefStmtNode node) {
         node.varDef.accept(this);
     }
@@ -132,12 +138,9 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Continue outside loop", node.pos);
     }
     public void visit(SuiteStmtNode node) {
-        if (curScope.isFuncScope)
-            curScope = new Scope(curScope);
-        for (var stmt : node.stmts)
-            stmt.accept(this);
-        if (curScope.isFuncScope)
-            curScope = curScope.getParent();
+        curScope = new Scope(curScope);
+        node.suite.accept(this);
+        curScope = curScope.getParent();
     }
 
     public void visit(NewArrayExprNode node) {
@@ -183,11 +186,17 @@ public class SemanticChecker implements ASTVisitor {
     }
     public void visit(MemberExprNode node) {
         node.classExpr.accept(this);
-        if (!node.classExpr.type.isClass && node.classExpr.type.dim > 0)
-            throw new SemanticError("Invoke members or methods from a non-class expression", node.pos);
-        Type memberType = gScope.getClassMember(node.classExpr.type.baseTypename, node.memberName);
-        if (memberType == null)
-            throw new SemanticError("Class " + node.classExpr.type.baseTypename + " not defined", node.pos);
+        if (!node.classExpr.type.isClass && node.classExpr.type.dim == 0)
+            throw new SemanticError("Invoke members or methods from a both non-class and non-array expression", node.pos);
+        Type memberType = gScope.getClassMember(node.classExpr.type, node.memberName);
+        if (memberType == null) {
+            ExprType methodType = gScope.getClassMethod(node.classExpr.type, node.memberName);
+            if (methodType == null)
+                throw new SemanticError("Class " + node.classExpr.type.toString() + " does not contain such a member or method called " + node.memberName, node.pos);
+            node.type = methodType;
+            node.isLeftValue = false;
+            return;
+        }
         node.type = (ExprType) memberType;
         node.isLeftValue = true;
     }
@@ -326,8 +335,8 @@ public class SemanticChecker implements ASTVisitor {
                 throw new SemanticError("Class member" + varUnit.a + "cannot have initializer", node.pos);
             if (varUnit.b != null) {
                 varUnit.b.accept(this);
-                if (varUnit.b.type.isSameType(node.type))
-                    throw new SemanticError("Variable (type: " + node.type.toString() + ") is initialized with wrong type" + varUnit.b.type.toString(), node.pos);
+                if (!varUnit.b.type.isSameType(node.type))
+                    throw new SemanticError("Variable (type: " + node.type.toString() + ") is initialized with wrong type " + varUnit.b.type.toString(), node.pos);
             }
             if (!curScope.isInClass)
                 curScope.defineVar(varUnit.a, node.type, node.pos);

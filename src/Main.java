@@ -1,4 +1,3 @@
-import AST.ASTNode;
 import AST.Program.ProgramNode;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
@@ -12,12 +11,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import Util.MxErrorListener;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        InputStream input = new FileInputStream("test/test.mx");
+        String testcaseName = "sema", packageName = "basic", ind = "8";
+        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
+//        InputStream input = System.in;
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();
@@ -33,7 +33,6 @@ public class Main {
             astRoot.accept(new SemanticChecker(gScope));
         } catch (Error error) {
             System.err.println(error.toString());
-            throw new RuntimeException();
         }
     }
 }

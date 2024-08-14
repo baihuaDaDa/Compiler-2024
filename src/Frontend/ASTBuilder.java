@@ -8,6 +8,7 @@ import AST.Program.ProgramNode;
 import AST.Stmt.*;
 import AST.Literal.*;
 import AST.Expr.*;
+import AST.Suite.SuiteNode;
 import AST.VarDef.*;
 import Parser.MxBaseVisitor;
 import Parser.MxParser;
@@ -44,7 +45,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         var paramNames = ctx.Identifier();
         for (int i = 0; i < paramTypes.size(); i++)
             funcDef.paramList.add(new Pair<>(new Type(paramTypes.get(i)), paramNames.get(i + 1).getText()));
-        funcDef.body = (SuiteStmtNode) visit(ctx.suite());
+        funcDef.body = (SuiteNode) visit(ctx.suite());
         return funcDef;
     }
 
@@ -67,8 +68,18 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitClassBuild(MxParser.ClassBuildContext ctx) {
         ClassBuildNode classBuild = new ClassBuildNode(new Position(ctx));
         classBuild.className = ctx.Identifier().getText();
-        classBuild.body = (SuiteStmtNode) visit(ctx.suite());
+        classBuild.body = (SuiteNode) visit(ctx.suite());
         return classBuild;
+    }
+
+    @Override
+    public ASTNode visitSuite(MxParser.SuiteContext ctx) {
+        SuiteNode suite = new SuiteNode(new Position(ctx));
+        for (var stmt : ctx.statement()) {
+            if (stmt instanceof MxParser.EmptyStmtContext) continue;
+            suite.stmts.add((StmtNode) visit(stmt));
+        }
+        return suite;
     }
 
     @Override
@@ -136,12 +147,9 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitSuiteStmt(MxParser.SuiteStmtContext ctx) {
-        SuiteStmtNode suite = new SuiteStmtNode(new Position(ctx));
-        for (var stmt : ctx.suite().statement()) {
-            if (stmt instanceof MxParser.EmptyStmtContext) continue;
-            suite.stmts.add((StmtNode) visit(stmt));
-        }
-        return suite;
+        SuiteStmtNode suiteStmt = new SuiteStmtNode(new Position(ctx));
+        suiteStmt.suite = (SuiteNode) visit(ctx.suite());
+        return suiteStmt;
     }
 
     @Override

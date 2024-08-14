@@ -9,6 +9,6 @@ public class SyntaxError extends Error {
 
     @Override
     public String toString() {
-        return "Syntax Error: " + super.toString();
+        return "[Invalid Identifier] " + super.toString();
     }
 }

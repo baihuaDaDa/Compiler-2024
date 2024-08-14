@@ -15,13 +15,15 @@ public class Scope {
     public boolean isInGlobalClass = false; // 是否是类的全局作用域（不可被子节点继承）
     public boolean isInFunc = false;
     public boolean isInLoop = false;
-    public boolean isFuncScope = false; // 是否是函数或构造函数的作用域（不可被子节点继承）
     public BaseType classType = null;
     public ReturnType returnType = null;
     public boolean isReturned = false; // 需要上传给父节点
     public Position loopPos = null; // 循环语句位置
 
     public Scope(Scope parent) {
+        vars = new HashMap<>();
+        if (parent == null)
+            return;
         this.parent = parent;
         this.vars = new HashMap<>();
         isInClass = parent.isInClass;
@@ -37,7 +39,6 @@ public class Scope {
         this(parent);
         if (type instanceof ReturnType) {
             isInFunc = true;
-            isFuncScope = true;
             returnType = (ReturnType) type;
             if (returnType.isSameType(new ReturnType("void", 0)))
                 isReturned = true;
@@ -62,7 +63,14 @@ public class Scope {
 
     public Type getVar(String name) {
         if (vars.containsKey(name)) return vars.get(name);
-        else if (parent != null) return parent.getVar(name);
+        else if (parent != null) {
+            if (parent instanceof GlobalScope && isInClass) {
+                Type type = ((GlobalScope) parent).getClassMember(new Type(classType), name);
+                if (type != null)
+                    return type;
+            }
+            return parent.getVar(name);
+        }
         else return null;
     }
 

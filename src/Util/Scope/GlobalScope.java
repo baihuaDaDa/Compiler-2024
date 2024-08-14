@@ -80,15 +80,22 @@ public class GlobalScope extends Scope {
         super.defineVar(name, type, pos);
     }
 
-    public Type getClassMember(String className, String memberName) {
-        if (classes.get(className).members.containsKey(memberName))
-            return classes.get(className).members.get(memberName);
+    public Type getClassMember(Type classType, String memberName) {
+        if (!classType.isClass || classType.dim > 0)
+            return null;
+        if (classes.get(classType.baseTypename).members.containsKey(memberName))
+            return classes.get(classType.baseTypename).members.get(memberName);
         return null;
     }
 
-    public ExprType getClassMethod(String className, String funcName) {
-        if (classes.get(className).methods.containsKey(funcName))
-            return new ExprType(funcName, classes.get(className).methods.get(funcName));
+    public ExprType getClassMethod(Type classType, String funcName) {
+        if (classType.dim > 0) {
+            if (funcName.equals("size"))
+                return new ExprType(funcName, new FuncDecl(new ReturnType("int", 0), new ArrayList<>()));
+            else return null;
+        }
+        if (classes.get(classType.baseTypename).methods.containsKey(funcName))
+            return new ExprType(funcName, classes.get(classType.baseTypename).methods.get(funcName));
         return null;
     }
 

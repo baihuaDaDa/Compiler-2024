@@ -6,6 +6,7 @@ import AST.ClassDef.*;
 import AST.FuncDef.*;
 import AST.Stmt.*;
 import AST.Expr.*;
+import AST.Suite.*;
 import AST.VarDef.*;
 import AST.Literal.*;
 
@@ -17,6 +18,8 @@ public interface ASTVisitor {
     void visit(ClassDefNode node);
 
     void visit(FuncDefNode node);
+
+    void visit(SuiteNode node);
 
     void visit(VarDefStmtNode node);
     void visit(ExprStmtNode node);

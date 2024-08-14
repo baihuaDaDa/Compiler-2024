@@ -2,7 +2,7 @@ package AST.FuncDef;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
-import AST.Stmt.SuiteStmtNode;
+import AST.Suite.SuiteNode;
 import Util.Type.ReturnType;
 import Util.Type.Type;
 import Util.Position;
@@ -14,7 +14,7 @@ public class FuncDefNode extends ASTNode {
     public ReturnType type;
     public String funcName;
     public ArrayList<Pair<Type, String>> paramList;
-    public SuiteStmtNode body;
+    public SuiteNode body;
 
     public FuncDefNode(Position pos) {
         super(pos);
