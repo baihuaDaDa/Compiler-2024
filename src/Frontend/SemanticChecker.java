@@ -53,6 +53,8 @@ public class SemanticChecker implements ASTVisitor {
 
     public void visit(ClassDefNode node) {
         curScope = new Scope(curScope, new BaseType(node.className));
+        if (node.classBuild != null)
+            node.classBuild.accept(this);
         for (var varDef : node.varDefList)
             varDef.accept(this);
         for (var methodDef : node.methodDefList)
@@ -119,6 +121,12 @@ public class SemanticChecker implements ASTVisitor {
     public void visit(ReturnStmtNode node) {
         if (!curScope.isInFunc)
             throw new SemanticError("Return outside function", node.pos);
+        if (node.returnValue == null) {
+            if (!curScope.returnType.isSameType(new ReturnType("void", 0)))
+                throw new SemanticError("Loss of return value", node.pos);
+            curScope.isReturned = true;
+            return;
+        }
         node.returnValue.accept(this);
         if (!curScope.returnType.isSameType(node.returnValue.type))
             throw new SemanticError("Return the type " + node.returnValue.type.toString() + " for the required type " + curScope.returnType.toString(), node.pos);
@@ -341,7 +349,7 @@ public class SemanticChecker implements ASTVisitor {
                 if (!varUnit.b.type.isSameType(node.type))
                     throw new SemanticError("Variable (type: " + node.type.toString() + ") is initialized with wrong type " + varUnit.b.type.toString(), node.pos);
             }
-            if (!curScope.isInClass)
+            if (!curScope.isInGlobalClass)
                 curScope.defineVar(varUnit.a, node.type, node.pos);
         }
     }

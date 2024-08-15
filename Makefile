@@ -1,35 +1,23 @@
-# Makefile for a Java project
+# 变量定义
+SOURCES = src
+CLASSES = bin
+JARS = ulib/antlr-4.7-complete.jar
 
-# Variables
-SRC_DIR := src
-BIN_DIR := bin
-LIB_DIR := /ulib
-CLASSPATH := $(shell find $(LIB_DIR) -name '*.jar' | tr '\n' ':')$(BIN_DIR)
-MAIN_CLASS := Main
+# 规则定义
+all: compile
 
-# Find all Java files
-JAVA_FILES := $(shell find $(SRC_DIR) -name '*.java')
+# 编译所有 Java 源文件
+compile:
+	@mkdir -p $(CLASSES)
+	@find $(SOURCES) -name "*.java" | xargs -I{} javac -cp $(JARS) -d $(CLASSES) {}
 
-# Find all class files
-CLASSES := $(JAVA_FILES:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
+# 运行 Java 程序
+run:
+	@java -cp $(CLASSES):$(JARS) Main
 
-# Default target
-all: build
-
-# Build target
-build: $(CLASSES)
-
-$(BIN_DIR)/%.class: $(SRC_DIR)/%.java
-    @mkdir -p $(BIN_DIR)
-    @find $(SRC_DIR) -name '*.java' | xargs javac -d $(BIN_DIR) -cp $(CLASSPATH)
-
-# Run target
-run: build
-    java -cp $(CLASSPATH) $(MAIN_CLASS)
-
-# Clean build artifacts
+# 清理编译产物
 clean:
-    @rm -rf $(BIN_DIR)
+	@rm -rf $(CLASSES)
 
-# Phony targets
-.PHONY: all build run clean
+# 默认目标
+.PHONY: all compile run clean

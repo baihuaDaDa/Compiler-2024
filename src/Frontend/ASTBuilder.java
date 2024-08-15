@@ -140,6 +140,11 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitEmptyStmt(MxParser.EmptyStmtContext ctx) {
+        return null;
+    }
+
+    @Override
     public ASTNode visitSuiteStmt(MxParser.SuiteStmtContext ctx) {
         SuiteStmtNode suiteStmt = new SuiteStmtNode(new Position(ctx));
         suiteStmt.suite = (SuiteNode) visit(ctx.suite());
