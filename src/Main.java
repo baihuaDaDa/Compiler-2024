@@ -15,9 +15,9 @@ import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-//        String testcaseName = "sema", packageName = "scope", ind = "5";
-//        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = System.in;
+        String testcaseName = "sema", packageName = "scope", ind = "1";
+        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
+//        InputStream input = System.in;
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();

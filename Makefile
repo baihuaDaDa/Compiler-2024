@@ -1,23 +1,17 @@
-# 变量定义
-SOURCES = src
-CLASSES = bin
-JARS = ulib/antlr-4.7-complete.jar
+JAVA_SRC = $(shell find src -name '*.java')
 
-# 规则定义
-all: compile
+ANTLR_JAR = /ulib/antlr-4.13.1-complete.jar
 
-# 编译所有 Java 源文件
-compile:
-	@mkdir -p $(CLASSES)
-	@find $(SOURCES) -name "*.java" | xargs -I{} javac -cp $(JARS) -d $(CLASSES) {}
+MAIN_CLASS = src.Main
 
-# 运行 Java 程序
+.PHONY: build
+build:
+    javac -d bin $(JAVA_SRC) -cp $(ANTLR_JAR)
+
+.PHONY: run
 run:
-	@java -cp $(CLASSES):$(JARS) Main
+    java -cp bin:$(ANTLR_JAR):bin $(MAIN_CLASS)
 
-# 清理编译产物
+.PHONY: clean
 clean:
-	@rm -rf $(CLASSES)
-
-# 默认目标
-.PHONY: all compile run clean
+    find bin -name '*.class' -or -name '*.jar' | xargs rm -f

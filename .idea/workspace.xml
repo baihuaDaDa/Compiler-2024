@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: add an abstract class DefinitionNode.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
+      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remote-targets.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler-2024.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-2024.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Debug",
     "Downloaded.Files.Path.Enabled": "false",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -57,7 +58,7 @@
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "project.propCompiler",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+    "应用程序.Main.executor": "Debug"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -138,7 +139,8 @@
       <workItem from="1723664478846" duration="154000" />
       <workItem from="1723664656940" duration="115000" />
       <workItem from="1723664799690" duration="5860000" />
-      <workItem from="1723700656756" duration="5671000" />
+      <workItem from="1723700656756" duration="10164000" />
+      <workItem from="1723718451128" duration="4185000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -260,11 +262,30 @@
       <option name="project" value="LOCAL" />
       <updated>1723701613002</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fix: fix Makefile.">
+      <option name="closed" value="true" />
+      <created>1723709079643</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1723709079643</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Upd: finish parser and lexer." />
@@ -280,9 +301,9 @@
     <MESSAGE value="Upd: finish the semantic checker." />
     <MESSAGE value="Fix: some problems about calling class methods." />
     <MESSAGE value="Upd: add Makefile." />
-    <MESSAGE value="Fix: fix Makefile." />
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: add an abstract class DefinitionNode." />
+    <MESSAGE value="Fix: fix Makefile." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Makefile." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -314,19 +335,15 @@
           </properties>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>340</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
           <line>319</line>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
