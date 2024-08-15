@@ -2,23 +2,17 @@ package AST.Program;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
-import AST.ClassDef.ClassDefNode;
-import AST.FuncDef.FuncDefNode;
-import AST.VarDef.VarDefNode;
+import AST.Definition.DefinitionNode;
 import Util.Position;
 
 import java.util.ArrayList;
 
 public class ProgramNode extends ASTNode {
-    public ArrayList<FuncDefNode> funcDefs = null;
-    public ArrayList<ClassDefNode> classDefs = null;
-    public ArrayList<VarDefNode> varDefs = null;
+    public ArrayList<DefinitionNode> defs = null;
 
     public ProgramNode(Position pos) {
         super(pos);
-        funcDefs = new ArrayList<>();
-        classDefs = new ArrayList<>();
-        varDefs = new ArrayList<>();
+        defs = new ArrayList<>();
     }
 
     @Override

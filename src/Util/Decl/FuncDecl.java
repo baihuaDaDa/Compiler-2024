@@ -1,9 +1,8 @@
 package Util.Decl;
 
-import AST.FuncDef.FuncDefNode;
+import AST.Definition.FuncDefNode;
 import Util.Type.ReturnType;
 import Util.Type.Type;
-import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package AST.FuncDef;
+package AST.Definition;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
 
-public class FuncDefNode extends ASTNode {
+public class FuncDefNode extends DefinitionNode {
     public ReturnType type;
     public String funcName;
     public ArrayList<Pair<Type, String>> paramList;

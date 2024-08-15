@@ -1,8 +1,10 @@
 grammar Mx;
 
 program
-    : (funcDef | classDef | varDef)* EOF
+    : definition* EOF
     ;
+
+definition : funcDef | classDef | varDef;
 
 funcDef : returnType Identifier LeftParen (type Identifier (Comma type Identifier)*)? RightParen suite;
 

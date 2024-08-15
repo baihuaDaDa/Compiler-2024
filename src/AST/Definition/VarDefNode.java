@@ -1,4 +1,4 @@
-package AST.VarDef;
+package AST.Definition;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
 
-public class VarDefNode extends ASTNode {
+public class VarDefNode extends DefinitionNode {
     public Type type;
     public ArrayList<Pair<String, ExprNode>> vars;
 

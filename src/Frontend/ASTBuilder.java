@@ -2,14 +2,15 @@ package Frontend;
 
 import AST.ASTNode;
 import AST.ClassBuild.ClassBuildNode;
-import AST.ClassDef.ClassDefNode;
-import AST.FuncDef.FuncDefNode;
+import AST.Definition.ClassDefNode;
+import AST.Definition.DefinitionNode;
+import AST.Definition.FuncDefNode;
+import AST.Definition.VarDefNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
 import AST.Literal.*;
 import AST.Expr.*;
 import AST.Suite.SuiteNode;
-import AST.VarDef.*;
 import Parser.MxBaseVisitor;
 import Parser.MxParser;
 import Util.Error.SemanticError;
@@ -20,19 +21,12 @@ import Util.Type.ReturnType;
 import Util.Type.Type;
 import org.antlr.v4.runtime.misc.Pair;
 
-// TODO 转义字符的转换
-// TODO 保留词
-
 public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitProgram(MxParser.ProgramContext ctx) {
         ProgramNode program = new ProgramNode(new Position(ctx));
-        for (var varDef : ctx.varDef())
-            program.varDefs.add((VarDefNode) visit(varDef));
-        for (var classDef : ctx.classDef())
-            program.classDefs.add((ClassDefNode) visit(classDef));
-        for (var funcDef : ctx.funcDef())
-            program.funcDefs.add((FuncDefNode) visit(funcDef));
+        for (var def : ctx.definition())
+            program.defs.add((DefinitionNode) visit(def));
         return program;
     }
 

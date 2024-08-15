@@ -2,16 +2,16 @@ package Frontend;
 
 import AST.ASTVisitor;
 import AST.ClassBuild.ClassBuildNode;
-import AST.ClassDef.ClassDefNode;
+import AST.Definition.ClassDefNode;
 import AST.Expr.*;
 import AST.Expr.FStringExprNode;
-import AST.FuncDef.FuncDefNode;
+import AST.Definition.FuncDefNode;
 import AST.Literal.ConstArrayNode;
 import AST.Literal.LiteralNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
 import AST.Suite.SuiteNode;
-import AST.VarDef.VarDefNode;
+import AST.Definition.VarDefNode;
 import Util.Error.SemanticError;
 import Util.Scope.GlobalScope;
 import Util.Scope.Scope;
@@ -19,8 +19,6 @@ import Util.Type.BaseType;
 import Util.Type.ExprType;
 import Util.Type.ReturnType;
 import Util.Type.Type;
-
-// TODO 数组类型的内建方法size()
 
 public class SemanticChecker implements ASTVisitor {
     GlobalScope gScope;
@@ -39,12 +37,8 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Main function should return int", node.pos);
         if (!mainFunc.funcDecl.paramTypes.isEmpty())
             throw new SemanticError("Main function should not have parameters", node.pos);
-        for (var classDef : node.classDefs)
-            classDef.accept(this);
-        for (var funcDef : node.funcDefs)
-            funcDef.accept(this);
-        for (var varDef : node.varDefs)
-            varDef.accept(this);
+        for (var def : node.defs)
+            def.accept(this);
     }
 
     public void visit(ClassBuildNode node) {
@@ -78,6 +72,7 @@ public class SemanticChecker implements ASTVisitor {
         node.body.accept(this);
         if (!curScope.isReturned && !node.funcName.equals("main"))
             throw new SemanticError("Function " + node.funcName + " have not returned yet", node.pos);
+        curScope = curScope.getParent();
     }
 
     public void visit(SuiteNode node) {
@@ -186,7 +181,7 @@ public class SemanticChecker implements ASTVisitor {
     }
     public void visit(MemberExprNode node) {
         node.classExpr.accept(this);
-        if (!node.classExpr.type.isClass && node.classExpr.type.dim == 0)
+        if (!node.classExpr.type.isClass && !node.classExpr.type.isString && node.classExpr.type.dim == 0)
             throw new SemanticError("Invoke members or methods from a both non-class and non-array expression", node.pos);
         Type memberType = gScope.getClassMember(node.classExpr.type, node.memberName);
         if (memberType == null) {
@@ -197,7 +192,7 @@ public class SemanticChecker implements ASTVisitor {
             node.isLeftValue = false;
             return;
         }
-        node.type = (ExprType) memberType;
+        node.type = new ExprType(memberType);
         node.isLeftValue = true;
     }
     public void visit(IndexExprNode node) {
@@ -304,6 +299,14 @@ public class SemanticChecker implements ASTVisitor {
                 node.type = new ExprType(varType);
                 node.isLeftValue = true;
             } else {
+                if (curScope.isInClass) {
+                    ExprType classMethodType = gScope.getClassMethod(new Type(curScope.classType), node.identifier);
+                    if (classMethodType != null) {
+                        node.type = classMethodType;
+                        node.isLeftValue = false;
+                        return;
+                    }
+                }
                 ExprType funcType = gScope.getFunc(node.identifier);
                 if (funcType == null)
                     throw new SemanticError("Identifier " + node.identifier + " not defined", node.pos);

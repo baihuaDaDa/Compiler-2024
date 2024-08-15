@@ -2,16 +2,17 @@ package Frontend;
 
 import AST.ASTVisitor;
 import AST.ClassBuild.ClassBuildNode;
-import AST.ClassDef.ClassDefNode;
+import AST.Definition.ClassDefNode;
+import AST.Definition.DefinitionNode;
 import AST.Expr.*;
 import AST.Expr.FStringExprNode;
-import AST.FuncDef.FuncDefNode;
+import AST.Definition.FuncDefNode;
 import AST.Literal.ConstArrayNode;
 import AST.Literal.LiteralNode;
 import AST.Program.ProgramNode;
 import AST.Stmt.*;
 import AST.Suite.SuiteNode;
-import AST.VarDef.VarDefNode;
+import AST.Definition.VarDefNode;
 import Util.Decl.ClassDecl;
 import Util.Decl.FuncDecl;
 import Util.Scope.GlobalScope;
@@ -24,10 +25,9 @@ public class SymbolCollector implements ASTVisitor {
     }
 
     public void visit(ProgramNode node) {
-        for (ClassDefNode classDef : node.classDefs)
-            classDef.accept(this);
-        for (FuncDefNode funcDef : node.funcDefs)
-            funcDef.accept(this);
+        for (DefinitionNode def : node.defs)
+            if (def instanceof ClassDefNode || def instanceof FuncDefNode)
+                def.accept(this);
     }
 
     public void visit(ClassBuildNode node) {}

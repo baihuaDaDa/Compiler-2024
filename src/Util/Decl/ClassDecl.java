@@ -1,6 +1,6 @@
 package Util.Decl;
 
-import AST.ClassDef.ClassDefNode;
+import AST.Definition.ClassDefNode;
 import Util.Type.Type;
 
 import java.util.HashMap;

@@ -1,15 +1,13 @@
-package AST.ClassDef;
+package AST.Definition;
 
 import AST.ASTNode;
 import AST.ASTVisitor;
 import AST.ClassBuild.ClassBuildNode;
-import AST.FuncDef.FuncDefNode;
-import AST.VarDef.VarDefNode;
 import Util.Position;
 
 import java.util.ArrayList;
 
-public class ClassDefNode extends ASTNode {
+public class ClassDefNode extends DefinitionNode {
     public String className = null;
     public ClassBuildNode classBuild = null;
     public ArrayList<VarDefNode> varDefList = null;

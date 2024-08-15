@@ -65,9 +65,9 @@ public class Scope {
         if (vars.containsKey(name)) return vars.get(name);
         else if (parent != null) {
             if (parent instanceof GlobalScope && isInClass) {
-                Type type = ((GlobalScope) parent).getClassMember(new Type(classType), name);
-                if (type != null)
-                    return type;
+                Type classMemberType = ((GlobalScope) parent).getClassMember(new Type(classType), name);
+                if (classMemberType != null)
+                    return classMemberType;
             }
             return parent.getVar(name);
         }

@@ -4,10 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: some problems about calling class methods.">
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
+      <change afterPath="$PROJECT_DIR$/src/AST/Definition/DefinitionNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ClassDef/ClassDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Definition/ClassDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/FuncDef/FuncDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Definition/FuncDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Program/ProgramNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Program/ProgramNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/VarDefStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/VarDef/VarDefNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Definition/VarDefNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Decl/FuncDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/FuncDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,34 +52,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu/usr/share/java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "//wsl.localhost/Ubuntu/usr/share/java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Main.executor": "Run"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
+  "keyToStringList": {
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src\Parser" />
@@ -135,7 +154,8 @@
       <workItem from="1723663942134" duration="432000" />
       <workItem from="1723664478846" duration="154000" />
       <workItem from="1723664656940" duration="115000" />
-      <workItem from="1723664799690" duration="2054000" />
+      <workItem from="1723664799690" duration="5860000" />
+      <workItem from="1723700656756" duration="793000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -233,7 +253,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723666169720</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Upd: add Makefile.">
+      <option name="closed" value="true" />
+      <created>1723667052647</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723667052647</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix: fix Makefile.">
+      <option name="closed" value="true" />
+      <created>1723667263614</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723667263614</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,26 +288,33 @@
     <MESSAGE value="Upd: almost finish the semantic checker." />
     <MESSAGE value="Upd: finish the semantic checker." />
     <MESSAGE value="Fix: some problems about calling class methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: some problems about calling class methods." />
+    <MESSAGE value="Upd: add Makefile." />
+    <MESSAGE value="Fix: fix Makefile." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Makefile." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>139</line>
-          <properties class="Frontend.SemanticChecker">
+          <line>136</line>
+          <properties class="Frontend.SemanticChecker" method="visit">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="node" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

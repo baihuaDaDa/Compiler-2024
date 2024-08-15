@@ -1,13 +1,13 @@
 package AST;
 
+import AST.Definition.ClassDefNode;
+import AST.Definition.FuncDefNode;
+import AST.Definition.VarDefNode;
 import AST.Program.*;
 import AST.ClassBuild.*;
-import AST.ClassDef.*;
-import AST.FuncDef.*;
 import AST.Stmt.*;
 import AST.Expr.*;
 import AST.Suite.*;
-import AST.VarDef.*;
 import AST.Literal.*;
 
 public interface ASTVisitor {
