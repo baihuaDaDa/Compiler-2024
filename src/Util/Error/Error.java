@@ -2,7 +2,7 @@ package Util.Error;
 
 import Util.Position;
 
-abstract public class Error extends RuntimeException {
+public class Error extends RuntimeException {
     protected Position pos = null;
     protected String type = null;
     protected String msg = null;

@@ -35,6 +35,7 @@ public class Main {
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());
+            System.exit(-1);
         }
     }
 }

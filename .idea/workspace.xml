@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix the only failure in `t66.mx`.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: add error types.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Error/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Error/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Error/SemanticError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Error/SemanticError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Error/SyntaxError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Error/SyntaxError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/MxErrorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/MxErrorListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +140,7 @@
       <workItem from="1723664799690" duration="5860000" />
       <workItem from="1723700656756" duration="10164000" />
       <workItem from="1723718451128" duration="9501000" />
-      <workItem from="1723741896972" duration="4484000" />
+      <workItem from="1723741896972" duration="5196000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -318,7 +310,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723742631438</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Upd: add error types.">
+      <option name="closed" value="true" />
+      <created>1723746897278</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1723746897278</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,7 +354,8 @@
     <MESSAGE value="Fix: fix Makefile." />
     <MESSAGE value="Fix: fix several problems and pass the local test." />
     <MESSAGE value="Fix: fix the only failure in `t66.mx`." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix the only failure in `t66.mx`." />
+    <MESSAGE value="Upd: add error types." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: add error types." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
