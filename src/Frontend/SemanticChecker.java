@@ -220,7 +220,7 @@ public class SemanticChecker implements ASTVisitor {
         if (!node.expr.isLeftValue)
             throw new SemanticError("Invalid Type", "Right value cannot increment or decrement", node.pos);
         if (!node.expr.type.isSameType(new ExprType("int", 0)))
-            throw new SemanticError("Type Mismatch", "Type of pre-self expression should be int instead of " + node.expr.type.toString(), node.pos);
+            throw new SemanticError("Invalid Type", "Type of pre-self expression should be int instead of " + node.expr.type.toString(), node.pos);
         node.type = new ExprType("int", 0);
         node.isLeftValue = true;
     }
@@ -231,17 +231,17 @@ public class SemanticChecker implements ASTVisitor {
                 if (!node.expr.isLeftValue)
                     throw new SemanticError("Invalid Type", "Right value cannot increment or decrement", node.pos);
                 if (!node.expr.type.isSameType(new ExprType("int", 0)))
-                    throw new SemanticError("Type Mismatch", "Type of suc-self expression should be int instead of " + node.expr.type.toString(), node.pos);
+                    throw new SemanticError("Invalid Type", "Type of suc-self expression should be int instead of " + node.expr.type.toString(), node.pos);
                 node.type = new ExprType("int", 0);
             }
             case "~", "-" -> {
                 if (!node.expr.type.isSameType(new ExprType("int", 0)))
-                    throw new SemanticError("Type Mismatch", "Type of ~, - expression should be int instead of " + node.expr.type.toString(), node.pos);
+                    throw new SemanticError("Invalid Type", "Type of ~, - expression should be int instead of " + node.expr.type.toString(), node.pos);
                 node.type = new ExprType("int", 0);
             }
             case "!" -> {
                 if (!node.expr.type.isSameType(new ExprType("bool", 0)))
-                    throw new SemanticError("Type Mismatch", "Type of ! expression should be bool instead of " + node.expr.type.toString(), node.pos);
+                    throw new SemanticError("Invalid Type", "Type of ! expression should be bool instead of " + node.expr.type.toString(), node.pos);
                 node.type = new ExprType("bool", 0);
             }
         }
@@ -258,7 +258,7 @@ public class SemanticChecker implements ASTVisitor {
                 node.isLeftValue = false;
                 return;
             }
-            throw new SemanticError("Type Mismatch", "Cannot compute array", node.pos);
+            throw new SemanticError("Invalid Type", "Cannot compute array", node.pos);
         }
         if (node.lhs.type.isSameType(new ExprType("string", 0))) {
             switch (node.op) {
@@ -274,7 +274,7 @@ public class SemanticChecker implements ASTVisitor {
                 node.isLeftValue = false;
                 return;
             }
-            throw new SemanticError("Type Mismatch", "Cannot compute bool", node.pos);
+            throw new SemanticError("Invalid Type", "Cannot compute bool", node.pos);
         }
         switch (node.op) {
             case "*", "/", "%", "+", "-", "<<", ">>", "&", "|", "^", "~" -> node.type = new ExprType("int", 0);
