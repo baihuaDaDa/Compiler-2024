@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
-      <change beforePath="$PROJECT_DIR$/.idea/remote-targets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remote-targets.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler-2024.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler-2024.iml" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: channel the input from stdin.">
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +136,7 @@
       <workItem from="1723664656940" duration="115000" />
       <workItem from="1723664799690" duration="5860000" />
       <workItem from="1723700656756" duration="10164000" />
-      <workItem from="1723718451128" duration="4185000" />
+      <workItem from="1723718451128" duration="4505000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -270,7 +266,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723709079643</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fix: fix Makefile.">
+      <option name="closed" value="true" />
+      <created>1723722944121</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723722944121</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fix: channel the input from stdin.">
+      <option name="closed" value="true" />
+      <created>1723723024394</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723723024394</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +315,8 @@
     <MESSAGE value="Upd: add Makefile." />
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
     <MESSAGE value="Fix: fix Makefile." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Makefile." />
+    <MESSAGE value="Fix: channel the input from stdin." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: channel the input from stdin." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
