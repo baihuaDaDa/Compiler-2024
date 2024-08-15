@@ -58,7 +58,7 @@ public class Scope {
 
     public void defineVar(String name, Type type, Position pos) {
         if (vars.containsKey(name))
-            throw new SemanticError("[Multiple Definitions] variable redefine: " + name, pos);
+            throw new SemanticError("Multiple Definitions" ,"variable redefine: " + name, pos);
         vars.put(name, type);
     }
 

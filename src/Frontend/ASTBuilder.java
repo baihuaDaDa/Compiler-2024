@@ -48,7 +48,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         ClassDefNode classDef = new ClassDefNode(new Position(ctx));
         classDef.className = ctx.Identifier().getText();
         if (ctx.classBuild().size() > 1)
-            throw new SemanticError("Multiple class constructors.", new Position(ctx));
+            throw new SemanticError("Multiple Definitions", "multiple class constructors.", new Position(ctx));
         else if (!ctx.classBuild().isEmpty())
             classDef.classBuild = (ClassBuildNode) visit(ctx.classBuild(0));
         for (var funcDef : ctx.funcDef())
@@ -190,7 +190,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
             if (ctx.children.get(i).getText().equals("[")) {
                 if (noSize) {
                     if (ctx.children.get(++i) instanceof MxParser.ExpressionContext)
-                        throw new SemanticError("New Array error.", new Position(ctx));
+                        throw new SemanticError("Invalid New Expression", "New Array error.", new Position(ctx));
                 } else {
                     if (ctx.children.get(++i) instanceof MxParser.ExpressionContext) {
                         newEmptyArrayExpr.sizeList.add((ExprNode) visit(ctx.children.get(i)));
@@ -352,7 +352,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
                 if (constArray.arrayType == null)
                     constArray.arrayType = literalNode.type;
                 else if (!constArray.arrayType.isSameType(literalNode.type))
-                    throw new SemanticError("Inconsistent types in const array", new Position(ctx));
+                    throw new SemanticError("Type Mismatch", "Inconsistent types in const array", new Position(ctx));
                 if ((constArray.arrayType.isArbitrary || constArray.arrayType.isNull) && !literalNode.type.isNull && !literalNode.type.isArbitrary)
                     constArray.arrayType = literalNode.type;
                 constArray.constArray.add(literalNode);

@@ -32,8 +32,9 @@ public class Main {
             GlobalScope gScope = new GlobalScope();
             astRoot.accept(new SymbolCollector(gScope));
             astRoot.accept(new SemanticChecker(gScope));
-        } catch (Error error) {
+        } catch (Util.Error.Error error) {
             System.err.println(error.toString());
+            System.out.println(error.errorType());
         }
     }
 }
