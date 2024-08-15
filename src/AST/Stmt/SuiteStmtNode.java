@@ -13,6 +13,11 @@ public class SuiteStmtNode extends StmtNode {
         super(pos);
     }
 
+    public SuiteStmtNode(Position pos, StmtNode stmt) {
+        super(pos);
+        suite = new SuiteNode(pos, stmt);
+    }
+
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);

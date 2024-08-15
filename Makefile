@@ -6,12 +6,12 @@ MAIN_CLASS = Main
 
 .PHONY: build
 build:
-    javac -d bin $(JAVA_SRC) -cp $(ANTLR_JAR)
+	javac -d bin $(JAVA_SRC) -cp $(ANTLR_JAR)
 
 .PHONY: run
 run:
-    java -cp bin:$(ANTLR_JAR):bin $(MAIN_CLASS)
+	java -cp bin:$(ANTLR_JAR):bin $(MAIN_CLASS)
 
 .PHONY: clean
 clean:
-    find bin -name '*.class' -or -name '*.jar' | xargs rm -f
+	find bin -name '*.class' -or -name '*.jar' | xargs rm -f

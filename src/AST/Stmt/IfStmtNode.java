@@ -6,7 +6,7 @@ import Util.Position;
 
 public class IfStmtNode extends StmtNode {
     public ExprNode condition = null;
-    public StmtNode thenStmt = null, elseStmt = null;
+    public SuiteStmtNode thenStmt = null, elseStmt = null;
 
     public IfStmtNode(Position pos) {
         super(pos);

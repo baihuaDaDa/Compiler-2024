@@ -6,7 +6,7 @@ import Util.Position;
 
 public class WhileStmtNode extends StmtNode {
     public ExprNode condition = null;
-    public StmtNode body = null;
+    public SuiteStmtNode body = null;
 
     public WhileStmtNode(Position pos) {
         super(pos);

@@ -29,6 +29,7 @@ public interface ASTVisitor {
     void visit(ReturnStmtNode node);
     void visit(BreakStmtNode node);
     void visit(ContinueStmtNode node);
+    void visit(EmptyStmtNode node);
     void visit(SuiteStmtNode node);
 
     void visit(NewArrayExprNode node);

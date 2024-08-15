@@ -15,6 +15,13 @@ public class SuiteNode extends ASTNode {
         stmts = new ArrayList<>();
     }
 
+    // 单语句块
+    public SuiteNode(Position pos, StmtNode stmt) {
+        super(pos);
+        stmts = new ArrayList<>();
+        stmts.add(stmt);
+    }
+
     @Override
     public void accept(ASTVisitor visitor) {
         visitor.visit(this);

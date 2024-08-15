@@ -140,6 +140,7 @@ public class SemanticChecker implements ASTVisitor {
         if (!curScope.isInLoop)
             throw new SemanticError("Continue outside loop", node.pos);
     }
+    public void visit(EmptyStmtNode node) {}
     public void visit(SuiteStmtNode node) {
         curScope = new Scope(curScope);
         node.suite.accept(this);
@@ -302,25 +303,11 @@ public class SemanticChecker implements ASTVisitor {
             node.type = new ExprType(node.literal.type);
             node.isLeftValue = false;
         } else if (node.isIdentifier) {
-            Type varType = curScope.getVar(node.identifier);
-            if (varType != null) {
-                node.type = new ExprType(varType);
-                node.isLeftValue = true;
-            } else {
-                if (curScope.isInClass) {
-                    ExprType classMethodType = gScope.getClassMethod(new Type(curScope.classType), node.identifier);
-                    if (classMethodType != null) {
-                        node.type = classMethodType;
-                        node.isLeftValue = false;
-                        return;
-                    }
-                }
-                ExprType funcType = gScope.getFunc(node.identifier);
-                if (funcType == null)
-                    throw new SemanticError("Identifier " + node.identifier + " not defined", node.pos);
-                node.type = funcType;
-                node.isLeftValue = false;
-            }
+            ExprType identifierType = curScope.getIdentifier(node.identifier);
+            if (identifierType == null)
+                throw new SemanticError("Identifier " + node.identifier + " not defined", node.pos);
+            node.type = identifierType;
+            node.isLeftValue = !node.type.isFunc;
         } else if (node.isThis) {
             if (!curScope.isInClass)
                 throw new SemanticError("Invoke this outside class", node.pos);

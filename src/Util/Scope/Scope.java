@@ -3,6 +3,7 @@ package Util.Scope;
 import Util.Error.SemanticError;
 import Util.Position;
 import Util.Type.BaseType;
+import Util.Type.ExprType;
 import Util.Type.ReturnType;
 import Util.Type.Type;
 
@@ -61,15 +62,23 @@ public class Scope {
         vars.put(name, type);
     }
 
-    public Type getVar(String name) {
-        if (vars.containsKey(name)) return vars.get(name);
+    public ExprType getIdentifier(String name) {
+        if (vars.containsKey(name)) return new ExprType(vars.get(name));
         else if (parent != null) {
-            if (parent instanceof GlobalScope && isInClass) {
-                Type classMemberType = ((GlobalScope) parent).getClassMember(new Type(classType), name);
-                if (classMemberType != null)
-                    return classMemberType;
+            if (parent instanceof GlobalScope) {
+                if (isInClass) {
+                    Type classMemberType = ((GlobalScope) parent).getClassMember(new Type(classType), name);
+                    if (classMemberType != null)
+                        return new ExprType(classMemberType);
+                    ExprType classMethodType = ((GlobalScope) parent).getClassMethod(new Type(classType), name);
+                    if (classMethodType != null)
+                        return classMethodType;
+                }
+                ExprType funcType = ((GlobalScope) parent).getFunc(name);
+                if (funcType != null)
+                    return funcType;
             }
-            return parent.getVar(name);
+            return parent.getIdentifier(name);
         }
         else return null;
     }

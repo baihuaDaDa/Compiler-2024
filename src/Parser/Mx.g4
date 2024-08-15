@@ -139,7 +139,7 @@ LineComment : '//' ~[\r\n]* -> skip;
 BlockComment : '/*' .*? '*/' -> skip;
 
 // identifiers
-Identifier : [a-zA-Z_] [a-zA-Z0-9_]*;
+Identifier : [a-zA-Z] [a-zA-Z0-9_]*;
 
 // literals
 ConstDecInt : '0' | [1-9] [0-9]*;

@@ -50,6 +50,7 @@ public class SymbolCollector implements ASTVisitor {
     public void visit(ReturnStmtNode node) {}
     public void visit(BreakStmtNode node) {}
     public void visit(ContinueStmtNode node) {}
+    public void visit(EmptyStmtNode node) {}
     public void visit(SuiteStmtNode node) {}
 
     public void visit(NewArrayExprNode node) {}

@@ -7,7 +7,7 @@ import Util.Position;
 public class ForStmtNode extends StmtNode {
     public StmtNode init = null;
     public ExprNode cond = null, step = null;
-    public StmtNode body = null;
+    public SuiteStmtNode body = null;
 
     public ForStmtNode(Position pos) {
         super(pos);

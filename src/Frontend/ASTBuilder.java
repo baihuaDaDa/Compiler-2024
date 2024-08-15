@@ -94,9 +94,16 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitIfStmt(MxParser.IfStmtContext ctx) {
         IfStmtNode ifStmt = new IfStmtNode(new Position(ctx));
         ifStmt.condition = (ExprNode) visit(ctx.condition);
-        ifStmt.thenStmt = (StmtNode) visit(ctx.thenStmt);
-        if (ctx.elseStmt != null)
-            ifStmt.elseStmt = (StmtNode) visit(ctx.elseStmt);
+        StmtNode thenStmt = (StmtNode) visit(ctx.thenStmt);
+        if (!(thenStmt instanceof SuiteStmtNode))
+            thenStmt = new SuiteStmtNode(new Position(ctx.thenStmt), thenStmt);
+        ifStmt.thenStmt = (SuiteStmtNode) thenStmt;
+        if (ctx.elseStmt != null) {
+            StmtNode elseStmt = (StmtNode) visit(ctx.elseStmt);
+            if (!(elseStmt instanceof SuiteStmtNode))
+                elseStmt = new SuiteStmtNode(new Position(ctx.elseStmt), elseStmt);
+            ifStmt.elseStmt = (SuiteStmtNode) elseStmt;
+        }
         return ifStmt;
     }
 
@@ -109,7 +116,10 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
             forStmt.cond = (ExprNode) visit(ctx.cond);
         if (ctx.step != null)
             forStmt.step = (ExprNode) visit(ctx.step);
-        forStmt.body = (StmtNode) visit(ctx.body);
+        StmtNode body = (StmtNode) visit(ctx.body);
+        if (!(body instanceof SuiteStmtNode))
+            body = new SuiteStmtNode(new Position(ctx.body), body);
+        forStmt.body = (SuiteStmtNode) body;
         return forStmt;
     }
 
@@ -117,7 +127,10 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
     public ASTNode visitWhileStmt(MxParser.WhileStmtContext ctx) {
         WhileStmtNode whileStmt = new WhileStmtNode(new Position(ctx));
         whileStmt.condition = (ExprNode) visit(ctx.expression());
-        whileStmt.body = (StmtNode) visit(ctx.statement());
+        StmtNode body = (StmtNode) visit(ctx.statement());
+        if (!(body instanceof SuiteStmtNode))
+            body = new SuiteStmtNode(new Position(ctx.statement()), body);
+        whileStmt.body = (SuiteStmtNode) body;
         return whileStmt;
     }
 
@@ -141,7 +154,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitEmptyStmt(MxParser.EmptyStmtContext ctx) {
-        return null;
+        return new EmptyStmtNode(new Position(ctx));
     }
 
     @Override

@@ -4,8 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: channel the input from stdin.">
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
+      <change afterPath="$PROJECT_DIR$/src/AST/Stmt/EmptyStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AST/Suite/SuiteNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Suite/SuiteNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +151,7 @@
       <workItem from="1723664656940" duration="115000" />
       <workItem from="1723664799690" duration="5860000" />
       <workItem from="1723700656756" duration="10164000" />
-      <workItem from="1723718451128" duration="4505000" />
+      <workItem from="1723718451128" duration="9501000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -282,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723723024394</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Fix: fix Makefile.">
+      <option name="closed" value="true" />
+      <created>1723723153055</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1723723153055</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,56 +337,32 @@
     <MESSAGE value="Fix: some problems about calling class methods." />
     <MESSAGE value="Upd: add Makefile." />
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
-    <MESSAGE value="Fix: fix Makefile." />
     <MESSAGE value="Fix: channel the input from stdin." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: channel the input from stdin." />
+    <MESSAGE value="Fix: fix Makefile." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Makefile." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>142</line>
+          <line>327</line>
           <properties class="Frontend.SemanticChecker" method="visit">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>98</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
+          <url>file://$PROJECT_DIR$/src/Util/Scope/GlobalScope.java</url>
+          <line>47</line>
+          <properties class="Util.Scope.GlobalScope" method="defineClassMember">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>43</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>319</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>175</line>
-          <option name="timeStamp" value="24" />
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="node" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
