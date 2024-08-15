@@ -39,7 +39,7 @@ public class ExprType extends ReturnType {
     public boolean isSameType(BaseType other) {
         ExprType otherType = new ExprType(other);
         if (otherType.isFunc || isFunc) return false;
-        if (otherType.isNull) return dim > 0 || isClass;
+        if (otherType.isNull) return dim > 0 || isClass || isNull;
         if (isNull) return otherType.dim > 0 || otherType.isClass;
         if ((otherType.isArbitrary || isArbitrary) && !otherType.isVoid && !isVoid)
             // 空数组可以兼容不小于自己维度的数组

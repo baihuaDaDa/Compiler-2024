@@ -234,10 +234,15 @@ public class SemanticChecker implements ASTVisitor {
                     throw new SemanticError("Type of suc-self expression should be int instead of " + node.expr.type.toString(), node.pos);
                 node.type = new ExprType("int", 0);
             }
-            case "+", "-", "!" -> {
+            case "~", "-" -> {
                 if (!node.expr.type.isSameType(new ExprType("int", 0)))
-                    throw new SemanticError("Type of !, ~, - expression should be int instead of " + node.expr.type.toString(), node.pos);
+                    throw new SemanticError("Type of ~, - expression should be int instead of " + node.expr.type.toString(), node.pos);
                 node.type = new ExprType("int", 0);
+            }
+            case "!" -> {
+                if (!node.expr.type.isSameType(new ExprType("bool", 0)))
+                    throw new SemanticError("Type of ! expression should be bool instead of " + node.expr.type.toString(), node.pos);
+                node.type = new ExprType("bool", 0);
             }
         }
         node.isLeftValue = false;

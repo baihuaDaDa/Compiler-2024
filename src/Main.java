@@ -15,7 +15,7 @@ import java.io.InputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-//        String testcaseName = "sema", packageName = "basic", ind = "16";
+//        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
         InputStream input = System.in;
         try {

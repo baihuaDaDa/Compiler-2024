@@ -13,14 +13,4 @@ public class ClassDecl {
         members = new HashMap<>();
         methods = new HashMap<>();
     }
-
-    public ClassDecl(ClassDefNode classDef) {
-        members = new HashMap<>();
-        methods = new HashMap<>();
-        for (var varDef : classDef.varDefList)
-            for (var var : varDef.vars)
-                members.put(var.a, varDef.type);
-        for (var funcDef : classDef.methodDefList)
-            methods.put(funcDef.funcName, new FuncDecl(funcDef));
-    }
 }

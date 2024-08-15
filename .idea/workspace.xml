@@ -5,22 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
-      <change afterPath="$PROJECT_DIR$/src/AST/Stmt/EmptyStmtNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/ASTVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/ASTVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/ForStmtNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/IfStmtNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/SuiteStmtNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Stmt/WhileStmtNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Suite/SuiteNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Suite/SuiteNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser/MxLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/MxLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/MxErrorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/MxErrorListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +34,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -48,7 +47,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -63,13 +62,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
+    "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "project.propCompiler",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Debug"
+    "应用程序.Main.executor": "Run"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -88,7 +87,7 @@
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler-2024" />
       <projectPathOnTarget name="projectPathOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.GuaufHEYuU , stderr=}/Compiler-2024" />
-      <target name="@@@LOCAL@@@" />
+      <target name="WSL - Ubuntu" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -344,23 +343,10 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>327</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Util/Scope/GlobalScope.java</url>
-          <line>47</line>
-          <properties class="Util.Scope.GlobalScope" method="defineClassMember">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="26" />
+          <line>238</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

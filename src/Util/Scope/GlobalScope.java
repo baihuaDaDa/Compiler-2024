@@ -1,5 +1,6 @@
 package Util.Scope;
 
+import AST.Definition.ClassDefNode;
 import Util.Decl.ClassDecl;
 import Util.Decl.FuncDecl;
 import Util.Error.SemanticError;
@@ -33,16 +34,17 @@ public class GlobalScope extends Scope {
         classes.put("string", stringClass);
     }
 
-    public void defineClass(String className, ClassDecl classDecl, Position pos) {
-        if (classes.containsKey(className))
-            throw new SemanticError("[Multiple Definitions] class redefine: " + className, pos);
-        if (functions.containsKey(className))
-            throw new SemanticError("[Multiple Definitions] class and function name duplicate: " + className, pos);
-        classes.put(className, new ClassDecl());
-        for (String memberName : classDecl.members.keySet())
-            defineClassMember(className, memberName, classDecl.members.get(memberName), pos);
-        for (String methodName : classDecl.methods.keySet())
-            defineClassMethod(className, methodName, classDecl.methods.get(methodName), pos);
+    public void defineClass(ClassDefNode node) {
+        if (classes.containsKey(node.className))
+            throw new SemanticError("[Multiple Definitions] class redefine: " + node.className, node.pos);
+        if (functions.containsKey(node.className))
+            throw new SemanticError("[Multiple Definitions] class and function name duplicate: " + node.className, node.pos);
+        classes.put(node.className, new ClassDecl());
+        for (var varDef: node.varDefList)
+            for (var var: varDef.vars)
+                defineClassMember(node.className, var.a, varDef.type, node.pos);
+        for (var methodDef: node.methodDefList)
+            defineClassMethod(node.className, methodDef.funcName, new FuncDecl(methodDef), node.pos);
     }
 
     public void defineClassMember(String className, String memberName, Type type, Position pos) {

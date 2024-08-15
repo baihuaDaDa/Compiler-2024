@@ -33,7 +33,7 @@ public class SymbolCollector implements ASTVisitor {
     public void visit(ClassBuildNode node) {}
 
     public void visit(ClassDefNode node) {
-        gScope.defineClass(node.className, new ClassDecl(node), node.pos);
+        gScope.defineClass(node);
     }
 
     public void visit(FuncDefNode node) {
