@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Makefile.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix several problems and pass the local test.">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SymbolCollector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/Mx.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/Mx.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/MxBaseListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/MxLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/MxListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser/MxParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser/MxParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/MxErrorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/MxErrorListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/ExprType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/ExprType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/Scope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/Scope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +77,7 @@
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler-2024" />
       <projectPathOnTarget name="projectPathOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.GuaufHEYuU , stderr=}/Compiler-2024" />
-      <target name="WSL - Ubuntu" />
+      <target name="@@@LOCAL@@@" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -151,6 +141,7 @@
       <workItem from="1723664799690" duration="5860000" />
       <workItem from="1723700656756" duration="10164000" />
       <workItem from="1723718451128" duration="9501000" />
+      <workItem from="1723741896972" duration="444000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -304,7 +295,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723723153055</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fix: fix several problems and pass the local test.">
+      <option name="closed" value="true" />
+      <created>1723738031346</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1723738031346</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +337,8 @@
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
     <MESSAGE value="Fix: channel the input from stdin." />
     <MESSAGE value="Fix: fix Makefile." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Makefile." />
+    <MESSAGE value="Fix: fix several problems and pass the local test." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix several problems and pass the local test." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -347,6 +347,20 @@
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
           <line>238</line>
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
+          <line>310</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
+          <line>332</line>
+          <properties class="Frontend.SemanticChecker" method="visit">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

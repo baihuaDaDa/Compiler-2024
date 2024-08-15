@@ -74,13 +74,9 @@ public class Scope {
                     if (classMethodType != null)
                         return classMethodType;
                 }
-                ExprType funcType = ((GlobalScope) parent).getFunc(name);
-                if (funcType != null)
-                    return funcType;
             }
             return parent.getIdentifier(name);
-        }
-        else return null;
+        } else return ((GlobalScope) this).getFunc(name);
     }
 
     public Scope getParent() {
