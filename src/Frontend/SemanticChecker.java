@@ -207,7 +207,7 @@ public class SemanticChecker implements ASTVisitor {
     public void visit(IndexExprNode node) {
         node.array.accept(this);
         if (node.array.type.dim == 0)
-            throw new SemanticError("Dimension Out of Bound", "Cannot visit any element of a non-array expression", node.pos);
+            throw new SemanticError("Dimension Out Of Bound", "Cannot visit any element of a non-array expression", node.pos);
         node.index.accept(this);
         if (!node.index.type.isSameType(new ExprType("int", 0)))
             throw new SemanticError("Invalid Identifier", "Type of index of array should be int instead of " + node.index.type.toString(), node.pos);
