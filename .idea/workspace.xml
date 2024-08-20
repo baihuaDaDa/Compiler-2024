@@ -4,9 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: let the program return -1 when throw error.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD">
+      <change afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/ConstArrayLiteral.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/Module.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IREntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalVar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRLocalVar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRVariable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/Type/IRType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +44,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -44,7 +73,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "//wsl.localhost/Ubuntu/usr/share/java",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,6 +84,7 @@
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.pluginManager",
+    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll",
     "vue.rearranger.settings.migration": "true",
     "应用程序.Main.executor": "Run"
   },
@@ -139,7 +169,10 @@
       <workItem from="1723664799690" duration="5860000" />
       <workItem from="1723700656756" duration="10164000" />
       <workItem from="1723718451128" duration="9501000" />
-      <workItem from="1723741896972" duration="6515000" />
+      <workItem from="1723741896972" duration="7865000" />
+      <workItem from="1724053385217" duration="89000" />
+      <workItem from="1724053481052" duration="9800000" />
+      <workItem from="1724127135823" duration="22163000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -325,7 +358,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723747837897</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fix: fix some wrong error type delimitations.">
+      <option name="closed" value="true" />
+      <created>1723749268141</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1723749268141</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD">
+      <option name="closed" value="true" />
+      <created>1723749352470</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1723749352470</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +412,9 @@
     <MESSAGE value="Fix: fix the only failure in `t66.mx`." />
     <MESSAGE value="Upd: add error types." />
     <MESSAGE value="Fix: let the program return -1 when throw error." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: let the program return -1 when throw error." />
+    <MESSAGE value="Fix: fix some wrong error type delimitations." />
+    <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
