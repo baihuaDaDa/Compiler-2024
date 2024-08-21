@@ -19,6 +19,7 @@ public interface IRVisitor {
     void visit(SelectInstr instr);
     void visit(StoreInstr instr);
 
+    void visit(FuncDeclMod mod);
     void visit(FuncDefMod mod);
     void visit(GlobalVarDefMod mod);
     void visit(StringLiteralDefMod mod);

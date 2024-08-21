@@ -1,113 +1,132 @@
-typedef unsigned int size_t;
+#define bool _Bool
+typedef unsigned long size_t;
 
-int scanf(const char *format, ...);
 
-int printf(const char *format, ...);
+int printf(const char *pattern, ...);
+int sprintf(char *dest, const char *pattern, ...);
+int scanf(const char *pattern, ...);
+int sscanf(const char *src, const char *pattern, ...);
+size_t strlen(const char *str);
+int strcmp(const char *s1, const char *s2);
+void *memcpy(void *dest, const void *src, size_t n);
+void *malloc(size_t n);
 
-int sprintf(char *str, const char *format, ...);
+void print(char *str) {
+    printf("%s", str);
+}
 
-void *malloc(size_t size); // NOLINT
+void println(char *str) {
+    printf("%s\n", str);
+}
 
-void print(char *s) { printf("%s", s); }
+void printInt(int n) {
+    printf("%d", n);
+}
 
-void println(char *s) { printf("%s\n", s); }
+void printlnInt(int n) {
+    printf("%d\n", n);
+}
 
-void printInt(int n) { printf("%d", n); }
+char *getString() {
+    char *buffer = malloc(256);
+    scanf("%s", buffer);
+    return buffer;
+}
 
-void printlnInt(int n) { printf("%d\n", n); }
+int getInt() {
+    int n;
+    scanf("%d", &n);
+    return n;
+}
 
-int *_malloc_array(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
+char *toString(int n) {
+    char *buffer = malloc(16);
+    sprintf(buffer, "%d", n);
+    return buffer;
+}
+
+int string_length(char *str) {
+    return strlen(str);
+}
+
+char *string_substring(char *str, int left, int right) {
+    int length = right - left;
+    char *buffer = malloc(length + 1);
+    memcpy(buffer, str + left, length);
+    buffer[length] = '\0';
+    return buffer;
+}
+
+int string_parseInt(char *str) {
+    int n;
+    sscanf(str, "%d", &n);
+    return n;
+}
+
+int string_ord(char *str, int pos) {
+    return (int)str[pos];
+}
+
+char *string_add(char *str1, char *str2) {
+    int length1 = strlen(str1);
+    int length2 = strlen(str2);
+    int length = length1 + length2;
+    char *buffer = malloc(length + 1);
+    memcpy(buffer, str1, length1);
+    memcpy(buffer + length1, str2, length2);
+    buffer[length] = '\0';
+    return buffer;
+}
+
+bool string_equal(char *str1, char *str2) {
+    return strcmp(str1, str2) == 0;
+}
+
+bool string_notEqual(char *str1, char *str2) {
+    return strcmp(str1, str2) != 0;
+}
+
+bool string_less(char *str1, char *str2) {
+    return strcmp(str1, str2) < 0;
+}
+
+bool string_lessOrEqual(char *str1, char *str2) {
+    return strcmp(str1, str2) <= 0;
+}
+
+bool string_greater(char *str1, char *str2) {
+    return strcmp(str1, str2) > 0;
+}
+
+bool string_greaterOrEqual(char *str1, char *str2) {
+    return strcmp(str1, str2) >= 0;
+}
+
+int array_size(void *arr) {
+    return ((int*)arr)[-1];
+}
+
+void *_malloc(int size){
+    return malloc((size_t)(size));
+}
+
+void *array_malloc(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
     int *tmp = (int *) malloc(size * length + 4);
     tmp[0] = length;
     return tmp + 1;
 }
 
-void *_malloc(int size) {
-    return malloc(size);
+void *array_copy(int size, int dim, void *arr, void *constArr) {
 }
 
-char *getString() {
-  char *s = malloc(102 * sizeof(char));
-  scanf("%s", s);
-  return s;
-}
-
-int getInt() {
-  int n;
-  scanf("%d", &n);
-  return n;
-}
-
-char *toString(int i) {
-  char *s = malloc(12 * sizeof(char));
-  sprintf(s, "%d", i);
-  return s;
-}
-
-int _string_length(char *s) {
-  int i = 0;
-  while (s[i] != '\0') {
-    i++;
-  }
-  return i;
-}
-
-char *_string_substring(char *s, int left, int right) {
-  int len = right - left;
-  char *result = (char *) malloc(sizeof(char) * (len + 1));
-  for (int i = 0; i < len; i++) {
-    result[i] = s[left + i];
-  }
-  result[len] = '\0';
-  return result;
-}
-
-int _string_parseInt(char *s) {
-  int result = 0;
-  int i = 0;
-  if (s[0] == '-') i = 1;
-  for (; s[i] != '\0'; i++) {
-    result = result * 10 + s[i] - '0';
-  }
-  if (s[0] == '-') {
-    result = -result;
-  }
-  return result;
-}
-
-int _string_ord(char *s, int i) { return s[i]; }
-
-int _string_compare(char *s1, char *s2) {
-  int i = 0;
-  while (s1[i] != '\0' && s2[i] != '\0') {
-    if (s1[i] != s2[i]) {
-      return s1[i] - s2[i];
+char *_boolToString(bool n) {
+    if (n) {
+        char *buffer = malloc(5);
+        sprintf(buffer, "true");
+        return buffer;
+    } else {
+        char *buffer = malloc(6);
+        sprintf(buffer, "false");
+        return buffer;
     }
-    i++;
-  }
-  return s1[i] - s2[i];
-}
-
-char *_string_concat(char *s1, char *s2) {
-  int len1 = _string_length(s1);
-  int len2 = _string_length(s2);
-  char *result = (char *) malloc(sizeof(char) * (len1 + len2 + 1));
-  for (int i = 0; i < len1; i++) {
-    result[i] = s1[i];
-  }
-  for (int i = 0; i < len2; i++) {
-    result[len1 + i] = s2[i];
-  }
-  result[len1 + len2] = '\0';
-  return result;
-}
-
-char * _string_copy(char *s) {
-  int len = _string_length(s);
-  char *result = (char *) malloc(sizeof(char) * (len + 1));
-  for (int i = 0; i < len; i++) {
-    result[i] = s[i];
-  }
-  result[len] = '\0';
-  return result;
 }

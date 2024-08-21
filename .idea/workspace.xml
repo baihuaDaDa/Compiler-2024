@@ -4,37 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD">
-      <change afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/ConstArrayLiteral.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/Module.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IREntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalVar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRLocalVar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRVariable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/Type/IRType.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR types and entities, instruction IR nodes and the builtin functions.">
+      <change afterPath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRLiteral.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/ConstArrayLiteral.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalPtr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,36 +45,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src\Parser" />
@@ -172,7 +155,9 @@
       <workItem from="1723741896972" duration="7865000" />
       <workItem from="1724053385217" duration="89000" />
       <workItem from="1724053481052" duration="9800000" />
-      <workItem from="1724127135823" duration="22163000" />
+      <workItem from="1724127135823" duration="22552000" />
+      <workItem from="1724180986709" duration="4543000" />
+      <workItem from="1724216125191" duration="11977000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -374,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723749352470</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Upd: finish IR types and entities, instruction IR nodes and the builtin functions.">
+      <option name="closed" value="true" />
+      <created>1724177472036</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1724177472036</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,7 +407,8 @@
     <MESSAGE value="Fix: let the program return -1 when throw error." />
     <MESSAGE value="Fix: fix some wrong error type delimitations." />
     <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
+    <MESSAGE value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

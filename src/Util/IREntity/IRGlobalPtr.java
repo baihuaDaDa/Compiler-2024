@@ -2,8 +2,8 @@ package Util.IREntity;
 
 import Util.Type.IRType;
 
-public class IRGlobalVar extends IRVariable {
-    public IRGlobalVar(String name, IRType type) {
+public class IRGlobalPtr extends IRVariable {
+    public IRGlobalPtr(String name, IRType type) {
         super(type, name);
     }
 
