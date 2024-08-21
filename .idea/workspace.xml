@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR types and entities, instruction IR nodes and the builtin functions.">
-      <change afterPath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Util/IREntity/IRLiteral.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish all the IR nodes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/ConstArrayLiteral.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/GlobalVarDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StructDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/IREntity/IRGlobalPtr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +71,20 @@
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src" />
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\Parser" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <myKeys>
+      <visibility group="Gradle 任务" flag="true" />
+      <visibility group="Grunt" flag="true" />
+      <visibility group="Gulp" flag="true" />
+      <visibility group="HTTP 请求" flag="true" />
+      <visibility group="Maven 目标" flag="true" />
+      <visibility group="Node.js" flag="true" />
+      <visibility group="npm" flag="true" />
+      <visibility group="yarn" flag="true" />
+      <visibility group="最近的项目" flag="true" />
+      <visibility group="运行配置" flag="true" />
+    </myKeys>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
@@ -157,7 +161,7 @@
       <workItem from="1724053481052" duration="9800000" />
       <workItem from="1724127135823" duration="22552000" />
       <workItem from="1724180986709" duration="4543000" />
-      <workItem from="1724216125191" duration="11977000" />
+      <workItem from="1724216125191" duration="19569000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -367,7 +371,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724177472036</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Upd: finish all the IR nodes.">
+      <option name="closed" value="true" />
+      <created>1724237640689</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1724237640689</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +420,8 @@
     <MESSAGE value="Fix: fix some wrong error type delimitations." />
     <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
     <MESSAGE value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
+    <MESSAGE value="Upd: finish all the IR nodes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish all the IR nodes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -429,5 +442,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

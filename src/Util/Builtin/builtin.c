@@ -106,7 +106,7 @@ int array_size(void *arr) {
     return ((int*)arr)[-1];
 }
 
-void *_malloc(int size){
+void *_builtin_malloc(int size){
     return malloc((size_t)(size));
 }
 
@@ -116,17 +116,20 @@ void *array_malloc(int size, int length) { // size 为每个元素占几个字�
     return tmp + 1;
 }
 
-void *array_copy(int size, int dim, void *arr, void *constArr) {
+void *array_copy(int size, int dim, void *constArr) {
+    if (constArr == 0) return 0;
+    int length = array_size(constArr);
+    if (dim == 1) {
+        void *arr = array_malloc(size, length);
+        memcpy(arr, constArr, length * size);
+        return arr;
+    } else {
+        int *arr = (int *) array_malloc(4, length);
+        for (int i = 0; i < length; ++i)
+            arr[i] = (int) array_copy(size, dim - 1, (void *) ((int*)constArr)[i]);
+    }
 }
 
-char *_boolToString(bool n) {
-    if (n) {
-        char *buffer = malloc(5);
-        sprintf(buffer, "true");
-        return buffer;
-    } else {
-        char *buffer = malloc(6);
-        sprintf(buffer, "false");
-        return buffer;
-    }
+char *_builtin_boolToString(bool n) {
+    return n ? "true" : "false";
 }
