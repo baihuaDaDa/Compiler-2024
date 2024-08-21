@@ -11,7 +11,7 @@ public class FuncDeclMod extends Module {
     public String funcName;
     public ArrayList<IRLocalVar> params;
 
-    public FuncDeclMod(IRType returnType, String funcName) {
+    public FuncDeclMod(IRType returnType, String funcName, String ... paramTypes) {
         this.returnType = returnType;
         this.funcName = funcName;
         this.params = new ArrayList<>();

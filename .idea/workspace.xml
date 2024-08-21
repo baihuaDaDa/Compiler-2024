@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish all the IR nodes.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish the `array.copy` function for const arrays.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +168,7 @@
       <workItem from="1724053481052" duration="9800000" />
       <workItem from="1724127135823" duration="22552000" />
       <workItem from="1724180986709" duration="4543000" />
-      <workItem from="1724216125191" duration="19569000" />
+      <workItem from="1724216125191" duration="32487000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -379,7 +386,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724237640689</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Upd: finish the `array.copy` function for const arrays.">
+      <option name="closed" value="true" />
+      <created>1724258984167</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1724258984167</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -421,7 +436,8 @@
     <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
     <MESSAGE value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
     <MESSAGE value="Upd: finish all the IR nodes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish all the IR nodes." />
+    <MESSAGE value="Upd: finish the `array.copy` function for const arrays." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish the `array.copy` function for const arrays." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
