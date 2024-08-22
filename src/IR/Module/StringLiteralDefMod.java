@@ -1,8 +1,7 @@
 package IR.Module;
 
 import IR.IRVisitor;
-import Util.IREntity.IRGlobalPtr;
-import Util.Type.IRType;
+import Util.IRObject.IREntity.IRGlobalPtr;
 
 public class StringLiteralDefMod extends Module {
     public String value;

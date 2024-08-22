@@ -34,12 +34,13 @@ public class GlobalScope extends Scope {
         classes.put("string", stringClass);
     }
 
-    public void defineClass(ClassDefNode node) {
+    public void defineClass(ClassDefNode node, boolean hasOverrideConstructor) {
         if (classes.containsKey(node.className))
             throw new SemanticError("Multiple Definitions", "class redefine: " + node.className, node.pos);
         if (functions.containsKey(node.className))
             throw new SemanticError("Multiple Definitions", "class and function name duplicate: " + node.className, node.pos);
         classes.put(node.className, new ClassDecl());
+        classes.get(node.className).hasOverrideConstructor = hasOverrideConstructor;
         for (var varDef: node.varDefList)
             for (var var: varDef.vars)
                 defineClassMember(node.className, var.a, varDef.type, node.pos);
@@ -109,5 +110,17 @@ public class GlobalScope extends Scope {
 
     public boolean isClassDefined(String name) {
         return classes.containsKey(name);
+    }
+
+    public boolean hasOverrideConstructor(String name) {
+        return classes.get(name).hasOverrideConstructor;
+    }
+
+    public void setClassSize(String className, int size) {
+        classes.get(className).size = size;
+    }
+
+    public int getClassSize(String className) {
+        return classes.get(className).size;
     }
 }

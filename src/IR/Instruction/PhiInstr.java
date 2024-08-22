@@ -2,9 +2,8 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IREntity;
-import Util.IREntity.IRLocalVar;
-import Util.Type.IRType;
+import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLocalVar;
 import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;

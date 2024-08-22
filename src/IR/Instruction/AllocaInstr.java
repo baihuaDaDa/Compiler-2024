@@ -2,8 +2,7 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IREntity;
-import Util.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
 public class AllocaInstr extends Instruction {

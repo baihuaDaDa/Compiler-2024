@@ -17,6 +17,18 @@ public class IRType {
         }
     }
 
+    public IRType(BaseType other) {
+        var astType = new ExprType(other);
+        if (astType.isVoid) isVoid = true;
+        else if (astType.dim > 0 || astType.isClass || astType.isString || astType.isNull) isPtr = true;
+        else if (astType.isInt || astType.isBool) {
+            isInt = true;
+            if (astType.isInt) bitSize = 32;
+            else bitSize = 1;
+        }
+        else throw new RuntimeException("Unknown type: " + other);
+    }
+
     @Override
     public String toString() {
         if (isVoid) return "void";

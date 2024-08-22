@@ -1,8 +1,8 @@
 package IR.Module;
 
 import IR.IRVisitor;
-import Util.IREntity.IRGlobalPtr;
-import Util.IREntity.IRLiteral;
+import Util.IRObject.IREntity.IRGlobalPtr;
+import Util.IRObject.IREntity.IRLiteral;
 
 public class GlobalVarDefMod extends Module {
     public IRGlobalPtr globalVar;

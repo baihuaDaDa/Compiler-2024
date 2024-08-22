@@ -2,7 +2,7 @@ package IR.Module;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
@@ -16,11 +16,12 @@ public class FuncDefMod extends Module {
     public HashMap<String, Integer> localVars;
     public int anonymousVarCnt = 0, loopCnt = 0, ifCnt = 0;
 
-    public FuncDefMod(IRType returnType, String funcName) {
+    public FuncDefMod(IRType returnType, String funcName, ArrayList<IRLocalVar> params) {
         this.returnType = returnType;
         this.funcName = funcName;
-        params = new ArrayList<>();
+        this.params = params;
         body = new ArrayList<>();
+        body.add(new IRBlock(this, "entry"));
     }
 
     @Override
@@ -45,15 +46,11 @@ public class FuncDefMod extends Module {
         visitor.visit(this);
     }
 
-    public void addLocalVar(String name, int no) {
+    public void defineLocalVar(String name, int no) {
         localVars.put(name, no);
     }
 
     public int getLocalVarNo(String name) {
-        if (!localVars.containsKey(name)) {
-            localVars.put(name, 0);
-            return 0;
-        }
-        return localVars.get(name);
+        return localVars.getOrDefault(name, 0);
     }
 }

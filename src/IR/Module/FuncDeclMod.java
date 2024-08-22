@@ -1,7 +1,7 @@
 package IR.Module;
 
 import IR.IRVisitor;
-import Util.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
 import java.util.ArrayList;

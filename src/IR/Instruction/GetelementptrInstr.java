@@ -2,20 +2,20 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IREntity;
-import Util.IREntity.IRLocalVar;
-import Util.IREntity.IRVariable;
+import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IRVariable;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
 
 public class GetelementptrInstr extends Instruction {
     public IRLocalVar result;
-    public IRType type;
+    public String type;
     public IRVariable pointer;
     public ArrayList<IREntity> indices;
 
-    public GetelementptrInstr(IRBlock parent, IRLocalVar result, IRType type, IRVariable pointer) {
+    public GetelementptrInstr(IRBlock parent, IRLocalVar result, String type, IRVariable pointer) {
         super(parent);
         this.result = result;
         this.type = type;

@@ -2,9 +2,8 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IREntity;
-import Util.IREntity.IRVariable;
-import Util.Type.IRType;
+import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRVariable;
 
 public class StoreInstr extends Instruction {
     public IREntity value;

@@ -2,7 +2,7 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IRLocalVar;
 
 public class BrInstr extends Instruction {
     public IRLocalVar cond;

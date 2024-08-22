@@ -1,4 +1,4 @@
-package Util.IREntity;
+package Util.IRObject.IREntity;
 
 import Util.Type.IRType;
 

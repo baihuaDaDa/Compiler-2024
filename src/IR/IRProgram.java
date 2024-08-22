@@ -1,11 +1,10 @@
 package IR;
 
 import IR.Module.*;
-import Util.IREntity.IRGlobalPtr;
+import Util.IRObject.IREntity.IRGlobalPtr;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IRProgram {
     public ArrayList<FuncDeclMod> funcDecls = null;
@@ -44,6 +43,7 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "string.copy", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i32"), "array.size", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.malloc", "i32"));
+        funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.calloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.malloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "i32", "i32", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.boolToString", "i1"));
@@ -68,5 +68,9 @@ public class IRProgram {
         visitor.visit(this);
     }
 
-    public IRGlobalPtr addStringLiteral(String value) {}
+    public IRGlobalPtr addStringLiteral(String value) {
+        var ptr = new IRGlobalPtr(String.format("str.%d", ++stringLiteralCnt), new IRType("ptr"));
+        stringLiteralDefs.add(new StringLiteralDefMod(value, ptr));
+        return ptr;
+    }
 }

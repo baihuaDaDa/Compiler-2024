@@ -2,8 +2,8 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
-import Util.IREntity.IREntity;
-import Util.IREntity.IRLocalVar;
+import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLocalVar;
 
 public class SelectInstr extends Instruction {
     public IRLocalVar result, cond;
