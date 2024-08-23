@@ -8,6 +8,7 @@ import Util.IRObject.IREntity.IRVariable;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GetelementptrInstr extends Instruction {
     public IRLocalVar result;
@@ -15,12 +16,13 @@ public class GetelementptrInstr extends Instruction {
     public IRVariable pointer;
     public ArrayList<IREntity> indices;
 
-    public GetelementptrInstr(IRBlock parent, IRLocalVar result, String type, IRVariable pointer) {
+    public GetelementptrInstr(IRBlock parent, IRLocalVar result, String type, IRVariable pointer, IREntity ... indices) {
         super(parent);
         this.result = result;
         this.type = type;
         this.pointer = pointer;
-        indices = new ArrayList<>();
+        this.indices = new ArrayList<>();
+        Collections.addAll(this.indices, indices);
     }
 
     @Override

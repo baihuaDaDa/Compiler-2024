@@ -29,6 +29,13 @@ public class IRType {
         else throw new RuntimeException("Unknown type: " + other);
     }
 
+    public IRType(IRType other) {
+        isVoid = other.isVoid;
+        isPtr = other.isPtr;
+        isInt = other.isInt;
+        bitSize = other.bitSize;
+    }
+
     @Override
     public String toString() {
         if (isVoid) return "void";

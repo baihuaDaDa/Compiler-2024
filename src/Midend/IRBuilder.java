@@ -14,13 +14,10 @@ import AST.Suite.SuiteNode;
 import IR.*;
 import IR.Instruction.*;
 import IR.Module.FuncDefMod;
-import IR.Module.StringLiteralDefMod;
 import IR.Module.StructDefMod;
-import Util.IRObject.IREntity.IREntity;
-import Util.IRObject.IREntity.IRGlobalPtr;
-import Util.IRObject.IREntity.IRLiteral;
-import Util.IRObject.IREntity.IRLocalVar;
-import Util.IRObject.IRExpr;
+import Util.IRObject.IREntity.*;
+import Util.IRObject.IRExpression;
+import Util.IRObject.IRFunction;
 import Util.Scope.GlobalScope;
 import Util.Scope.IRScope;
 import Util.Type.IRType;
@@ -35,7 +32,7 @@ public class IRBuilder implements ASTVisitor {
     public IRProgram program;
     public IRBlock curBlock;
     public IRScope curScope;
-    public IRExpr lastExpr;
+    public IRExpression lastExpr;
 
     public IRBuilder(GlobalScope gScope) {
         this.gScope = gScope;
@@ -77,8 +74,7 @@ public class IRBuilder implements ASTVisitor {
             int varNum = varDef.vars.size();
             for (int i = 0; i < varNum; ++i)
                 memTypes.add(new IRType(varDef.type));
-            if (varDef.type.dim > 0 || varDef.type.isClass || varDef.type.isString || varDef.type.isInt) size += 4 * varNum;
-            else if (varDef.type.isBool) size += varNum;
+            size += 4 * varNum; // bool -> i32 4字节对齐
         }
         gScope.setClassSize(node.className, size);
         program.structDefs.add(new StructDefMod(node.className, memTypes));
@@ -221,8 +217,26 @@ public class IRBuilder implements ASTVisitor {
         curScope = curScope.parent;
     }
 
-    public void visit(NewArrayExprNode node) {}
-    public void visit(NewEmptyArrayExprNode node) {}
+    public void visit(NewArrayExprNode node) {
+        node.constArray.accept(this);
+        var newArr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+        ArrayList<IREntity> args = new ArrayList<>();
+        args.add(new IRLiteral(new IRType("i32"), 4));
+        args.add(new IRLiteral(new IRType("i32"), node.type.dim));
+        args.add(lastExpr.value);
+        curBlock.addInstr(new CallInstr(curBlock, newArr, "array.copy", args));
+        lastExpr = new IRExpression(newArr);
+    }
+    private IREntity NewEmptyArray() {}
+    public void visit(NewEmptyArrayExprNode node) {
+        ArrayList<IREntity> sizes = new ArrayList<>();
+        for (var size : node.sizeList) {
+            size.accept(this);
+            sizes.add(lastExpr.value);
+        }
+        if (node.type.dim == node.sizeList.size()) lastExpr = new IRExpression(NewEmptyArray());
+        else lastExpr = new IRExpression(NewEmptyArray());
+    }
     public void visit(NewTypeExprNode node) {
         var tmp = new IRLocalVar("tmp", new IRType("ptr"));
         ArrayList<IREntity> args = new ArrayList<>();
@@ -234,16 +248,93 @@ public class IRBuilder implements ASTVisitor {
             args.add(new IRLiteral(new IRType("i32"), gScope.getClassSize(node.newType.baseTypename)));
             curBlock.addInstr(new CallInstr(curBlock, tmp, ".builtin.calloc", args));
         }
-        lastExpr = new IRExpr(tmp);
+        lastExpr = new IRExpression(tmp);
     }
-    public void visit(FuncCallExprNode node) {}
-    public void visit(MemberExprNode node) {}
-    public void visit(IndexExprNode node) {}
-    public void visit(PreSelfExprNode node) {}
-    public void visit(UnaryExprNode node) {}
-    public void visit(BinaryExprNode node) {}
+    public void visit(FuncCallExprNode node) {
+        node.func.accept(this);
+        var callInstr = new CallInstr(curBlock, null, lastExpr.func.funcName, new ArrayList<>());
+        if (!lastExpr.func.returnType.isVoid)
+            callInstr.result = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), lastExpr.func.returnType);
+        for (var arg : node.args) {
+            arg.accept(this);
+            callInstr.args.add(lastExpr.value);
+        }
+        curBlock.addInstr(callInstr);
+        if (!lastExpr.func.returnType.isVoid)
+            lastExpr = new IRExpression(callInstr.result);
+    }
+    public void visit(MemberExprNode node) {
+        node.classExpr.accept(this);
+        if (node.classExpr.type.isString) {
+            switch (node.identifier) {
+                case "length" -> lastExpr = new IRExpression(new IRFunction("string.length", new IRType("i32"), (IRVariable) lastExpr.value));
+                case "substring" -> lastExpr = new IRExpression(new IRFunction("string.substring", new IRType("ptr"), (IRVariable) lastExpr.value));
+                case "parseInt" -> lastExpr = new IRExpression(new IRFunction("string.parseInt", new IRType("i32"), (IRVariable) lastExpr.value));
+                case "ord" -> lastExpr = new IRExpression(new IRFunction("string.ord", new IRType("i32"), (IRVariable) lastExpr.value));
+            }
+        } else if (node.classExpr.type.dim > 0) {
+            lastExpr = new IRExpression(new IRFunction("array.size", new IRType("i32"), (IRLocalVar) lastExpr.value));
+        } else if (node.classExpr.type.isClass) {
+            var memberType = gScope.getClassMember(node.classExpr.type, node.identifier);
+            if (memberType != null) {
+                var ptr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+                var value = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(memberType));
+                curBlock.addInstr(new GetelementptrInstr(curBlock, ptr, String.format("%%class.%s", node.classExpr.type.baseTypename), (IRVariable) lastExpr.value,
+                        new IRLiteral(new IRType("i32"), 0), new IRLiteral(new IRType("i32"), gScope.getClassMemberIndex(node.classExpr.type.baseTypename, node.identifier))));
+                curBlock.addInstr(new LoadInstr(curBlock, value, ptr));
+                lastExpr = new IRExpression(value, ptr);
+            } else {
+                var methodType = gScope.getClassMethod(node.classExpr.type, node.identifier);
+                lastExpr = new IRExpression(new IRFunction(String.format("class.%s.%s", node.classExpr.type.baseTypename, node.identifier), new IRType(methodType)));
+            }
+        }
+    }
+    public void visit(IndexExprNode node) {
+        node.array.accept(this);
+        var tmpArr = (IRLocalVar) lastExpr.value;
+        node.index.accept(this);
+        var tmpInd = lastExpr.value;
+        var tmpPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+        var tmpValue = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
+        curBlock.addInstr(new GetelementptrInstr(curBlock, tmpPtr, tmpValue.type.toString(), tmpArr, tmpInd));
+        curBlock.addInstr(new LoadInstr(curBlock, tmpValue, tmpPtr));
+        lastExpr = new IRExpression(tmpValue, tmpPtr);
+    }
+    public void visit(PreSelfExprNode node) {
+        node.expr.accept(this);
+        var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("i32"));
+        curBlock.addInstr(new BinaryInstr(curBlock, (node.isIncrement ? "add" : "sub"), lastExpr.value, new IRLiteral(new IRType("i32"), 1), tmp));
+        curBlock.addInstr(new StoreInstr(curBlock, tmp, lastExpr.ptr));
+        lastExpr = new IRExpression(tmp, lastExpr.ptr);
+    }
+    public void visit(UnaryExprNode node) {
+        node.expr.accept(this);
+        var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.op.equals("!") ? "i1" : "i32"));
+        switch (node.op) {
+            case "!" -> curBlock.addInstr(new BinaryInstr(curBlock, "xor", lastExpr.value, new IRLiteral(new IRType("i1"), 1), tmp));
+            case "-" -> curBlock.addInstr(new BinaryInstr(curBlock, "sub", new IRLiteral(new IRType("i32"), 0), lastExpr.value, tmp));
+            case "~" -> curBlock.addInstr(new BinaryInstr(curBlock, "xor", lastExpr.value, new IRLiteral(new IRType("i32"), -1), tmp));
+            case "++", "--" -> {
+                curBlock.addInstr(new BinaryInstr(curBlock, (node.op.equals("++") ? "add" : "sub"), lastExpr.value, new IRLiteral(new IRType("i32"), 1), tmp));
+                curBlock.addInstr(new StoreInstr(curBlock, tmp, lastExpr.ptr));
+                lastExpr = new IRExpression(lastExpr.value);
+                return;
+            }
+        }
+        lastExpr = new IRExpression(tmp);
+    }
+    public void visit(BinaryExprNode node) {
+
+    }
     public void visit(TernaryExprNode node) {}
-    public void visit(AssignExprNode node) {}
+    public void visit(AssignExprNode node) {
+        node.lhs.accept(this);
+        var ptr = lastExpr.ptr;
+        node.rhs.accept(this);
+        var value = lastExpr.value;
+        curBlock.addInstr(new StoreInstr(curBlock, value, ptr));
+        // 使用赋值表达式的值是未定义的，所以没有lastExpr
+    }
     public void visit(AtomExprNode node) {
         if (node.isLiteral)
     }

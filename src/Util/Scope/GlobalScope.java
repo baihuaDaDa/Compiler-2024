@@ -41,19 +41,21 @@ public class GlobalScope extends Scope {
             throw new SemanticError("Multiple Definitions", "class and function name duplicate: " + node.className, node.pos);
         classes.put(node.className, new ClassDecl());
         classes.get(node.className).hasOverrideConstructor = hasOverrideConstructor;
+        int memberCnt = 0;
         for (var varDef: node.varDefList)
             for (var var: varDef.vars)
-                defineClassMember(node.className, var.a, varDef.type, node.pos);
+                defineClassMember(node.className, var.a, memberCnt++, varDef.type, node.pos);
         for (var methodDef: node.methodDefList)
             defineClassMethod(node.className, methodDef.funcName, new FuncDecl(methodDef), node.pos);
     }
 
-    public void defineClassMember(String className, String memberName, Type type, Position pos) {
+    public void defineClassMember(String className, String memberName, int memberIndex, Type type, Position pos) {
         if (classes.get(className).members.containsKey(memberName))
             throw new SemanticError("Multiple Definitions","class member redefine: " + className + "." + memberName, pos);
         if (classes.get(className).methods.containsKey(memberName))
             throw new SemanticError("Multiple Definitions", "class method and member name duplicate: " + className + "." + memberName, pos);
         classes.get(className).members.put(memberName, type);
+        classes.get(className).memberIndices.put(memberName, memberIndex);
     }
 
     public void defineClassMethod(String className, String funcName, FuncDecl method, Position pos) {
@@ -122,5 +124,9 @@ public class GlobalScope extends Scope {
 
     public int getClassSize(String className) {
         return classes.get(className).size;
+    }
+
+    public int getClassMemberIndex(String className, String memberName) {
+        return classes.get(className).memberIndices.get(memberName);
     }
 }

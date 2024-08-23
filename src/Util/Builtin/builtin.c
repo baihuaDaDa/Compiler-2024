@@ -104,10 +104,6 @@ bool string_greaterOrEqual(char *str1, char *str2) {
     return strcmp(str1, str2) >= 0;
 }
 
-char *string_copy(char *src) {
-    return strcpy(malloc(strlen(src)), src);
-}
-
 int array_size(void *arr) {
     return ((int*)arr)[-1];
 }

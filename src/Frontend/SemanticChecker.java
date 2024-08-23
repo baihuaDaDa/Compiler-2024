@@ -192,11 +192,11 @@ public class SemanticChecker implements ASTVisitor {
         node.classExpr.accept(this);
         if (!node.classExpr.type.isClass && !node.classExpr.type.isString && node.classExpr.type.dim == 0)
             throw new SemanticError("Undefined Identifier", "Invoke members or methods from a both non-class and non-array expression", node.pos);
-        Type memberType = gScope.getClassMember(node.classExpr.type, node.memberName);
+        Type memberType = gScope.getClassMember(node.classExpr.type, node.identifier);
         if (memberType == null) {
-            ExprType methodType = gScope.getClassMethod(node.classExpr.type, node.memberName);
+            ExprType methodType = gScope.getClassMethod(node.classExpr.type, node.identifier);
             if (methodType == null)
-                throw new SemanticError("Undefined Identifier", "Class " + node.classExpr.type.toString() + " does not contain such a member or method called " + node.memberName, node.pos);
+                throw new SemanticError("Undefined Identifier", "Class " + node.classExpr.type.toString() + " does not contain such a member or method called " + node.identifier, node.pos);
             node.type = methodType;
             node.isLeftValue = false;
             return;

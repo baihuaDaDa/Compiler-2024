@@ -5,7 +5,7 @@ import Util.Position;
 
 public class MemberExprNode extends ExprNode {
     public ExprNode classExpr = null;
-    public String memberName = null;
+    public String identifier = null;
 
     public MemberExprNode(Position pos) {
         super(pos);
