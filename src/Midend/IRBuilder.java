@@ -14,6 +14,8 @@ import AST.Suite.SuiteNode;
 import IR.*;
 import IR.Instruction.*;
 import IR.Module.FuncDefMod;
+import IR.Module.GlobalVarDefMod;
+import IR.Module.StringLiteralDefMod;
 import IR.Module.StructDefMod;
 import Util.IRObject.IREntity.*;
 import Util.IRObject.IRExpression;
@@ -21,11 +23,14 @@ import Util.IRObject.IRFunction;
 import Util.Scope.GlobalScope;
 import Util.Scope.IRScope;
 import Util.Type.IRType;
+import Util.Type.Type;
 
 import java.util.ArrayList;
 
 // TODO 没有return void或者没有constructor
-// TODO new 类数组是否需要调用构造函数
+// TODO new 类数组是否需要调用构造函数: 不用
+// TODO 转义字符
+// TODO AST常量表达式折叠 + IR全局变量常量不用init
 
 public class IRBuilder implements ASTVisitor {
     public GlobalScope gScope;
@@ -324,9 +329,80 @@ public class IRBuilder implements ASTVisitor {
         lastExpr = new IRExpression(tmp);
     }
     public void visit(BinaryExprNode node) {
-
+        node.lhs.accept(this);
+        var lhs = lastExpr.value;
+        node.rhs.accept(this);
+        var rhs = lastExpr.value;
+        switch (node.op) {
+            case "==", "!=", "<", "<=", ">", ">=" -> {
+                var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("i1"));
+                if (node.lhs.type.isString) {
+                    ArrayList<IREntity> args = new ArrayList<>();
+                    args.add(lhs);
+                    args.add(rhs);
+                    switch (node.op) {
+                        case "==" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.equal", args));
+                        case "!=" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.notEqual", args));
+                        case "<" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.less", args));
+                        case "<=" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.lessOrEqual", args));
+                        case ">" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.greater", args));
+                        case ">=" -> curBlock.addInstr(new CallInstr(curBlock, tmp, "string.greaterOrEqual", args));
+                    }
+                } else curBlock.addInstr(new IcmpInstr(curBlock, IcmpInstr.getCond(node.op), lhs, rhs, tmp));
+                lastExpr = new IRExpression(tmp);
+            }
+            case "&&", "||" -> {
+                var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("i1"));
+                if (node.op.equals("&&")) {
+                    IRBlock thenBlock = new IRBlock(curBlock.parent, String.format("ternary_then.%d", curBlock.parent.ternaryCnt++));
+                    IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", curBlock.parent.ternaryCnt++));
+                    IRBlock endBlock = new IRBlock(curBlock.parent, String.format("ternary_end.%d", curBlock.parent.ternaryCnt++));
+                    curBlock.addInstr(new BranchInstr(curBlock, lhs, thenBlock, elseBlock));
+                    curBlock = thenBlock;
+                } else {
+                    var thenBlock = new IRBlock(curBlock.parent, String.format("ternary_then.%d", curBlock.parent.ternaryCnt++));
+                    var elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", curBlock.parent.ternaryCnt++));
+                    curBlock.addInstr(new BranchInstr(curBlock, lhs, thenBlock, elseBlock));
+                    curBlock = thenBlock;
+                }
+            }
+            case "&", "|", "^", "<<", ">>", "+", "-", "*", "/", "%" -> {
+                var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.lhs.type.isString ? "ptr" : "i32"));
+                if (node.lhs.type.isString) {
+                    ArrayList<IREntity> args = new ArrayList<>();
+                    args.add(lhs);
+                    args.add(rhs);
+                    curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", args));
+                } else curBlock.addInstr(new BinaryInstr(curBlock, BinaryInstr.getOp(node.op), lhs, rhs, tmp));
+                lastExpr = new IRExpression(tmp);
+            }
+        }
     }
-    public void visit(TernaryExprNode node) {}
+    public void visit(TernaryExprNode node) {
+        node.condition.accept(this);
+        int ternaryNo = curBlock.parent.ternaryCnt++;
+        IRBlock thenBlock = new IRBlock(curBlock.parent, String.format("ternary_then.%d", ternaryNo));
+        IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", ternaryNo));
+        IRBlock endBlock = new IRBlock(curBlock.parent, String.format("ternary_end.%d", ternaryNo));
+        if (lastExpr.value instanceof IRLiteral logic) {
+            if (logic.value == 0) curBlock.addInstr(new BrInstr(curBlock, null, elseBlock, null));
+            else curBlock.addInstr(new BrInstr(curBlock, null, thenBlock, null));
+        } else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lastExpr.value, thenBlock, elseBlock));
+        // TODO 用select还是store+load？
+        var cond = lastExpr.value;
+        curBlock = thenBlock;
+        node.thenExpr.accept(this);
+        curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
+        var thenValue = lastExpr.value;
+        curBlock = elseBlock;
+        node.elseExpr.accept(this);
+        curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
+        var elseValue = lastExpr.value;
+        curBlock = endBlock;
+        var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
+        curBlock.addInstr(new SelectInstr(curBlock, tmp, cond, thenValue, elseValue));
+        lastExpr = new IRExpression(tmp);
+    }
     public void visit(AssignExprNode node) {
         node.lhs.accept(this);
         var ptr = lastExpr.ptr;
@@ -335,16 +411,80 @@ public class IRBuilder implements ASTVisitor {
         curBlock.addInstr(new StoreInstr(curBlock, value, ptr));
         // 使用赋值表达式的值是未定义的，所以没有lastExpr
     }
+    private IRGlobalPtr NewStringLiteral(String value) {
+        var ptr = new IRGlobalPtr(String.format(".str.%d", program.stringLiteralDefs.size()), new IRType("ptr"));
+        program.stringLiteralDefs.add(new StringLiteralDefMod(value, ptr));
+        return ptr;
+    }
     public void visit(AtomExprNode node) {
-        if (node.isLiteral)
+        if (node.isLiteral) {
+            if (node.literal.type.isNull) lastExpr = new IRExpression(new IRLiteral(new IRType("ptr"), true));
+            else if (node.literal.type.dim > 0) node.literal.constArray.accept(this);
+            else if (node.literal.type.isString) lastExpr = new IRExpression(NewStringLiteral(node.literal.constString));
+            else if (node.literal.type.isInt) lastExpr = new IRExpression(new IRLiteral(new IRType("i32"), node.literal.constInt));
+            else if (node.literal.type.isBool) lastExpr = new IRExpression(new IRLiteral(new IRType("i1"), node.literal.constLogic ? 1 : 0));
+        } else if (node.isIdentifier) {
+            if (node.type.isFunc) {
+                if (curScope != null && curScope.className != null && gScope.getClassMethod(new Type(curScope.className, 0), node.identifier) != null) {
+                    var thisPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+                    curBlock.addInstr(new LoadInstr(curBlock, thisPtr, new IRLocalVar("this.1", new IRType("ptr"))));
+                    lastExpr = new IRExpression(new IRFunction(String.format("class.%s.%s", curScope.className, node.identifier), new IRType(node.type.funcDecl.type), thisPtr));
+                } else lastExpr = new IRExpression(new IRFunction(node.identifier, new IRType(node.type.funcDecl.type)));
+                return;
+            }
+            IRVariable ptr;
+            if (curScope != null && curScope.getVarNo(node.identifier) > 0) {
+                ptr = new IRLocalVar(String.format("%s.%d", node.identifier, curScope.getVarNo(node.identifier)), new IRType("ptr"));
+            } else if (curScope != null && curScope.className != null) {
+                var thisPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+                ptr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+                curBlock.addInstr(new LoadInstr(curBlock, thisPtr, new IRLocalVar("this.1", new IRType("ptr"))));
+                curBlock.addInstr(new GetelementptrInstr(curBlock, (IRLocalVar) ptr, String.format("%%class.%s", curScope.className), thisPtr,
+                        new IRLiteral(new IRType("i32"), 0), new IRLiteral(new IRType("i32"), gScope.getClassMemberIndex(curScope.className, node.identifier))));
+            } else ptr = new IRGlobalPtr(node.identifier, new IRType("ptr"));
+            var value = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
+            curBlock.addInstr(new LoadInstr(curBlock, value, ptr));
+            lastExpr = new IRExpression(value, ptr);
+        } else {
+            var thisPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+            curBlock.addInstr(new LoadInstr(curBlock, thisPtr, new IRLocalVar("this.1", new IRType("ptr"))));
+            lastExpr = new IRExpression(thisPtr);
+        }
     }
-    public void visit(FStringExprNode node) {}
-
-    public void visit(VarDefNode node) {}
-
-    public void visit(LiteralNode node) {
-        if (node.constArray != null)
-            node.constArray.accept(this);
+    public void visit(FStringExprNode node) {
+        if (node.isExpr) {
+            var tmpStr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+            curBlock.addInstr(new CallInstr(curBlock, tmpStr, ".builtin.calloc"));
+        } else lastExpr = new IRExpression(NewStringLiteral(node.front));
     }
+
+    public void visit(VarDefNode node) {
+        for (var varUnit : node.vars) {
+            if (curScope == null) {
+                var newVar = new IRGlobalPtr(varUnit.a, new IRType(node.type));
+                program.globalVarDefs.add(new GlobalVarDefMod(newVar,
+                        ((node.type.isInt || node.type.isBool) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true))));
+                if (varUnit.b != null) {
+                    curBlock = program.initFunc.body.getLast();
+                    varUnit.b.accept(this);
+                    curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, newVar));
+                    curBlock = null;
+                }
+            } else {
+                int no = curBlock.parent.getLocalVarNo(varUnit.a);
+                curBlock.parent.defineLocalVar(varUnit.a, ++no);
+                curScope.parent.addVar(varUnit.a, no);
+                var newVar = new IRLocalVar(String.format("%s.%d", varUnit.a, no), new IRType("ptr"));
+                curBlock.addInstr(new AllocaInstr(curBlock, newVar, new IRType(node.type)));
+                if (varUnit.b != null) {
+                    varUnit.b.accept(this);
+                    curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, newVar));
+                } else curBlock.addInstr(new StoreInstr(curBlock,
+                        ((node.type.isInt || node.type.isBool) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true)), newVar));
+            }
+        }
+    }
+
+    public void visit(LiteralNode node) {}
     public void visit(ConstArrayNode node) {}
 }

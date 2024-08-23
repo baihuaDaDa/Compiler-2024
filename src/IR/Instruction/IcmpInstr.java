@@ -27,4 +27,16 @@ public class IcmpInstr extends Instruction {
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
     }
+
+    static public String getCond(String op) {
+        return switch (op) {
+            case "==" -> "eq";
+            case "!=" -> "ne";
+            case "<" -> "slt";
+            case "<=" -> "sle";
+            case ">" -> "sgt";
+            case ">=" -> "sge";
+            default -> throw new RuntimeException("Unexpected operation: " + op);
+        };
+    }
 }

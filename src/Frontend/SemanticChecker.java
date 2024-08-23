@@ -277,8 +277,8 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Invalid Type", "Cannot compute bool", node.pos);
         }
         switch (node.op) {
-            case "*", "/", "%", "+", "-", "<<", ">>", "&", "|", "^", "~" -> node.type = new ExprType("int", 0);
-            case "&&", "||", "!", "==", "!=", "<", ">", "<=", ">=" -> node.type = new ExprType("bool", 0);
+            case "*", "/", "%", "+", "-", "<<", ">>", "&", "|", "^" -> node.type = new ExprType("int", 0);
+            case "&&", "||", "==", "!=", "<", ">", "<=", ">=" -> node.type = new ExprType("bool", 0);
         }
         node.isLeftValue = false;
     }

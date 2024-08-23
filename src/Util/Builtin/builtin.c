@@ -9,6 +9,7 @@ int sscanf(const char *src, const char *pattern, ...);
 size_t strlen(const char *str);
 int strcmp(const char *s1, const char *s2);
 char *strcpy(char *dest, const char *src);
+char *strcat(char *dest, const char *src);
 void *memcpy(void *dest, const void *src, size_t n);
 void *malloc(size_t n);
 void *calloc(size_t n, size_t size);
@@ -102,6 +103,10 @@ bool string_greater(char *str1, char *str2) {
 
 bool string_greaterOrEqual(char *str1, char *str2) {
     return strcmp(str1, str2) >= 0;
+}
+
+char *string_cat(char *dest, char *src) {
+    return strcat(dest, src);
 }
 
 int array_size(void *arr) {

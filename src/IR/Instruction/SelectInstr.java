@@ -6,10 +6,10 @@ import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
 public class SelectInstr extends Instruction {
-    public IRLocalVar result, cond;
-    public IREntity lhs, rhs;
+    public IRLocalVar result;
+    public IREntity cond, lhs, rhs;
 
-    public SelectInstr(IRBlock parent, IRLocalVar result, IRLocalVar cond, IREntity lhs, IREntity rhs) {
+    public SelectInstr(IRBlock parent, IRLocalVar result, IREntity cond, IREntity lhs, IREntity rhs) {
         super(parent);
         this.result = result;
         this.cond = cond;

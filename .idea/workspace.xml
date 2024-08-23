@@ -4,22 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish LLVM IR statements and modules (except variable definitions).">
-      <change afterPath="$PROJECT_DIR$/src/Util/IRObject/IRFunction.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish transforming all the naive expression nodes into LLVM IR instructions.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AST/Expr/MemberExprNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Decl/ClassDecl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/IRObject/IRExpr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/IRObject/IRExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/IRObject/IRFunc.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Type/IRType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/IRType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +171,7 @@
       <workItem from="1724216125191" duration="32651000" />
       <workItem from="1724273875704" duration="95000" />
       <workItem from="1724306176831" duration="34859000" />
-      <workItem from="1724390068576" duration="19019000" />
+      <workItem from="1724390068576" duration="34695000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -418,7 +413,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724362873429</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Upd: finish transforming all the naive expression nodes into LLVM IR instructions.">
+      <option name="closed" value="true" />
+      <created>1724438054001</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1724438054001</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -436,7 +439,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish half of the definitions of the AST nodes." />
     <MESSAGE value="Upd: finish AST nodes." />
     <MESSAGE value="Upd: finish global scope." />
     <MESSAGE value="Upd: finish symbol collector." />
@@ -461,7 +463,8 @@
     <MESSAGE value="Upd: finish the `array.copy` function for const arrays." />
     <MESSAGE value="Upd: finish IR Scope and some counters of variables and labels." />
     <MESSAGE value="Upd: finish LLVM IR statements and modules (except variable definitions)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish LLVM IR statements and modules (except variable definitions)." />
+    <MESSAGE value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

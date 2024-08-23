@@ -14,7 +14,6 @@ public class IRProgram {
     public ArrayList<FuncDefMod> funcDefs = null;
     public FuncDefMod initFunc = null;
     public FuncDefMod mainFunc = null;
-    private int stringLiteralCnt = 0;
 
     public IRProgram() {
         funcDecls = new ArrayList<>();
@@ -40,6 +39,7 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.lessOrEqual", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.greater", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.greaterOrEqual", "ptr", "ptr"));
+        funcDecls.add(new FuncDeclMod(new IRType("ptr"), "string.cat", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i32"), "array.size", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.malloc", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.calloc", "i32", "i32"));
@@ -65,11 +65,5 @@ public class IRProgram {
 
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public IRGlobalPtr addStringLiteral(String value) {
-        var ptr = new IRGlobalPtr(String.format("str.%d", ++stringLiteralCnt), new IRType("ptr"));
-        stringLiteralDefs.add(new StringLiteralDefMod(value, ptr));
-        return ptr;
     }
 }

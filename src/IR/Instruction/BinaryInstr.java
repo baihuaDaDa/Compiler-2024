@@ -27,4 +27,20 @@ public class BinaryInstr extends Instruction {
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
     }
+
+    static public String getOp(String op) {
+        return switch (op) {
+            case "+" -> "add";
+            case "-" -> "sub";
+            case "*" -> "mul";
+            case "/" -> "sdiv";
+            case "%" -> "srem";
+            case "<<" -> "shl";
+            case ">>" -> "ashr";
+            case "&" -> "and";
+            case "|" -> "or";
+            case "^" -> "xor";
+            default -> throw new RuntimeException("Unexpected operation: " + op);
+        };
+    }
 }
