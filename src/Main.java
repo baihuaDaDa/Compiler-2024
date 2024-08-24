@@ -12,14 +12,19 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import Util.MxErrorListener;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-//        InputStream input = new FileInputStream("testcases/codegen/t66.mx");
+//        InputStream input = new FileInputStream("testcases/sema/basic-package/basic-1.mx");
+//        OutputStream output = new FileOutputStream("out.ll");
         InputStream input = System.in;
+        OutputStream output = System.out;
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();
@@ -35,7 +40,7 @@ public class Main {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
-            System.out.println(irBuilder.program.toString());
+            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

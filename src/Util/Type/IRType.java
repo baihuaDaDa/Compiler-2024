@@ -40,7 +40,7 @@ public class IRType {
     public String toString() {
         if (isVoid) return "void";
         if (isPtr) return "ptr";
-        if (isInt) return "i" + Integer.toString(bitSize);
+        if (isInt) return "i" + bitSize;
         throw new RuntimeException("Unprintable type");
     }
 

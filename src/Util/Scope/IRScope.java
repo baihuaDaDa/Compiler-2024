@@ -14,9 +14,11 @@ public class IRScope {
     public IRScope(IRScope parent) { // common
         this.parent = parent;
         this.vars = new HashMap<>();
-        this.className = parent.className;
-        this.loopEnd = parent.loopEnd;
-        this.loopNext = parent.loopNext;
+        if (parent != null) {
+            this.className = parent.className;
+            this.loopEnd = parent.loopEnd;
+            this.loopNext = parent.loopNext;
+        }
     }
 
     public IRScope(IRScope parent, String className) { // for classScope

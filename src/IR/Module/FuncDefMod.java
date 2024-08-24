@@ -22,6 +22,7 @@ public class FuncDefMod extends Module {
         this.params = params;
         body = new ArrayList<>();
         body.add(new IRBlock(this, "entry"));
+        localVars = new HashMap<>();
     }
 
     @Override

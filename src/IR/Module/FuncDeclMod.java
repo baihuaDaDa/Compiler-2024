@@ -15,6 +15,10 @@ public class FuncDeclMod extends Module {
         this.returnType = returnType;
         this.funcName = funcName;
         this.params = new ArrayList<>();
+        for (int i = 0; i < paramTypes.length; ++i) {
+            var param = new IRLocalVar(Integer.toString(i), new IRType(paramTypes[i]));
+            params.add(param);
+        }
     }
 
     @Override

@@ -17,7 +17,7 @@ public class StoreInstr extends Instruction {
 
     @Override
     public String toString() {
-        return "store " + value.type + value + ", ptr " + pointer;
+        return "store " + value.type + " " + value + ", ptr " + pointer;
     }
 
     @Override

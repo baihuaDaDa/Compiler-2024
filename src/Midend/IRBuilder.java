@@ -28,8 +28,6 @@ import Util.Type.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO IR转义字符
-
 // optimize
 // TODO AST常量表达式折叠 + IR全局变量常量不用init
 // TODO return, break, continue后面的死代码删除
@@ -93,7 +91,7 @@ public class IRBuilder implements ASTVisitor {
     public void visit(FuncDefNode node) {
         ArrayList<IRLocalVar> params = new ArrayList<>();
         var func = new FuncDefMod(new IRType(node.type), node.funcName, params);
-        if (curScope.className != null) {
+        if (curScope != null && curScope.className != null) {
             func.funcName = String.format("class.%s.%s", curScope.className, node.funcName);
             params.add(new IRLocalVar("this", new IRType("ptr")));
         }
@@ -442,6 +440,7 @@ public class IRBuilder implements ASTVisitor {
             else curBlock.addInstr(new BrInstr(curBlock, null, thenBlock, null));
         } else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lastExpr.value, thenBlock, elseBlock));
         // TODO 用select还是store+load？
+        // TODO void函数也可以作为三目运算的表达式
         var cond = lastExpr.value;
         curBlock = thenBlock;
         curBlock.parent.body.add(thenBlock);
@@ -554,7 +553,7 @@ public class IRBuilder implements ASTVisitor {
             } else {
                 int no = curBlock.parent.getLocalVarNo(varUnit.a);
                 curBlock.parent.defineLocalVar(varUnit.a, ++no);
-                curScope.parent.addVar(varUnit.a, no);
+                curScope.addVar(varUnit.a, no);
                 var newVar = new IRLocalVar(String.format("%s.%d", varUnit.a, no), new IRType("ptr"));
                 curBlock.addInstr(new AllocaInstr(curBlock, newVar, new IRType(node.type)));
                 if (varUnit.b != null) {

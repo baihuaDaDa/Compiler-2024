@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR builder.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR printer.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/IRType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/IRType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +32,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -167,7 +176,7 @@
       <workItem from="1724306176831" duration="34859000" />
       <workItem from="1724390068576" duration="35201000" />
       <workItem from="1724490599109" duration="664000" />
-      <workItem from="1724491519953" duration="20150000" />
+      <workItem from="1724491519953" duration="27400000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -433,7 +442,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724521872779</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Upd: finish IR printer.">
+      <option name="closed" value="true" />
+      <created>1724522991361</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1724522991361</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -451,7 +468,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish symbol collector." />
     <MESSAGE value="Upd: finish AST builder" />
     <MESSAGE value="Upd: finish Main (Semantic Part)." />
     <MESSAGE value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
@@ -476,7 +492,8 @@
     <MESSAGE value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
     <MESSAGE value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
     <MESSAGE value="Upd: finish IR builder." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish IR builder." />
+    <MESSAGE value="Upd: finish IR printer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish IR printer." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
