@@ -25,10 +25,10 @@ public class CallInstr extends Instruction {
         if (result != null) ret.append(result).append(" = ");
         ret.append("call ");
         if (result == null) ret.append("void ");
-        else ret.append(result.type);
+        else ret.append(result.type).append(" ");
         ret.append("@").append(funcName).append("(");
         for (int i = 0; i < args.size(); ++i) {
-            ret.append(args.get(i));
+            ret.append(args.get(i).type).append(" ").append(args.get(i));
             if (i != args.size() - 1) ret.append(", ");
         }
         ret.append(")");

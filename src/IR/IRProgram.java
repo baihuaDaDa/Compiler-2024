@@ -61,6 +61,9 @@ public class IRProgram {
             ret.append(globalVarDef).append("\n");
         for (var funcDef : funcDefs)
             ret.append(funcDef).append("\n");
+        if (initFunc != null)
+            ret.append(initFunc).append("\n");
+        ret.append(mainFunc).append("\n");
         return ret.toString();
     }
 

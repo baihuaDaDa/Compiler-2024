@@ -28,6 +28,8 @@ import Util.Type.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO 转义字符替换需要一次完成
+
 // optimize
 // TODO AST常量表达式折叠 + IR全局变量常量不用init
 // TODO return, break, continue后面的死代码删除
@@ -95,7 +97,8 @@ public class IRBuilder implements ASTVisitor {
             func.funcName = String.format("class.%s.%s", curScope.className, node.funcName);
             params.add(new IRLocalVar("this", new IRType("ptr")));
         }
-        program.funcDefs.add(func);
+        if (node.funcName.equals("main")) program.mainFunc = func;
+        else program.funcDefs.add(func);
         curScope = new IRScope(curScope);
         curBlock = func.body.getFirst();
         for (var param : node.paramList) {
@@ -159,7 +162,7 @@ public class IRBuilder implements ASTVisitor {
         curBlock = loopCond;
         curBlock.parent.body.add(loopCond);
         if (node.cond != null) {
-            node.accept(this);
+            node.cond.accept(this);
             if (lastExpr.value instanceof IRLiteral logic) {
                 if (logic.value == 0) curBlock.addInstr(new BrInstr(curBlock, null, loopEnd, null));
                 else curBlock.addInstr(new BrInstr(curBlock, null, loopBody, null));
@@ -297,15 +300,15 @@ public class IRBuilder implements ASTVisitor {
     public void visit(FuncCallExprNode node) {
         node.func.accept(this);
         var callInstr = new CallInstr(curBlock, null, lastExpr.func.funcName, new ArrayList<>());
-        if (!lastExpr.func.returnType.isVoid)
+        if (!lastExpr.func.returnType.isVoid) {
             callInstr.result = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), lastExpr.func.returnType);
+            lastExpr = new IRExpression(callInstr.result);
+        }
         for (var arg : node.args) {
             arg.accept(this);
             callInstr.args.add(lastExpr.value);
         }
         curBlock.addInstr(callInstr);
-        if (!lastExpr.func.returnType.isVoid)
-            lastExpr = new IRExpression(callInstr.result);
     }
     public void visit(MemberExprNode node) {
         node.classExpr.accept(this);
@@ -545,6 +548,8 @@ public class IRBuilder implements ASTVisitor {
                 program.globalVarDefs.add(new GlobalVarDefMod(newVar,
                         ((node.type.isInt || node.type.isBool) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true))));
                 if (varUnit.b != null) {
+                    if (program.initFunc == null)
+                        program.initFunc = new FuncDefMod(new IRType("void"), ".init", new ArrayList<>());
                     curBlock = program.initFunc.body.getLast();
                     varUnit.b.accept(this);
                     curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, newVar));
@@ -593,6 +598,8 @@ public class IRBuilder implements ASTVisitor {
         var ptr = new IRGlobalPtr(String.format(".arr.%d", program.constArrayCnt++), new IRType("ptr"));
         program.globalVarDefs.add(new GlobalVarDefMod(ptr, new IRLiteral(new IRType("ptr"), true)));
         var originBlock = curBlock;
+        if (program.initFunc == null)
+            program.initFunc = new FuncDefMod(new IRType("void"), ".init", new ArrayList<>());
         curBlock = program.initFunc.body.getLast();
         curBlock.addInstr(new StoreInstr(curBlock, NewConstArray(node), ptr));
         curBlock = originBlock;

@@ -17,8 +17,8 @@ public class BrInstr extends Instruction {
 
     @Override
     public String toString() {
-        if (cond != null) return "br i1 " + cond + ", label " + thenBlock + ", " + elseBlock;
-        return "br label " + thenBlock;
+        if (cond != null) return "br i1 " + cond + ", label %" + thenBlock.label + ", label %" + elseBlock.label;
+        return "br label %" + thenBlock.label;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class PhiInstr extends Instruction {
         StringBuilder ret = new StringBuilder();
         ret.append(result).append(" = phi ").append(result.type).append(" ");
         for (var pair : pairs) {
-            ret.append("[ ").append(pair.a).append(", ").append(pair.b).append(" ]");
+            ret.append("[ ").append(pair.a).append(", %").append(pair.b.label).append(" ]");
             if (pairs.indexOf(pair) != pairs.size() - 1)
                 ret.append(", ");
         }

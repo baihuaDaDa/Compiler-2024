@@ -74,9 +74,9 @@ public class SemanticChecker implements ASTVisitor {
             curScope.defineVar(param.b, param.a, node.pos);
         }
         node.body.accept(this);
-        if (node.type.isSameType(new ReturnType("void", 0)) && !(node.body.stmts.getLast() instanceof ReturnStmtNode))
+        if (node.type.isSameType(new ReturnType("void", 0)) && (node.body.stmts.isEmpty() || !(node.body.stmts.getLast() instanceof ReturnStmtNode)))
             node.body.stmts.add(new ReturnStmtNode(node.pos));
-        if (node.funcName.equals("main") && !(node.body.stmts.getLast() instanceof ReturnStmtNode)) {
+        if (node.funcName.equals("main") && (node.body.stmts.isEmpty() || !(node.body.stmts.getLast() instanceof ReturnStmtNode))) {
             var returnStmt = new ReturnStmtNode(node.pos);
             var atomExpr = new AtomExprNode(node.pos);
             var literal = new LiteralNode(node.pos);
