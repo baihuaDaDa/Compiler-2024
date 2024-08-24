@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR printer.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDeclMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/IRScope.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Type/IRType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Type/IRType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +177,6 @@
       <workItem from="1724390068576" duration="35201000" />
       <workItem from="1724490599109" duration="664000" />
       <workItem from="1724491519953" duration="27400000" />
-      <workItem from="1724535464021" duration="219000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
