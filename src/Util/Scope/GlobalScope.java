@@ -45,6 +45,7 @@ public class GlobalScope extends Scope {
         for (var varDef: node.varDefList)
             for (var var: varDef.vars)
                 defineClassMember(node.className, var.a, memberCnt++, varDef.type, node.pos);
+        setClassSize(node.className, 4 * memberCnt);
         for (var methodDef: node.methodDefList)
             defineClassMethod(node.className, methodDef.funcName, new FuncDecl(methodDef), node.pos);
     }

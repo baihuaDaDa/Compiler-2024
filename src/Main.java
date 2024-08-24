@@ -2,6 +2,7 @@ import AST.Program.ProgramNode;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
+import Midend.IRBuilder;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -32,6 +33,8 @@ public class Main {
             GlobalScope gScope = new GlobalScope();
             astRoot.accept(new SymbolCollector(gScope));
             astRoot.accept(new SemanticChecker(gScope));
+            IRBuilder irBuilder = new IRBuilder(gScope);
+            irBuilder.visit(astRoot);
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

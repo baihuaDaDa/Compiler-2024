@@ -14,7 +14,7 @@ public class FuncDefMod extends Module {
     public ArrayList<IRLocalVar> params;
     public ArrayList<IRBlock> body;
     public HashMap<String, Integer> localVars;
-    public int anonymousVarCnt = 0, loopCnt = 0, ifCnt = 0, ternaryCnt = 0;
+    public int anonymousVarCnt = 0, loopCnt = 0, ifCnt = 0, ternaryCnt = 0, andOrCnt = 0;
 
     public FuncDefMod(IRType returnType, String funcName, ArrayList<IRLocalVar> params) {
         this.returnType = returnType;

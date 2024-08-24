@@ -48,6 +48,8 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Invalid Constructor", "Wrong constructor", node.pos);
         curScope = new Scope(curScope, new ReturnType("void", 0));
         node.body.accept(this);
+        if (!(node.body.stmts.getLast() instanceof ReturnStmtNode))
+            node.body.stmts.add(new ReturnStmtNode(node.pos));
         curScope = curScope.getParent();
     }
 
@@ -72,7 +74,23 @@ public class SemanticChecker implements ASTVisitor {
             curScope.defineVar(param.b, param.a, node.pos);
         }
         node.body.accept(this);
-        if (!curScope.isReturned && !node.funcName.equals("main"))
+        if (node.type.isSameType(new ReturnType("void", 0)) && !(node.body.stmts.getLast() instanceof ReturnStmtNode))
+            node.body.stmts.add(new ReturnStmtNode(node.pos));
+        if (node.funcName.equals("main") && !(node.body.stmts.getLast() instanceof ReturnStmtNode)) {
+            var returnStmt = new ReturnStmtNode(node.pos);
+            var atomExpr = new AtomExprNode(node.pos);
+            var literal = new LiteralNode(node.pos);
+            literal.constInt = 0;
+            literal.type = new ExprType("int", 0);
+            atomExpr.isLiteral = true;
+            atomExpr.isLeftValue = false;
+            atomExpr.literal = literal;
+            atomExpr.type = new ExprType("int", 0);
+            returnStmt.returnValue = atomExpr;
+            node.body.stmts.add(returnStmt);
+            curScope.isReturned = true;
+        }
+        if (!curScope.isReturned)
             throw new SemanticError("Missing Return Statement", "Function " + node.funcName + " have not returned yet", node.pos);
         curScope = curScope.getParent();
     }

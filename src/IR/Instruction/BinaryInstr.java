@@ -37,8 +37,8 @@ public class BinaryInstr extends Instruction {
             case "%" -> "srem";
             case "<<" -> "shl";
             case ">>" -> "ashr";
-            case "&" -> "and";
-            case "|" -> "or";
+            case "&", "&&" -> "and";
+            case "|", "||" -> "or";
             case "^" -> "xor";
             default -> throw new RuntimeException("Unexpected operation: " + op);
         };

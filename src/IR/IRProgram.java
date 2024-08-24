@@ -14,6 +14,7 @@ public class IRProgram {
     public ArrayList<FuncDefMod> funcDefs = null;
     public FuncDefMod initFunc = null;
     public FuncDefMod mainFunc = null;
+    public int constArrayCnt = 0;
 
     public IRProgram() {
         funcDecls = new ArrayList<>();
@@ -39,11 +40,11 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.lessOrEqual", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.greater", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i1"), "string.greaterOrEqual", "ptr", "ptr"));
-        funcDecls.add(new FuncDeclMod(new IRType("ptr"), "string.cat", "ptr", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("i32"), "array.size", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.malloc", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.calloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.malloc", "i32", "i32"));
+        funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.calloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "i32", "i32", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.boolToString", "i1"));
     }

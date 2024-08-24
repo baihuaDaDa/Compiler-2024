@@ -1,7 +1,6 @@
 package Util.IRObject.IREntity;
 
 import AST.Literal.LiteralNode;
-import IR.Instruction.Instruction;
 import Util.Type.IRType;
 
 public class IRLiteral extends IREntity {
@@ -16,6 +15,13 @@ public class IRLiteral extends IREntity {
     public IRLiteral(IRType type, boolean isNull) {
         super(type);
         this.isNull = isNull;
+    }
+
+    public IRLiteral(LiteralNode node) {
+        super(new IRType(node.type));
+        if (node.type.isNull) isNull = true;
+        else if (node.type.isBool) value = node.constLogic ? 1 : 0;
+        else value = node.constInt;
     }
 
     @Override

@@ -303,18 +303,21 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
             fStringExpr.isExpr = false;
             fStringExpr.front = fString.Quote2Quote().getText();
             fStringExpr.front = fStringExpr.front.substring(2, fStringExpr.front.length() - 1);
+            fStringExpr.front = fStringExpr.front.replace("$$", "$");
         } else if (fString.Quote2Dollar() != null) {
             fStringExpr.isExpr = true;
             fStringExpr.front = fString.Quote2Dollar().getText();
             fStringExpr.front = fStringExpr.front.substring(2, fStringExpr.front.length() - 1);
+            fStringExpr.front = fStringExpr.front.replace("$$", "$");
             fStringExpr.back = fString.Dollar2Quote().getText();
             fStringExpr.back = fStringExpr.back.substring(1, fStringExpr.back.length() - 1);
+            fStringExpr.back = fStringExpr.back.replace("$$", "$");
             var expressions = fString.expression();
             var strings = fString.Dollar2Dollar();
             fStringExpr.exprList.add(new Pair<>(null, (ExprNode) visit(expressions.getFirst())));
             for (int i = 0; i < strings.size(); i++) {
                 String middleString = strings.get(i).getText();
-                fStringExpr.exprList.add(new Pair<>(middleString.substring(1, middleString.length() - 1), (ExprNode) visit(expressions.get(i + 1))));
+                fStringExpr.exprList.add(new Pair<>(middleString.substring(1, middleString.length() - 1).replace("$$", "$"), (ExprNode) visit(expressions.get(i + 1))));
             }
         }
         return fStringExpr;
@@ -329,6 +332,9 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         } else if (ctx.ConstString() != null) {
             literal.constString = ctx.ConstString().getText();
             literal.constString = literal.constString.substring(1, literal.constString.length() - 1);
+            literal.constString = literal.constString.replace("\\n", "\n");
+            literal.constString = literal.constString.replace("\\\\", "\\");
+            literal.constString = literal.constString.replace("\\\"", "\"");
             literal.type = new ExprType("string", 0);
         } else if (ctx.logic() != null) {
             literal.constLogic = ctx.logic().True() != null;

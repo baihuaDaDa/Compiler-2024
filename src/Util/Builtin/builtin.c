@@ -8,8 +8,6 @@ int scanf(const char *pattern, ...);
 int sscanf(const char *src, const char *pattern, ...);
 size_t strlen(const char *str);
 int strcmp(const char *s1, const char *s2);
-char *strcpy(char *dest, const char *src);
-char *strcat(char *dest, const char *src);
 void *memcpy(void *dest, const void *src, size_t n);
 void *malloc(size_t n);
 void *calloc(size_t n, size_t size);
@@ -105,10 +103,6 @@ bool string_greaterOrEqual(char *str1, char *str2) {
     return strcmp(str1, str2) >= 0;
 }
 
-char *string_cat(char *dest, char *src) {
-    return strcat(dest, src);
-}
-
 int array_size(void *arr) {
     return ((int*)arr)[-1];
 }
@@ -121,8 +115,14 @@ void *_builtin_calloc(int size) {
     return calloc((size_t)(1), (size_t)(size));
 }
 
-void *array_malloc(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
+void *array_malloc(int size, int length) {
     int *tmp = (int *) malloc(size * length + 4);
+    tmp[0] = length;
+    return tmp + 1;
+}
+
+void *array_calloc(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
+    int *tmp = (int *) calloc(size, length + 1);
     tmp[0] = length;
     return tmp + 1;
 }
