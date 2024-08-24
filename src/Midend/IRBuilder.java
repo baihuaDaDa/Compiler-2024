@@ -28,7 +28,6 @@ import Util.Type.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO IRPrinter
 // TODO IR转义字符
 
 // optimize

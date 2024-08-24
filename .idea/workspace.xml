@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish IR builder.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/ASTBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frontend/SemanticChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/StringLiteralDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Builtin/builtin.ll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/IRObject/IREntity/IRLiteral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/IRObject/IREntity/IRLiteral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Scope/GlobalScope.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +167,7 @@
       <workItem from="1724306176831" duration="34859000" />
       <workItem from="1724390068576" duration="35201000" />
       <workItem from="1724490599109" duration="664000" />
-      <workItem from="1724491519953" duration="18908000" />
+      <workItem from="1724491519953" duration="20150000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -433,7 +425,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724454130357</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Upd: finish IR builder.">
+      <option name="closed" value="true" />
+      <created>1724521872779</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1724521872779</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -451,7 +451,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish global scope." />
     <MESSAGE value="Upd: finish symbol collector." />
     <MESSAGE value="Upd: finish AST builder" />
     <MESSAGE value="Upd: finish Main (Semantic Part)." />
@@ -476,19 +475,20 @@
     <MESSAGE value="Upd: finish LLVM IR statements and modules (except variable definitions)." />
     <MESSAGE value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
     <MESSAGE value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
+    <MESSAGE value="Upd: finish IR builder." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish IR builder." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>312</line>
+          <line>328</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>334</line>
+          <line>350</line>
           <properties class="Frontend.SemanticChecker" method="visit">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

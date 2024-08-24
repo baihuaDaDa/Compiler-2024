@@ -14,7 +14,11 @@ public class StringLiteralDefMod extends Module {
 
     @Override
     public String toString() {
-        return ptr + " = private unnamed_addr constant [" + (value.length() + 1) +  " x i8]" + " c\"" + value + "\"";
+        StringBuilder ret = new StringBuilder();
+        ret.append(ptr).append(" = private unnamed_addr constant [").append(value.length() + 1).append(" x i8] c\"");
+        ret.append(value.replace("\n", "\\0A").replace("\\", "\\\\").replace("\"", "\\\""));
+        ret.append("\\00\"");
+        return ret.toString();
     }
 
     @Override
