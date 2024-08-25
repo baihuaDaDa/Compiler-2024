@@ -365,7 +365,7 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
             for (var literal : ctx.literal()) {
                 var literalNode = (LiteralNode) visit(literal);
                 if (constArray.arrayType == null)
-                    constArray.arrayType = literalNode.type;
+                    constArray.arrayType = new ExprType(literalNode.type);
                 else if (!constArray.arrayType.isSameType(literalNode.type))
                     throw new SemanticError("Type Mismatch", "Inconsistent types in const array", new Position(ctx));
                 if ((constArray.arrayType.isArbitrary || constArray.arrayType.isNull) && !literalNode.type.isNull && !literalNode.type.isArbitrary)

@@ -306,11 +306,11 @@ public class IRBuilder implements ASTVisitor {
     }
     public void visit(NewTypeExprNode node) {
         var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
-        ArrayList<IREntity> args = new ArrayList<>();
-        args.add(new IRLiteral(new IRType("i32"), gScope.getClassSize(node.newType.baseTypename)));
-        curBlock.addInstr(new CallInstr(curBlock, tmp, ".builtin.malloc", args));
+        ArrayList<IREntity> mallocArgs = new ArrayList<>();
+        mallocArgs.add(new IRLiteral(new IRType("i32"), gScope.getClassSize(node.newType.baseTypename)));
+        curBlock.addInstr(new CallInstr(curBlock, tmp, ".builtin.malloc", mallocArgs));
         if (gScope.hasOverrideConstructor(node.newType.baseTypename)) {
-            args.clear();
+            ArrayList<IREntity> args = new ArrayList<>();
             args.add(tmp);
             curBlock.addInstr(new CallInstr(curBlock, null, String.format("class.%s.%s", node.newType.baseTypename, node.newType.baseTypename), args));
         }
