@@ -15,5 +15,6 @@ public class ClassDecl {
     public ClassDecl() {
         members = new HashMap<>();
         methods = new HashMap<>();
+        memberIndices = new HashMap<>();
     }
 }

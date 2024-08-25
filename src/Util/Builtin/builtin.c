@@ -111,8 +111,8 @@ void *_builtin_malloc(int size) {
     return malloc((size_t)(size));
 }
 
-void *_builtin_calloc(int size) {
-    return calloc((size_t)(1), (size_t)(size));
+void *_builtin_calloc(int num, int size) {
+    return calloc((size_t)(num), (size_t)(size));
 }
 
 void *array_malloc(int size, int length) {
@@ -122,12 +122,12 @@ void *array_malloc(int size, int length) {
 }
 
 void *array_calloc(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
-    int *tmp = (int *) calloc(size, length + 1);
+    int *tmp = (int *) calloc(size * length + 4, 1);
     tmp[0] = length;
     return tmp + 1;
 }
 
-void *array_copy(int size, int dim, void *constArr) {
+void *array_copy(void *constArr, int size, int dim) {
     if (constArr == 0) return 0;
     int length = array_size(constArr);
     if (dim == 1) {
@@ -137,7 +137,7 @@ void *array_copy(int size, int dim, void *constArr) {
     } else {
         int *arr = (int *) array_malloc(4, length);
         for (int i = 0; i < length; ++i)
-            arr[i] = (int) array_copy(size, dim - 1, (void *) ((int*)constArr)[i]);
+            arr[i] = (int) array_copy((void *) ((int*)constArr)[i], size, dim - 1);
     }
 }
 

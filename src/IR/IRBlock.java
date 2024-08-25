@@ -1,6 +1,8 @@
 package IR;
 
+import IR.Instruction.BrInstr;
 import IR.Instruction.Instruction;
+import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
 import java.util.ArrayList;

@@ -193,9 +193,9 @@ define dso_local noalias noundef ptr @.builtin.malloc(i32 noundef %0) local_unna
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite)
-define dso_local noalias noundef ptr @.builtin.calloc(i32 noundef %0) local_unnamed_addr #7 {
-  %2 = tail call ptr @calloc(i32 noundef 1, i32 noundef %0) #12
-  ret ptr %2
+define dso_local noalias noundef ptr @.builtin.calloc(i32 noundef %0, i32 noundef %1) local_unnamed_addr #7 {
+  %3 = tail call ptr @calloc(i32 noundef %0, i32 noundef %1) #12
+  ret ptr %3
 }
 
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite)
@@ -213,22 +213,23 @@ define dso_local noalias nonnull ptr @array.malloc(i32 noundef %0, i32 noundef %
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite)
 define dso_local noalias nonnull ptr @array.calloc(i32 noundef %0, i32 noundef %1) local_unnamed_addr #9 {
-  %3 = add nsw i32 %1, 1
-  %4 = tail call ptr @calloc(i32 noundef %0, i32 noundef %3) #12
-  store i32 %1, ptr %4, align 4, !tbaa !6
-  %5 = getelementptr inbounds i32, ptr %4, i32 1
-  ret ptr %5
+  %3 = mul nsw i32 %1, %0
+  %4 = add nsw i32 %3, 4
+  %5 = tail call ptr @calloc(i32 noundef %4, i32 noundef 1) #12
+  store i32 %1, ptr %5, align 4, !tbaa !6
+  %6 = getelementptr inbounds i32, ptr %5, i32 1
+  ret ptr %6
 }
 
 ; Function Attrs: nounwind
-define dso_local ptr @array.copy(i32 noundef %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
-  %4 = icmp eq ptr %2, null
+define dso_local ptr @array.copy(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+  %4 = icmp eq ptr %0, null
   br i1 %4, label %27, label %5
 
 5:                                                ; preds = %3
-  %6 = getelementptr inbounds i32, ptr %2, i32 -1
+  %6 = getelementptr inbounds i32, ptr %0, i32 -1
   %7 = load i32, ptr %6, align 4, !tbaa !6
-  %8 = icmp eq i32 %1, 1
+  %8 = icmp eq i32 %2, 1
   br i1 %8, label %13, label %9
 
 9:                                                ; preds = %5
@@ -236,24 +237,24 @@ define dso_local ptr @array.copy(i32 noundef %0, i32 noundef %1, ptr noundef %2)
   br i1 %10, label %11, label %27
 
 11:                                               ; preds = %9
-  %12 = add nsw i32 %1, -1
+  %12 = add nsw i32 %2, -1
   br label %19
 
 13:                                               ; preds = %5
-  %14 = mul nsw i32 %7, %0
+  %14 = mul nsw i32 %7, %1
   %15 = add nsw i32 %14, 4
   %16 = tail call ptr @malloc(i32 noundef %15) #12
   store i32 %7, ptr %16, align 4, !tbaa !6
   %17 = getelementptr inbounds i32, ptr %16, i32 1
-  %18 = tail call ptr @memcpy(ptr noundef nonnull %17, ptr noundef nonnull %2, i32 noundef %14) #11
+  %18 = tail call ptr @memcpy(ptr noundef nonnull %17, ptr noundef nonnull %0, i32 noundef %14) #11
   br label %27
 
 19:                                               ; preds = %11, %19
   %20 = phi i32 [ 0, %11 ], [ %25, %19 ]
-  %21 = getelementptr inbounds i32, ptr %2, i32 %20
+  %21 = getelementptr inbounds i32, ptr %0, i32 %20
   %22 = load i32, ptr %21, align 4, !tbaa !6
   %23 = inttoptr i32 %22 to ptr
-  %24 = tail call ptr @array.copy(i32 noundef %0, i32 noundef %12, ptr noundef %23) #12
+  %24 = tail call ptr @array.copy(ptr noundef %23, i32 noundef %1, i32 noundef %12) #12
   %25 = add nuw nsw i32 %20, 1
   %26 = icmp eq i32 %25, %7
   br i1 %26, label %27, label %19, !llvm.loop !11

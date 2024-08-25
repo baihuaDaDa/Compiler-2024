@@ -332,9 +332,18 @@ public class ASTBuilder extends MxBaseVisitor<ASTNode> {
         } else if (ctx.ConstString() != null) {
             literal.constString = ctx.ConstString().getText();
             literal.constString = literal.constString.substring(1, literal.constString.length() - 1);
-            literal.constString = literal.constString.replace("\\\\", "\\");
-            literal.constString = literal.constString.replace("\\n", "\n");
-            literal.constString = literal.constString.replace("\\\"", "\"");
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0 ; i < literal.constString.length(); i++) {
+                if (literal.constString.charAt(i) == '\\') {
+                    i++;
+                    switch (literal.constString.charAt(i)) {
+                        case 'n' -> sb.append('\n');
+                        case '\"' -> sb.append('\"');
+                        case '\\' -> sb.append('\\');
+                    }
+                } else sb.append(literal.constString.charAt(i));
+            }
+            literal.constString = sb.toString();
             literal.type = new ExprType("string", 0);
         } else if (ctx.logic() != null) {
             literal.constLogic = ctx.logic().True() != null;

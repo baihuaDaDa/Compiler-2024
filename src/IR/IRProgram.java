@@ -45,7 +45,7 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.calloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.malloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.calloc", "i32", "i32"));
-        funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "i32", "i32", "ptr"));
+        funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "ptr", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.boolToString", "i1"));
     }
 

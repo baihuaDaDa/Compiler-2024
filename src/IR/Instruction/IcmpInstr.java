@@ -20,7 +20,7 @@ public class IcmpInstr extends Instruction {
 
     @Override
     public String toString() {
-        return result + " = icmp " + cond + " " + result.type + " " + lhs + ", " + rhs;
+        return result + " = icmp " + cond + " " + lhs.type + " " + lhs + ", " + rhs;
     }
 
     @Override

@@ -26,6 +26,6 @@ public class IRLiteral extends IREntity {
 
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return isNull ? "null" : Integer.toString(value);
     }
 }
