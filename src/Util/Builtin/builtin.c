@@ -10,7 +10,6 @@ size_t strlen(const char *str);
 int strcmp(const char *s1, const char *s2);
 void *memcpy(void *dest, const void *src, size_t n);
 void *malloc(size_t n);
-void *calloc(size_t n, size_t size);
 
 void print(char *str) {
     printf("%s", str);
@@ -111,18 +110,8 @@ void *_builtin_malloc(int size) {
     return malloc((size_t)(size));
 }
 
-void *_builtin_calloc(int num, int size) {
-    return calloc((size_t)(num), (size_t)(size));
-}
-
 void *array_malloc(int size, int length) {
     int *tmp = (int *) malloc(size * length + 4);
-    tmp[0] = length;
-    return tmp + 1;
-}
-
-void *array_calloc(int size, int length) { // size 为每个元素占几个字节，length 为数组长度
-    int *tmp = (int *) calloc(size * length + 4, 1);
     tmp[0] = length;
     return tmp + 1;
 }

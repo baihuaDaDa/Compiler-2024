@@ -256,7 +256,7 @@ public class IRBuilder implements ASTVisitor {
         ArrayList<IREntity> args = new ArrayList<>();
         args.add(new IRLiteral(new IRType("i32"), 4));
         args.add(sizes.get(dim));
-        curBlock.addInstr(new CallInstr(curBlock, newArr, "array.calloc", args));
+        curBlock.addInstr(new CallInstr(curBlock, newArr, "array.malloc", args));
         if (dim < sizes.size() - 1) {
             int loopNo = curBlock.parent.loopCnt++;
             IRBlock loopCond = new IRBlock(curBlock.parent, String.format("loop_cond.%d", loopNo));
@@ -307,9 +307,8 @@ public class IRBuilder implements ASTVisitor {
     public void visit(NewTypeExprNode node) {
         var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
         ArrayList<IREntity> args = new ArrayList<>();
-        args.add(new IRLiteral(new IRType("i32"), 1));
         args.add(new IRLiteral(new IRType("i32"), gScope.getClassSize(node.newType.baseTypename)));
-        curBlock.addInstr(new CallInstr(curBlock, tmp, ".builtin.calloc", args));
+        curBlock.addInstr(new CallInstr(curBlock, tmp, ".builtin.malloc", args));
         if (gScope.hasOverrideConstructor(node.newType.baseTypename)) {
             args.clear();
             args.add(tmp);
@@ -600,14 +599,12 @@ public class IRBuilder implements ASTVisitor {
         ArrayList<IREntity> args = new ArrayList<>();
         args.add(new IRLiteral(new IRType("i32"), 4));
         args.add(new IRLiteral(new IRType("i32"), node.constArray.size()));
-        curBlock.addInstr(new CallInstr(curBlock, newArr, "array.calloc", args));
+        curBlock.addInstr(new CallInstr(curBlock, newArr, "array.malloc", args));
         if (node.arrayType.dim > 1) {
             for (int i = 0; i < node.constArray.size(); i++) {
                 var ptr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
-                if (!node.constArray.get(i).type.isNull) {
-                    curBlock.addInstr(new GetelementptrInstr(curBlock, ptr, "ptr", newArr, new IRLiteral(new IRType("i32"), i)));
-                    curBlock.addInstr(new StoreInstr(curBlock, NewConstArray(node.constArray.get(i).constArray), ptr));
-                }
+                curBlock.addInstr(new GetelementptrInstr(curBlock, ptr, "ptr", newArr, new IRLiteral(new IRType("i32"), i)));
+                curBlock.addInstr(new StoreInstr(curBlock, (node.constArray.get(i).type.isNull ? new IRLiteral(new IRType("ptr"), true) : NewConstArray(node.constArray.get(i).constArray)), ptr));
             }
         } else {
             for (int i = 0; i < node.constArray.size(); i++) {
