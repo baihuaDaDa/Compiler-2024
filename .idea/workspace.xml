@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Reset." />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: pass all the LLVM IR tests!">
+      <change afterPath="$PROJECT_DIR$/src/ASM/ASMProgram.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/ASMSection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/BTypeInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryImmInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/CallInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/Instruction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/JInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/LaInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/LiInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/MvInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/RetInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/SwInstr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Module/GlobalVarDefMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Module/Module.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Module/StringLiteralMod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ASM/Operand/PhysicalReg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,36 +56,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/IdeaProjects/test",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/test&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Util/Builtin/builtin_intermediate.ll&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024\src\Parser" />
@@ -156,6 +178,10 @@
       <workItem from="1724490599109" duration="664000" />
       <workItem from="1724491519953" duration="27400000" />
       <workItem from="1724536227354" duration="393000" />
+      <workItem from="1724536628871" duration="57000" />
+      <workItem from="1724536692270" duration="5114000" />
+      <workItem from="1724564081377" duration="35273000" />
+      <workItem from="1724649391573" duration="23433000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -445,7 +471,47 @@
       <option name="project" value="LOCAL" />
       <updated>1724536473527</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Reset.">
+      <option name="closed" value="true" />
+      <created>1724536642352</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1724536642352</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Fix: fix some problems and pass `basic-2.mx`.">
+      <option name="closed" value="true" />
+      <created>1724541802551</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1724541802551</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Fix: fix most of the problems; only 6 testcases left failed.">
+      <option name="closed" value="true" />
+      <created>1724606360185</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1724606360185</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fix: fix most of the problems; only 1 testcases left failed.">
+      <option name="closed" value="true" />
+      <created>1724614042471</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1724614042471</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Fix: pass all the LLVM IR tests!">
+      <option name="closed" value="true" />
+      <created>1724616251612</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1724616251612</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -463,10 +529,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish Main (Semantic Part)." />
-    <MESSAGE value="Upd: revise the class set of Types at the aim of processing empty const arrays." />
-    <MESSAGE value="Upd: almost finish the semantic checker." />
-    <MESSAGE value="Upd: finish the semantic checker." />
     <MESSAGE value="Fix: some problems about calling class methods." />
     <MESSAGE value="Upd: add Makefile." />
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
@@ -488,24 +550,19 @@
     <MESSAGE value="Upd: finish IR builder." />
     <MESSAGE value="Upd: finish IR printer." />
     <MESSAGE value="Reset." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reset." />
+    <MESSAGE value="Fix: fix some problems and pass `basic-2.mx`." />
+    <MESSAGE value="Fix: fix most of the problems; only 6 testcases left failed." />
+    <MESSAGE value="Fix: fix most of the problems; only 1 testcases left failed." />
+    <MESSAGE value="Fix: pass all the LLVM IR tests!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: pass all the LLVM IR tests!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>328</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Frontend/SemanticChecker.java</url>
-          <line>350</line>
-          <properties class="Frontend.SemanticChecker" method="visit">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="29" />
+          <url>file://$PROJECT_DIR$/src/Util/Type/IRType.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
