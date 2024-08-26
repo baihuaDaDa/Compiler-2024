@@ -7,10 +7,16 @@ public class ASMProgram {
 
     public ASMProgram() {
         sections = new ArrayList<>();
+        sections.add(new ASMSection("text"));
+        sections.add(new ASMSection("data"));
+        sections.add(new ASMSection("rodata"));
     }
 
-    public void addSection(ASMSection section) {
-        sections.add(section);
+    public ASMSection getSection(String name) {
+        for (ASMSection section : sections)
+            if (section.name.equals(name))
+                return section;
+        return null;
     }
 
     @Override

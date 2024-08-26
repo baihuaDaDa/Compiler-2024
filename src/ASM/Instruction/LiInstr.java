@@ -5,9 +5,9 @@ import ASM.Operand.PhysicalReg;
 
 public class LiInstr extends Instruction {
     public PhysicalReg dst;
-    public String imm; // pseudo -> allow 32-bit imm
+    public int imm; // pseudo -> allow 32-bit imm
 
-    public LiInstr(Block parent, PhysicalReg dst, String imm) {
+    public LiInstr(Block parent, PhysicalReg dst, int imm) {
         super(parent, "li");
         this.dst = dst;
         this.imm = imm;

@@ -1,6 +1,5 @@
 package ASM;
 
-import ASM.Module.Block;
 import ASM.Module.Module;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class ASMSection {
         modules = new ArrayList<>();
     }
 
-    public void addBlock(Module block) {
+    public void addModule(Module block) {
         modules.add(block);
     }
 
