@@ -2,7 +2,7 @@ JAVA_SRC = $(shell find src -name '*.java')
 
 ANTLR_JAR = /ulib/antlr-4.13.1-complete.jar
 
-MAIN_CLASS = Compiler
+MAIN_CLASS = OnlineJudge
 
 .PHONY: build
 build:

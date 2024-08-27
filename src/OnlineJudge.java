@@ -18,12 +18,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class Main {
+public class OnlineJudge {
     public static void main(String[] args) throws Exception {
-//        String testcaseName = "sema", packageName = "basic", ind = "71";
-//        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/optim/sha_1.mx");
-        OutputStream output = new FileOutputStream("test.s");
+        InputStream input = System.in;
+        InputStream builtin = new FileInputStream("src/Util/Builtin/builtin.s");
+        OutputStream output = System.out;
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();
@@ -41,6 +40,7 @@ public class Main {
             irBuilder.visit(astRoot);
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
+            output.write(builtin.readAllBytes());
             output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
