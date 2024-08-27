@@ -245,9 +245,9 @@ public class IRBuilder implements ASTVisitor {
         node.constArray.accept(this);
         var newArr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
         ArrayList<IREntity> args = new ArrayList<>();
+        args.add(lastExpr.value);
         args.add(new IRLiteral(new IRType("i32"), 4));
         args.add(new IRLiteral(new IRType("i32"), node.type.dim));
-        args.add(lastExpr.value);
         curBlock.addInstr(new CallInstr(curBlock, newArr, "array.copy", args));
         lastExpr = new IRExpression(newArr);
     }
@@ -543,6 +543,17 @@ public class IRBuilder implements ASTVisitor {
             lastExpr = new IRExpression(thisPtr);
         }
     }
+    private IREntity intBoolStringToString(IREntity entity) {
+        if (entity.type.isSameType(new IRType("i1"))) {
+            var tmpBool = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+            curBlock.addInstr(new CallInstr(curBlock, tmpBool, ".builtin.boolToString", new ArrayList<>(List.of(entity))));
+            return tmpBool;
+        } if (entity.type.isSameType(new IRType("i32"))) {
+            var tmpInt = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+            curBlock.addInstr(new CallInstr(curBlock, tmpInt, "toString", new ArrayList<>(List.of(entity))));
+            return tmpInt;
+        } else return entity;
+    }
     public void visit(FStringExprNode node) {
         if (node.isExpr) {
             ArrayList<IREntity> expressions = new ArrayList<>();
@@ -551,21 +562,18 @@ public class IRBuilder implements ASTVisitor {
                 expressions.add(lastExpr.value);
             }
             var tmpFront = NewStringLiteral(node.front);
+            var tmpExpr = intBoolStringToString(expressions.getFirst());
             var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
-            if (expressions.getFirst().type.isSameType(new IRType("i1"))) {
-                // bool: 1->true, 0->false
-                var tmpBool = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
-                curBlock.addInstr(new CallInstr(curBlock, tmpBool, ".builtin.boolToString", new ArrayList<>(List.of(expressions.getFirst()))));
-                curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(tmpFront, tmpBool))));
-            } else curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(tmpFront, expressions.getFirst()))));
+            curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(tmpFront, tmpExpr))));
             var lastTmp = tmp;
             for (int i = 1; i < expressions.size(); i++) {
                 tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
                 var tmpMid = NewStringLiteral(node.exprList.get(i).a);
                 curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(lastTmp, tmpMid))));
                 lastTmp = tmp;
+                tmpExpr = intBoolStringToString(expressions.get(i));
                 tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
-                curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(lastTmp, expressions.get(i)))));
+                curBlock.addInstr(new CallInstr(curBlock, tmp, "string.add", new ArrayList<>(List.of(lastTmp, tmpExpr))));
                 lastTmp = tmp;
             }
             var tmpBack = NewStringLiteral(node.back);

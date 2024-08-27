@@ -2,7 +2,7 @@ JAVA_SRC = $(shell find src -name '*.java')
 
 ANTLR_JAR = /ulib/antlr-4.13.1-complete.jar
 
-MAIN_CLASS = Main
+MAIN_CLASS = Compiler
 
 .PHONY: build
 build:
