@@ -16,6 +16,7 @@ public class FuncDefMod extends Module {
     public FuncDefMod(ASMSection parent, String label) {
         super(parent, label);
         body = new ArrayList<>();
+        paramMap = new HashMap<>();
         virtualRegMap = new HashMap<>();
         allocPtrMap = new HashMap<>();
         body.add(new Block(this, label));
@@ -38,7 +39,7 @@ public class FuncDefMod extends Module {
     }
 
     public int getParamReg(String name) {
-        return (paramMap.get(name) + stackSize) * 4;
+        return paramMap.get(name) * 4 + stackSize;
     }
 
     public int getAllocPtr(String name) {
@@ -60,7 +61,7 @@ public class FuncDefMod extends Module {
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        ret.append(String.format("\t%-8s", ".globl")).append(label);
+        ret.append(String.format("\t%-8s", ".globl")).append(label).append("\n");
         for (Block block : body)
             ret.append(block);
         ret.append("\n");

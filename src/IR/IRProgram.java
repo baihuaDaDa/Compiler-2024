@@ -15,6 +15,7 @@ public class IRProgram {
     public FuncDefMod initFunc = null;
     public FuncDefMod mainFunc = null;
     public int constArrayCnt = 0;
+    public int loopCnt = 0, ifCnt = 0, ternaryCnt = 0, andOrCnt = 0;
 
     public IRProgram() {
         funcDecls = new ArrayList<>();

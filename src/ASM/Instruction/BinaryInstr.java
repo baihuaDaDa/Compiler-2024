@@ -27,6 +27,6 @@ public class BinaryInstr extends Instruction {
 
     @Override
     public String toString() {
-        return String.format("%-8s%s, %s, %s", instr, dst, src1, src1);
+        return String.format("%-8s%s, %s, %s", instr, dst, src1, src2);
     }
 }

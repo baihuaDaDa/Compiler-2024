@@ -138,7 +138,7 @@ public class IRBuilder implements ASTVisitor {
     }
     public void visit(IfStmtNode node) {
         node.condition.accept(this);
-        int ifNo =  curBlock.parent.ifCnt++;
+        int ifNo =  program.ifCnt++;
         IRBlock thenBlock = new IRBlock(curBlock.parent, String.format("if_then.%d", ifNo));
         IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("if_else.%d", ifNo));
         IRBlock endBlock = new IRBlock(curBlock.parent, String.format("if_end.%d", ifNo));
@@ -162,7 +162,7 @@ public class IRBuilder implements ASTVisitor {
         curBlock.parent.body.add(endBlock);
     }
     public void visit(ForStmtNode node) {
-        int loopNo = curBlock.parent.loopCnt++;
+        int loopNo = program.loopCnt++;
         IRBlock loopCond = new IRBlock(curBlock.parent, String.format("loop_cond.%d", loopNo));
         IRBlock loopBody = new IRBlock(curBlock.parent, String.format("loop_body.%d", loopNo));
         IRBlock loopStep = new IRBlock(curBlock.parent, String.format("loop_step.%d", loopNo));
@@ -196,7 +196,7 @@ public class IRBuilder implements ASTVisitor {
         curScope = curScope.parent;
     }
     public void visit(WhileStmtNode node) {
-        int loopNo = curBlock.parent.loopCnt++;
+        int loopNo = program.loopCnt++;
         IRBlock loopCond = new IRBlock(curBlock.parent, String.format("loop_cond.%d", loopNo));
         IRBlock loopBody = new IRBlock(curBlock.parent, String.format("loop_body.%d", loopNo));
         IRBlock loopEnd = new IRBlock(curBlock.parent, String.format("loop_end.%d", loopNo));
@@ -258,7 +258,7 @@ public class IRBuilder implements ASTVisitor {
         args.add(sizes.get(dim));
         curBlock.addInstr(new CallInstr(curBlock, newArr, "array.malloc", args));
         if (dim < sizes.size() - 1) {
-            int loopNo = curBlock.parent.loopCnt++;
+            int loopNo = program.loopCnt++;
             IRBlock loopCond = new IRBlock(curBlock.parent, String.format("loop_cond.%d", loopNo));
             IRBlock loopBody = new IRBlock(curBlock.parent, String.format("loop_body.%d", loopNo));
             IRBlock loopStep = new IRBlock(curBlock.parent, String.format("loop_step.%d", loopNo));
@@ -418,14 +418,19 @@ public class IRBuilder implements ASTVisitor {
             case "&&", "||" -> {
                 var ptr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
                 curBlock.addInstr(new AllocaInstr(curBlock, ptr, new IRType("i1")));
-                int no = curBlock.parent.andOrCnt++;
+                int no = program.andOrCnt++;
                 IRBlock rhsBlock = new IRBlock(curBlock.parent, String.format("and_or_rhs.%d", no));
                 IRBlock endBlock = new IRBlock(curBlock.parent, String.format("and_or_end.%d", no));
                 node.lhs.accept(this);
                 var lhs = lastExpr.value;
                 curBlock.addInstr(new StoreInstr(curBlock, lhs, ptr));
-                if (node.op.equals("&&")) curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, rhsBlock, endBlock));
-                else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, endBlock, rhsBlock));
+                if (lhs instanceof IRLiteral) {
+                    if (node.op.equals("&&")) curBlock.addInstr(new BrInstr(curBlock, null, ((IRLiteral) lhs).value == 0 ? endBlock : rhsBlock, null));
+                    else curBlock.addInstr(new BrInstr(curBlock, null, ((IRLiteral) lhs).value == 0 ? rhsBlock : endBlock, null));
+                } else {
+                    if (node.op.equals("&&")) curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, rhsBlock, endBlock));
+                    else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, endBlock, rhsBlock));
+                }
                 curBlock = rhsBlock;
                 curBlock.parent.body.add(rhsBlock);
                 node.rhs.accept(this);
@@ -457,7 +462,7 @@ public class IRBuilder implements ASTVisitor {
     }
     public void visit(TernaryExprNode node) {
         node.condition.accept(this);
-        int ternaryNo = curBlock.parent.ternaryCnt++;
+        int ternaryNo = program.ternaryCnt++;
         IRBlock thenBlock = new IRBlock(curBlock.parent, String.format("ternary_then.%d", ternaryNo));
         IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", ternaryNo));
         IRBlock endBlock = new IRBlock(curBlock.parent, String.format("ternary_end.%d", ternaryNo));
@@ -522,7 +527,7 @@ public class IRBuilder implements ASTVisitor {
             IRVariable ptr;
             if (curScope != null && curScope.getVarNo(node.identifier) > 0) {
                 ptr = new IRLocalVar(String.format("%s.%d", node.identifier, curScope.getVarNo(node.identifier)), new IRType("ptr"));
-            } else if (curScope != null && curScope.className != null) {
+            } else if (curScope != null && curScope.className != null && gScope.getClassMember(new Type(curScope.className, 0), node.identifier) != null) {
                 var thisPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
                 ptr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
                 curBlock.addInstr(new LoadInstr(curBlock, thisPtr, new IRLocalVar("this.1", new IRType("ptr"))));

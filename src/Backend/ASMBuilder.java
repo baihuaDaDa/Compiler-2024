@@ -15,7 +15,6 @@ import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRGlobalPtr;
 import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
-import Util.Scope.GlobalScope;
 
 public class ASMBuilder implements IRVisitor {
     public ASMProgram program;
@@ -26,7 +25,11 @@ public class ASMBuilder implements IRVisitor {
     }
 
     public void visit(IRProgram program) {
-        program.accept(this);
+        for (var func : program.funcDefs) func.accept(this);
+        if (program.initFunc != null) program.initFunc.accept(this);
+        program.mainFunc.accept(this);
+        for (var globalVar : program.globalVarDefs) globalVar.accept(this);
+        for (var stringLiteral : program.stringLiteralDefs) stringLiteral.accept(this);
     }
     public void visit(IRBlock block) {
         if (!block.label.equals("entry")) {
@@ -48,7 +51,7 @@ public class ASMBuilder implements IRVisitor {
                 curBlock.addInstr(new LwInstr(curBlock, dst, offset, PhysicalReg.get("sp")));
                 return dst;
             } else if (curBlock.parent.isParamReg(((IRLocalVar) entity).name)) {
-                int index = curBlock.parent.getParamReg(((IRLocalVar) entity).name);
+                int index = curBlock.parent.paramMap.get(((IRLocalVar) entity).name);
                 if (index < 8) return PhysicalReg.get("a" + index);
                 else {
                     int offset = curBlock.parent.getParamReg(((IRLocalVar) entity).name);
@@ -57,7 +60,7 @@ public class ASMBuilder implements IRVisitor {
                 }
             }
         } else if (entity instanceof IRGlobalPtr) {
-            curBlock.addInstr(new LaInstr(curBlock, PhysicalReg.get("t0"), ((IRGlobalPtr) entity).name));
+            curBlock.addInstr(new LaInstr(curBlock, dst, ((IRGlobalPtr) entity).name));
             return dst;
         }
         return null;
@@ -65,6 +68,7 @@ public class ASMBuilder implements IRVisitor {
 
     public void visit(AllocaInstr instr) {}
     public void visit(IR.Instruction.BinaryInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         int offset = curBlock.parent.getVirtualReg(instr.result.name);
         loadReg(instr.lhs, PhysicalReg.get("t0"));
         loadReg(instr.rhs, PhysicalReg.get("t1"));
@@ -72,17 +76,19 @@ public class ASMBuilder implements IRVisitor {
         curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t2"), offset, PhysicalReg.get("sp")));
     }
     public void visit(BrInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         if (instr.cond != null) {
             loadReg(instr.cond, PhysicalReg.get("t0"));
-            Block brFalse = new Block(curBlock.parent, String.format("br.False.%d", program.brCnt++));
-            curBlock.addInstr(new BnezInstr(curBlock, PhysicalReg.get("t0"), brFalse.label));
-            curBlock.addInstr(new JInstr(curBlock, instr.thenBlock.label));
-            curBlock.parent.addBlock(brFalse);
-            curBlock = brFalse;
+            Block brTure = new Block(curBlock.parent, String.format("br_true.%d", program.brCnt++));
+            curBlock.addInstr(new BnezInstr(curBlock, PhysicalReg.get("t0"), brTure.label));
             curBlock.addInstr(new JInstr(curBlock, instr.elseBlock.label));
+            curBlock.parent.addBlock(brTure);
+            curBlock = brTure;
+            curBlock.addInstr(new JInstr(curBlock, instr.thenBlock.label));
         } else curBlock.addInstr(new JInstr(curBlock, instr.thenBlock.label));
     }
     public void visit(IR.Instruction.CallInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         int offset;
         for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
             offset = curBlock.parent.getArgReg(i);
@@ -97,27 +103,31 @@ public class ASMBuilder implements IRVisitor {
             }
         }
         curBlock.addInstr(new ASM.Instruction.CallInstr(curBlock, instr.funcName));
-        offset = curBlock.parent.getVirtualReg(instr.result.name);
-        if (instr.result != null) curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("a0"), offset, PhysicalReg.get("sp")));
+        if (instr.result != null) {
+            offset = curBlock.parent.getVirtualReg(instr.result.name);
+            curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("a0"), offset, PhysicalReg.get("sp")));
+        }
         for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
             offset = curBlock.parent.getArgReg(i);
             curBlock.addInstr(new LwInstr(curBlock, PhysicalReg.get("a" + i), offset, PhysicalReg.get("sp")));
         }
     }
     public void visit(GetelementptrInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         curBlock.addInstr(new LiInstr(curBlock, PhysicalReg.get("t0"), 4)); // load size
         loadReg(instr.indices.size() == 1 ? instr.indices.getFirst() : instr.indices.get(1), PhysicalReg.get("t1")); // load index
         curBlock.addInstr(new ASM.Instruction.BinaryInstr("mul", curBlock, PhysicalReg.get("t1"), PhysicalReg.get("t0"), PhysicalReg.get("t1")));
         if (loadReg(instr.pointer, PhysicalReg.get("t0")) == null) {
-            int offsetPtr = curBlock.parent.getAllocPtr(instr.result.name);
+            int offsetPtr = curBlock.parent.getAllocPtr(instr.pointer.name);
             curBlock.addInstr(new LiInstr(curBlock, PhysicalReg.get("t0"), offsetPtr));
             curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t0"), PhysicalReg.get("t0"), PhysicalReg.get("sp")));
         }
         curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t0"), PhysicalReg.get("t0"), PhysicalReg.get("t1")));
         int offsetResult = curBlock.parent.getVirtualReg(instr.result.name);
-        curBlock.addInstr(new LwInstr(curBlock, PhysicalReg.get("t0"), offsetResult, PhysicalReg.get("sp")));
+        curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t0"), offsetResult, PhysicalReg.get("sp")));
     }
     public void visit(IcmpInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         loadReg(instr.lhs, PhysicalReg.get("t0"));
         loadReg(instr.rhs, PhysicalReg.get("t1"));
         curBlock.addInstr(new ASM.Instruction.BinaryInstr("sub", curBlock, PhysicalReg.get("t2"), PhysicalReg.get("t0"), PhysicalReg.get("t1")));
@@ -139,13 +149,17 @@ public class ASMBuilder implements IRVisitor {
         curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t2"), offset, PhysicalReg.get("sp")));
     }
     public void visit(LoadInstr instr) {
-        int offset = curBlock.parent.getAllocPtr(instr.result.name);
-        if (loadReg(instr.pointer, PhysicalReg.get("t0")) == null)
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
+        int offsetResult = curBlock.parent.getVirtualReg(instr.result.name);
+        if (loadReg(instr.pointer, PhysicalReg.get("t0")) == null) {
+            int offset = curBlock.parent.getAllocPtr(instr.pointer.name);
             curBlock.addInstr(new LwInstr(curBlock, PhysicalReg.get("t0"), offset, PhysicalReg.get("sp")));
-        curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t0"), offset, PhysicalReg.get("sp")));
+        } else curBlock.addInstr(new LwInstr(curBlock, PhysicalReg.get("t0"), 0, PhysicalReg.get("t0")));
+        curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t0"), offsetResult, PhysicalReg.get("sp")));
     }
     public void visit(PhiInstr instr) {}
     public void visit(IR.Instruction.RetInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         if (instr.value != null) loadReg(instr.value, PhysicalReg.get("a0"));
         curBlock.addInstr(new LwInstr(curBlock, PhysicalReg.get("ra"), curBlock.parent.getRetReg(), PhysicalReg.get("sp")));
         curBlock.addInstr(new BinaryImmInstr("addi", curBlock, PhysicalReg.get("sp"), PhysicalReg.get("sp"), curBlock.parent.stackSize));
@@ -153,9 +167,10 @@ public class ASMBuilder implements IRVisitor {
     }
     public void visit(SelectInstr instr) {
         // unused
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         int offset = curBlock.parent.getVirtualReg(instr.result.name);
         loadReg(instr.cond, PhysicalReg.get("t0"));
-        Block selectFalse = new Block(curBlock.parent, String.format("select.False.%d", program.selectCnt++));
+        Block selectFalse = new Block(curBlock.parent, String.format("select_false.%d", program.selectCnt++));
         curBlock.addInstr(new BnezInstr(curBlock, PhysicalReg.get("t0"), selectFalse.label));
         loadReg(instr.lhs, PhysicalReg.get("t1"));
         curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t1"), offset, PhysicalReg.get("sp")));
@@ -165,6 +180,7 @@ public class ASMBuilder implements IRVisitor {
         curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("t1"), offset, PhysicalReg.get("sp")));
     }
     public void visit(StoreInstr instr) {
+        curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         PhysicalReg src = loadReg(instr.value, PhysicalReg.get("t0"));
         if (loadReg(instr.pointer, PhysicalReg.get("t1")) == null) {
             int offset = curBlock.parent.getAllocPtr(instr.pointer.name);
@@ -174,7 +190,7 @@ public class ASMBuilder implements IRVisitor {
 
     public void visit(FuncDeclMod mod) {}
     public void visit(IR.Module.FuncDefMod mod) {
-        var curSection = program.getSection("text");
+        var curSection = program.getSection(".text");
         var newFunc = new ASM.Module.FuncDefMod(curSection, mod.funcName);
         for (int i = 0; i < mod.params.size(); i++)
             newFunc.paramMap.put(mod.params.get(i).name, i);
@@ -192,17 +208,22 @@ public class ASMBuilder implements IRVisitor {
                     if (instr instanceof IcmpInstr) newFunc.virtualRegMap.put(((IcmpInstr) instr).result.name, newFunc.virtualRegCnt++);
                     if (instr instanceof SelectInstr) newFunc.virtualRegMap.put(((SelectInstr) instr).result.name, newFunc.virtualRegCnt++);
                 }
-                if (instr instanceof CallInstr) newFunc.argCnt = Math.max(newFunc.argCnt, ((CallInstr) instr).args.size());
+                if (instr instanceof CallInstr)
+                    newFunc.argCnt = Math.max(newFunc.argCnt, ((CallInstr) instr).args.size());
             }
         newFunc.stackSize = (newFunc.argCnt + newFunc.virtualRegCnt + newFunc.allocCnt + 1) * 4;
         if (newFunc.stackSize % 16 != 0) newFunc.stackSize = ((newFunc.stackSize) / 16 + 1) * 16;
+        curBlock.addInstr(new BinaryImmInstr("addi", curBlock, PhysicalReg.get("sp"), PhysicalReg.get("sp"), -newFunc.stackSize));
+        curBlock.addInstr(new SwInstr(curBlock, PhysicalReg.get("ra"), newFunc.getRetReg(), PhysicalReg.get("sp")));
+        for (var block : mod.body)
+            block.accept(this);
     }
     public void visit(IR.Module.GlobalVarDefMod mod) {
-        var curSection = program.getSection("data");
+        var curSection = program.getSection(".data");
         curSection.addModule(new ASM.Module.GlobalVarDefMod(curSection, mod.globalVar.name, mod.init.isNull ? 0 : mod.init.value));
     }
     public void visit(IR.Module.StringLiteralDefMod mod) {
-        var curSection = program.getSection("rodata");
+        var curSection = program.getSection(".rodata");
         curSection.addModule(new ASM.Module.StringLiteralMod(curSection, mod.ptr.name, mod.value, mod.value.length() + 1));
     }
     public void visit(StructDefMod mod) {}

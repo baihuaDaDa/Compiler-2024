@@ -5,5 +5,8 @@ tutorial
 .gitmodules
 out
 bin
-out.ll
-out.s
+test.ll
+test.s
+builtin.s
+test.in
+test.out

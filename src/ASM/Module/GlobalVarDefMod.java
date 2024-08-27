@@ -12,6 +12,6 @@ public class GlobalVarDefMod extends Module {
 
     @Override
     public String toString() {
-        return String.format("\t%-8s%s\n%s:\n\t%-8s%d", ".globl", label, label, ".word", num);
+        return String.format("\t%-8s%s\n%s:\n\t%-8s%d\n", ".globl", label, label, ".word", num);
     }
 }

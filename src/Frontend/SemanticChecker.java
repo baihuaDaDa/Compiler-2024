@@ -48,7 +48,7 @@ public class SemanticChecker implements ASTVisitor {
             throw new SemanticError("Invalid Constructor", "Wrong constructor", node.pos);
         curScope = new Scope(curScope, new ReturnType("void", 0));
         node.body.accept(this);
-        if (!(node.body.stmts.getLast() instanceof ReturnStmtNode))
+        if (node.body.stmts.isEmpty() || !(node.body.stmts.getLast() instanceof ReturnStmtNode))
             node.body.stmts.add(new ReturnStmtNode(node.pos));
         curScope = curScope.getParent();
     }

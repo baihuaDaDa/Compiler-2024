@@ -14,6 +14,15 @@ public class StringLiteralMod extends Module {
 
     @Override
     public String toString() {
-        return String.format("%s:\n\t%-8s%s\n\t%-8s%s, %d", label, ".asciz", str, ".size", label, size);
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            switch (str.charAt(i)) {
+                case '\n' -> ret.append("\\n");
+                case '\"' -> ret.append("\\\"");
+                case '\\' -> ret.append("\\\\");
+                default -> ret.append(str.charAt(i));
+            }
+        }
+        return String.format("%s:\n\t%-8s\"%s\"\n\t%-8s%s, %d\n", label, ".asciz", ret, ".size", label, size);
     }
 }

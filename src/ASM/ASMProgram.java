@@ -8,16 +8,15 @@ public class ASMProgram {
 
     public ASMProgram() {
         sections = new ArrayList<>();
-        sections.add(new ASMSection("text"));
-        sections.add(new ASMSection("data"));
-        sections.add(new ASMSection("rodata"));
     }
 
     public ASMSection getSection(String name) {
         for (ASMSection section : sections)
             if (section.name.equals(name))
                 return section;
-        return null;
+        ASMSection newSection = new ASMSection(name);
+        sections.add(newSection);
+        return newSection;
     }
 
     @Override
