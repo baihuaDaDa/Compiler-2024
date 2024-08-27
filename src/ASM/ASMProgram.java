@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ASMProgram {
     public ArrayList<ASMSection> sections;
+    public int brCnt = 0, selectCnt = 0;
 
     public ASMProgram() {
         sections = new ArrayList<>();

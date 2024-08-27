@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 public class FuncDefMod extends Module {
     public ArrayList<Block> body;
+    public HashMap<String, Integer> paramMap;
     public HashMap<String, Integer> virtualRegMap;
     public HashMap<String, Integer> allocPtrMap;
     public int virtualRegCnt = 0, allocCnt = 0, argCnt = 0, stackSize = 0;
+    // arguments中前八个用于暂存当前函数体的a0-a7，剩下的用于存储调用函数的第9个及以后的参数
 
     public FuncDefMod(ASMSection parent, String label) {
         super(parent, label);
@@ -23,8 +25,20 @@ public class FuncDefMod extends Module {
         body.add(block);
     }
 
-    public int getArgReg(int no) {
-        return no * 4;
+    public boolean isParamReg(String name) {
+        return paramMap.containsKey(name);
+    }
+
+    public boolean isAllocPtr(String name) {
+        return allocPtrMap.containsKey(name);
+    }
+
+    public boolean isVirtualReg(String name) {
+        return virtualRegMap.containsKey(name);
+    }
+
+    public int getParamReg(String name) {
+        return (paramMap.get(name) + stackSize) * 4;
     }
 
     public int getAllocPtr(String name) {
@@ -33,6 +47,10 @@ public class FuncDefMod extends Module {
 
     public int getVirtualReg(String name) {
         return (virtualRegMap.get(name) + allocCnt + argCnt) * 4;
+    }
+
+    public int getArgReg(int no) {
+        return no * 4;
     }
 
     public int getRetReg() {

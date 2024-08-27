@@ -33,12 +33,12 @@ import java.util.List;
 // TODO AST常量表达式折叠 + IR全局变量常量不用init
 
 public class IRBuilder implements ASTVisitor {
-    public GlobalScope gScope;
+    GlobalScope gScope;
     public IRProgram program;
-    public IRBlock curBlock;
-    public IRScope curScope;
-    public IRExpression lastExpr;
-    public boolean isEndBlock = false;
+    IRBlock curBlock;
+    IRScope curScope;
+    IRExpression lastExpr;
+    boolean isEndBlock = false;
 
 
     public IRBuilder(GlobalScope gScope) {
@@ -461,27 +461,33 @@ public class IRBuilder implements ASTVisitor {
         IRBlock thenBlock = new IRBlock(curBlock.parent, String.format("ternary_then.%d", ternaryNo));
         IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", ternaryNo));
         IRBlock endBlock = new IRBlock(curBlock.parent, String.format("ternary_end.%d", ternaryNo));
+        // TODO 用select还是store？
+        IRLocalVar resultPtr = null;
+        if (!node.type.isSameType(new ExprType("void", 0))) {
+            resultPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
+            curBlock.addInstr(new AllocaInstr(curBlock, resultPtr, new IRType(node.type)));
+        }
         if (lastExpr.value instanceof IRLiteral logic) {
             if (logic.value == 0) curBlock.addInstr(new BrInstr(curBlock, null, elseBlock, null));
             else curBlock.addInstr(new BrInstr(curBlock, null, thenBlock, null));
         } else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lastExpr.value, thenBlock, elseBlock));
-        // TODO 用select还是store+load？
-        var cond = lastExpr.value;
         curBlock = thenBlock;
         curBlock.parent.body.add(thenBlock);
         node.thenExpr.accept(this);
+        if (resultPtr != null)
+            curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, resultPtr));
         curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
-        var thenValue = lastExpr.value;
         curBlock = elseBlock;
         curBlock.parent.body.add(elseBlock);
         node.elseExpr.accept(this);
+        if (resultPtr != null)
+            curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, resultPtr));
         curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
-        var elseValue = lastExpr.value;
         curBlock = endBlock;
         curBlock.parent.body.add(endBlock);
-        if (node.type.isSameType(new ExprType("void", 0))) return;
+        if (resultPtr == null) return;
         var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
-        curBlock.addInstr(new SelectInstr(curBlock, tmp, cond, thenValue, elseValue));
+        curBlock.addInstr(new LoadInstr(curBlock, tmp, resultPtr));
         lastExpr = new IRExpression(tmp);
     }
     public void visit(AssignExprNode node) {

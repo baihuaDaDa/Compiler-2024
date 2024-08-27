@@ -1,4 +1,5 @@
 import AST.Program.ProgramNode;
+import Backend.ASMBuilder;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
@@ -22,7 +23,7 @@ public class Main {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
         InputStream input = new FileInputStream("testcases/codegen/t63.mx");
-        OutputStream output = new FileOutputStream("out.ll");
+        OutputStream output = new FileOutputStream("out.s");
 //        InputStream input = System.in;
 //        OutputStream output = System.out;
         try {
@@ -40,7 +41,9 @@ public class Main {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
-            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            ASMBuilder asmBuilder = new ASMBuilder();
+            asmBuilder.visit(irBuilder.program);
+            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

@@ -1,4 +1,5 @@
 import AST.Program.ProgramNode;
+import Backend.ASMBuilder;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
@@ -40,7 +41,9 @@ public class Compiler {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
-            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            ASMBuilder asmBuilder = new ASMBuilder();
+            asmBuilder.visit(irBuilder.program);
+            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

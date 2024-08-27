@@ -15,8 +15,17 @@ public class BinaryInstr extends Instruction {
         this.src2 = src2;
     }
 
-    @Override
+    public static String getInstr(String op) {
+        return switch (op) {
+            case "add", "sub", "mul", "and", "or", "xor" -> op;
+            case "sdiv", "srem" -> op.substring(1);
+            case "shl" -> "sll";
+            case "ashr" -> "sra";
+            default -> throw new RuntimeException("Unexpected operation: " + op);
+        };
+    }
 
+    @Override
     public String toString() {
         return String.format("%-8s%s, %s, %s", instr, dst, src1, src1);
     }

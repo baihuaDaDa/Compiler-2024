@@ -15,8 +15,16 @@ public class BinaryImmInstr extends Instruction {
         this.imm = imm;
     }
 
-    @Override
+    public static String getInstr(String op) {
+        return switch (op) {
+            case "add", "and", "or", "xor" -> op + "i";
+            case "shl" -> "slli";
+            case "ashr" -> "srai";
+            default -> throw new RuntimeException("Unexpected operation: " + op);
+        };
+    }
 
+    @Override
     public String toString() {
         return String.format("%-8s%s, %s, %d", instr, dst, src, imm);
     }

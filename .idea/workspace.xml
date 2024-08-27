@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish ASM nodes.">
-      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/LwInstr.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish half of the ASM builder.">
+      <change afterPath="$PROJECT_DIR$/src/ASM/Instruction/SetInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ASM/ASMProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/ASMProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASM/ASMSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/ASMSection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/LiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/LiInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/BinaryImmInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryImmInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +170,8 @@
       <workItem from="1724536628871" duration="57000" />
       <workItem from="1724536692270" duration="5114000" />
       <workItem from="1724564081377" duration="35273000" />
-      <workItem from="1724649391573" duration="34271000" />
+      <workItem from="1724649391573" duration="34413000" />
+      <workItem from="1724733032049" duration="15381000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -505,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724693191269</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Upd: finish half of the ASM builder.">
+      <option name="closed" value="true" />
+      <created>1724706947873</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1724706947873</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +535,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: add Makefile." />
     <MESSAGE value="Fix: add an abstract class DefinitionNode." />
     <MESSAGE value="Fix: channel the input from stdin." />
     <MESSAGE value="Fix: fix Makefile." />
@@ -548,7 +559,8 @@
     <MESSAGE value="Fix: fix most of the problems; only 1 testcases left failed." />
     <MESSAGE value="Fix: pass all the LLVM IR tests!" />
     <MESSAGE value="Upd: finish ASM nodes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish ASM nodes." />
+    <MESSAGE value="Upd: finish half of the ASM builder." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish half of the ASM builder." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
