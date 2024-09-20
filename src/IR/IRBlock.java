@@ -6,11 +6,16 @@ import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class IRBlock {
     public String label;
     public ArrayList<Instruction> instructions;
     public FuncDefMod parent;
+
+    // CFG
+    public HashSet<IRBlock> pred = new HashSet<>();
+    public HashSet<IRBlock> suc = new HashSet<>();
 
     public IRBlock(FuncDefMod parent, String label) {
         this.parent = parent;

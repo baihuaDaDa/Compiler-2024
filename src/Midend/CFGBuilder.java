@@ -1,0 +1,36 @@
+package Midend;
+
+import IR.IRBlock;
+import IR.IRProgram;
+import IR.Instruction.BrInstr;
+import IR.Instruction.RetInstr;
+import IR.Module.FuncDefMod;
+
+public class CFGBuilder {
+    private final IRProgram program;
+
+    public CFGBuilder(IRProgram program) {
+        this.program = program;
+    }
+
+    public void build() {
+        program.funcDefs.forEach(this::buildFunc);
+    }
+
+    public void buildFunc(FuncDefMod func) {
+        func.body.forEach(this::buildBlock);
+    }
+
+    public void buildBlock(IRBlock block) {
+        for (var instr : block.instructions) {
+            if (instr instanceof BrInstr brInstr) {
+                block.suc.add(brInstr.thenBlock);
+                brInstr.thenBlock.pred.add(block);
+                if (brInstr.elseBlock != null) {
+                    block.suc.add(brInstr.elseBlock);
+                    brInstr.elseBlock.pred.add(block);
+                }
+            }
+        }
+    }
+}
