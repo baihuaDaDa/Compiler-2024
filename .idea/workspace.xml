@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish CFG builder.">
-      <change afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish Dominator Tree Builder.">
+      <change afterPath="$PROJECT_DIR$/src/Backend/CFGBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Backend/RegAllocator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/CFGBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/CFGBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Module/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +180,7 @@
       <workItem from="1726760584674" duration="114000" />
       <workItem from="1726790768938" duration="20500000" />
       <workItem from="1726856898891" duration="6000" />
-      <workItem from="1727759873597" duration="9987000" />
+      <workItem from="1727759873597" duration="18523000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -566,7 +566,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726795775072</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Upd: finish Dominator Tree Builder.">
+      <option name="closed" value="true" />
+      <created>1727783477126</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1727783477126</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -584,7 +592,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: add error types." />
     <MESSAGE value="Fix: let the program return -1 when throw error." />
     <MESSAGE value="Fix: fix some wrong error type delimitations." />
     <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
@@ -609,7 +616,8 @@
     <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
     <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
     <MESSAGE value="Upd: finish CFG builder." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish CFG builder." />
+    <MESSAGE value="Upd: finish Dominator Tree Builder." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish Dominator Tree Builder." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

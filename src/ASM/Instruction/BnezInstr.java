@@ -6,6 +6,7 @@ import ASM.Operand.PhysicalReg;
 public class BnezInstr extends Instruction {
     public PhysicalReg src;
     public String label; // label与当前的PC的offset不能超过12位
+    public Block target;
 
     public BnezInstr(Block parent, PhysicalReg src, String label) {
         super(parent, "bnez");
