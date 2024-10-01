@@ -7,10 +7,10 @@ import ASM.Module.Block;
 import ASM.Module.FuncDefMod;
 import ASM.Module.Module;
 
-public class CFGBuilder {
+public class ASMCFGBuilder {
     private final ASMProgram program;
 
-    public CFGBuilder(ASMProgram program) {
+    public ASMCFGBuilder(ASMProgram program) {
         this.program = program;
     }
 

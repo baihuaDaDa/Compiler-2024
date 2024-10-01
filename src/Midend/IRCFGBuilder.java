@@ -5,10 +5,10 @@ import IR.IRProgram;
 import IR.Instruction.BrInstr;
 import IR.Module.FuncDefMod;
 
-public class CFGBuilder {
+public class IRCFGBuilder {
     private final IRProgram program;
 
-    public CFGBuilder(IRProgram program) {
+    public IRCFGBuilder(IRProgram program) {
         this.program = program;
     }
 

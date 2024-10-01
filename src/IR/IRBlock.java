@@ -20,13 +20,15 @@ public class IRBlock {
     public int blockNo;
     public BitSet dom;
     public IRBlock idom;
-    public ArrayList<IRBlock> children;
+    public HashSet<IRBlock> children;
+    public HashSet<IRBlock> domFrontier;
 
     public IRBlock(FuncDefMod parent, String label) {
         this.parent = parent;
         this.label = label;
         this.instructions = new ArrayList<>();
-        this.children = new ArrayList<>();
+        this.children = new HashSet<>();
+        this.domFrontier = new HashSet<>();
     }
 
     public String toString() {
