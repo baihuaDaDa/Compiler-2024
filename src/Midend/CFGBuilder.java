@@ -3,7 +3,6 @@ package Midend;
 import IR.IRBlock;
 import IR.IRProgram;
 import IR.Instruction.BrInstr;
-import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
 public class CFGBuilder {
@@ -18,7 +17,11 @@ public class CFGBuilder {
     }
 
     public void buildFunc(FuncDefMod func) {
-        func.body.forEach(this::buildBlock);
+        for (int i = 0; i < func.body.size(); ++i) {
+            var block = func.body.get(i);
+            block.blockNo = i;
+            buildBlock(block);
+        }
     }
 
     public void buildBlock(IRBlock block) {

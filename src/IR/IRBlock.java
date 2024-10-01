@@ -1,11 +1,10 @@
 package IR;
 
-import IR.Instruction.BrInstr;
 import IR.Instruction.Instruction;
-import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashSet;
 
 public class IRBlock {
@@ -17,10 +16,17 @@ public class IRBlock {
     public HashSet<IRBlock> pred = new HashSet<>();
     public HashSet<IRBlock> suc = new HashSet<>();
 
+    // Dominator Tree
+    public int blockNo;
+    public BitSet dom;
+    public IRBlock idom;
+    public ArrayList<IRBlock> children;
+
     public IRBlock(FuncDefMod parent, String label) {
         this.parent = parent;
         this.label = label;
         this.instructions = new ArrayList<>();
+        this.children = new ArrayList<>();
     }
 
     public String toString() {

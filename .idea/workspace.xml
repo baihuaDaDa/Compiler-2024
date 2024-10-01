@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: pass the new three testcases t75, t76 and t77, relying on ravel.">
-      <change afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish CFG builder.">
+      <change afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/CFGBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/CFGBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +31,7 @@
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -40,36 +42,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024" />
@@ -170,7 +172,15 @@
       <workItem from="1724564081377" duration="35273000" />
       <workItem from="1724649391573" duration="34413000" />
       <workItem from="1724733032049" duration="36294000" />
-      <workItem from="1724786266885" duration="4181000" />
+      <workItem from="1724786266885" duration="5320000" />
+      <workItem from="1724815503344" duration="959000" />
+      <workItem from="1726724628707" duration="142000" />
+      <workItem from="1726724777911" duration="1068000" />
+      <workItem from="1726748894745" duration="5452000" />
+      <workItem from="1726760584674" duration="114000" />
+      <workItem from="1726790768938" duration="20500000" />
+      <workItem from="1726856898891" duration="6000" />
+      <workItem from="1727759873597" duration="9987000" />
     </task>
     <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
       <option name="closed" value="true" />
@@ -540,7 +550,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724787563145</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Fix: pass all the testcases, relying on REIMU.">
+      <option name="closed" value="true" />
+      <created>1724790686804</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1724790686804</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Upd: finish CFG builder.">
+      <option name="closed" value="true" />
+      <created>1726795775072</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1726795775072</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -558,8 +584,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: fix several problems and pass the local test." />
-    <MESSAGE value="Fix: fix the only failure in `t66.mx`." />
     <MESSAGE value="Upd: add error types." />
     <MESSAGE value="Fix: let the program return -1 when throw error." />
     <MESSAGE value="Fix: fix some wrong error type delimitations." />
@@ -583,7 +607,9 @@
     <MESSAGE value="Upd: finish asm builder." />
     <MESSAGE value="Fix: pass all the testcases except the three new ones(t75, t76, t77), relying on ravel." />
     <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
+    <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
+    <MESSAGE value="Upd: finish CFG builder." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish CFG builder." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -595,17 +621,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>533</line>
+          <line>534</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>429</line>
+          <line>430</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>561</line>
+          <line>562</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>

@@ -21,8 +21,8 @@ public class FuncDefMod extends Module {
         this.funcName = funcName;
         this.params = params;
         body = new ArrayList<>();
-        body.add(new IRBlock(this, "entry"));
         localVars = new HashMap<>();
+        addBlock(new IRBlock(this, "entry"));
     }
 
     @Override
@@ -53,5 +53,9 @@ public class FuncDefMod extends Module {
 
     public int getLocalVarNo(String name) {
         return localVars.getOrDefault(name, 0);
+    }
+
+    public void addBlock(IRBlock block) {
+        body.add(block);
     }
 }
