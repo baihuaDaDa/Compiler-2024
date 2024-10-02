@@ -18,6 +18,15 @@ public class PhiInstr extends Instruction {
         pairs = new ArrayList<>();
     }
 
+    public void addBranch(IREntity value, IRBlock block) {
+        pairs.add(new Pair<>(value, block));
+    }
+
+    public void changeValue(IREntity value, IRBlock block) {
+        pairs.removeIf(pair -> pair.b == block);
+        addBranch(value, block);
+    }
+
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();

@@ -16,6 +16,8 @@ public class DomTreeBuilder {
 
     public void build() {
         program.funcDefs.forEach(this::buildFunc);
+        buildFunc(program.initFunc);
+        buildFunc(program.mainFunc);
     }
 
     public void buildFunc(FuncDefMod func) {
