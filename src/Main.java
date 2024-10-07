@@ -1,9 +1,13 @@
 import AST.Program.ProgramNode;
 import Backend.ASMBuilder;
+import Backend.ASMCFGBuilder;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
+import Midend.DomTreeBuilder;
 import Midend.IRBuilder;
+import Midend.IRCFGBuilder;
+import Midend.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -22,8 +26,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/optim/sha_1.mx");
-        OutputStream output = new FileOutputStream("test.s");
+        InputStream input = new FileInputStream("testcases/codegen/e1.mx");
+        OutputStream output = new FileOutputStream("test.ll");
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();
@@ -39,9 +43,15 @@ public class Main {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
+            IRCFGBuilder irCFGBuilder = new IRCFGBuilder(irBuilder.program);
+            irCFGBuilder.build();
+            Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
+            mem2Reg.run();
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
-            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            ASMCFGBuilder asmCFGBuilder = new ASMCFGBuilder(asmBuilder.program);
+            asmCFGBuilder.build();
+            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

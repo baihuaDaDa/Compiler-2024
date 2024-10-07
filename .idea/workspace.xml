@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish Dominator Tree Builder.">
-      <change afterPath="$PROJECT_DIR$/src/Backend/CFGBuilder.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: complete PhiInstr.java">
       <change afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Backend/RegAllocator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASM/Module/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,36 +40,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/test",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Main.executor": "Run"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
+  "keyToStringList": {
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024" />
@@ -180,31 +178,9 @@
       <workItem from="1726760584674" duration="114000" />
       <workItem from="1726790768938" duration="20500000" />
       <workItem from="1726856898891" duration="6000" />
-      <workItem from="1727759873597" duration="18523000" />
-    </task>
-    <task id="LOCAL-00001" summary="Upd: finish parser and lexer.">
-      <option name="closed" value="true" />
-      <created>1723001742235</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1723001742235</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Upd: finish the configuration of Module: Compiler-2024.">
-      <option name="closed" value="true" />
-      <created>1723010943500</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1723010943500</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Upd: finish half of the definitions of the AST nodes.">
-      <option name="closed" value="true" />
-      <created>1723055074963</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1723055074963</updated>
+      <workItem from="1727759873597" duration="27023000" />
+      <workItem from="1727840029927" duration="13573000" />
+      <workItem from="1728282263718" duration="12450000" />
     </task>
     <task id="LOCAL-00004" summary="Upd: finish AST nodes.">
       <option name="closed" value="true" />
@@ -574,7 +550,31 @@
       <option name="project" value="LOCAL" />
       <updated>1727783477126</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Fix: fix CFG builders in IR and ASM.">
+      <option name="closed" value="true" />
+      <created>1727802086634</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1727802086634</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Upd: add Dominator Frontier.">
+      <option name="closed" value="true" />
+      <created>1727809970631</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1727809970631</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Upd: complete PhiInstr.java">
+      <option name="closed" value="true" />
+      <created>1727859575040</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1727859575040</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,9 +592,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: let the program return -1 when throw error." />
-    <MESSAGE value="Fix: fix some wrong error type delimitations." />
-    <MESSAGE value="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD" />
     <MESSAGE value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
     <MESSAGE value="Upd: finish all the IR nodes." />
     <MESSAGE value="Upd: finish the `array.copy` function for const arrays." />
@@ -617,7 +614,10 @@
     <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
     <MESSAGE value="Upd: finish CFG builder." />
     <MESSAGE value="Upd: finish Dominator Tree Builder." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish Dominator Tree Builder." />
+    <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
+    <MESSAGE value="Upd: add Dominator Frontier." />
+    <MESSAGE value="Upd: complete PhiInstr.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: complete PhiInstr.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -16,7 +16,7 @@ public class DomTreeBuilder {
 
     public void build() {
         program.funcDefs.forEach(this::buildFunc);
-        buildFunc(program.initFunc);
+        if (program.initFunc != null) buildFunc(program.initFunc);
         buildFunc(program.mainFunc);
     }
 
