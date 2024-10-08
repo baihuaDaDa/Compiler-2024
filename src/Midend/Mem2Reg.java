@@ -30,18 +30,20 @@ public class Mem2Reg {
         DomTreeBuilder domTreeBuilder = new DomTreeBuilder(program);
         domTreeBuilder.build();
         for (var func : program.funcDefs) {
-            reinit();
             collectAllocVarsAndDefs(func);
             placePhi(func);
+            rename(func.body.getFirst());
+            reinit();
         }
-        reinit();
         if (program.initFunc != null) {
             collectAllocVarsAndDefs(program.initFunc);
             placePhi(program.initFunc);
+            rename(program.initFunc.body.getFirst());
             reinit();
         }
         collectAllocVarsAndDefs(program.mainFunc);
         placePhi(program.mainFunc);
+        rename(program.mainFunc.body.getFirst());
     }
 
     private void reinit() {
@@ -130,7 +132,7 @@ public class Mem2Reg {
                     nums.put(allocaInstr.result.name, 0);
                     valStacks.put(allocaInstr.result.name, new Stack<>());
                 }
-                if (instr instanceof StoreInstr storeInstr)
+                if (instr instanceof StoreInstr storeInstr && defs.containsKey(storeInstr.pointer.name))
                     defs.get(storeInstr.pointer.name).add(block);
             }
         }

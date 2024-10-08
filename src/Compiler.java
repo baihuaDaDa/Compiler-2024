@@ -4,6 +4,8 @@ import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.IRBuilder;
+import Midend.IRCFGBuilder;
+import Midend.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -37,9 +39,13 @@ public class Compiler {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
+            IRCFGBuilder irCFGBuilder = new IRCFGBuilder(irBuilder.program);
+            irCFGBuilder.build();
+            Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
+            mem2Reg.run();
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
-            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());
