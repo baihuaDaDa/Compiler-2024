@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/codegen/e1.mx");
+        InputStream input = new FileInputStream("testcases/codegen/t71.mx");
         OutputStream output = new FileOutputStream("test.ll");
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
