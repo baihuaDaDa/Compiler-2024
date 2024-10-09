@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: complete PhiInstr.java">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: Mem2Reg on IR fixed.">
       <change afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Backend/RegAllocator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,31 +184,10 @@
       <workItem from="1726856898891" duration="6000" />
       <workItem from="1727759873597" duration="27023000" />
       <workItem from="1727840029927" duration="13573000" />
-      <workItem from="1728282263718" duration="12450000" />
-    </task>
-    <task id="LOCAL-00004" summary="Upd: finish AST nodes.">
-      <option name="closed" value="true" />
-      <created>1723137872089</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1723137872089</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Upd: finish global scope.">
-      <option name="closed" value="true" />
-      <created>1723300826264</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1723300826264</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Upd: finish symbol collector.">
-      <option name="closed" value="true" />
-      <created>1723315246732</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1723315246732</updated>
+      <workItem from="1728282263718" duration="13337000" />
+      <workItem from="1728352921383" duration="12274000" />
+      <workItem from="1728369958964" duration="6056000" />
+      <workItem from="1728479687392" duration="14861000" />
     </task>
     <task id="LOCAL-00007" summary="Upd: finish AST builder">
       <option name="closed" value="true" />
@@ -574,7 +557,31 @@
       <option name="project" value="LOCAL" />
       <updated>1727859575040</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Upd: complete Mem2Reg in IR.">
+      <option name="closed" value="true" />
+      <created>1728329237707</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1728329237707</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Upd: use Phi instr to implement ternary expressions and `&amp;&amp;, ||` expressions.">
+      <option name="closed" value="true" />
+      <created>1728367383659</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1728367383659</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Fix: phi instructions include incorrect predecessors in ternary and `&amp;&amp;`, `||` nodes.">
+      <option name="closed" value="true" />
+      <created>1728481604393</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1728481604393</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,10 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish IR types and entities, instruction IR nodes and the builtin functions." />
-    <MESSAGE value="Upd: finish all the IR nodes." />
-    <MESSAGE value="Upd: finish the `array.copy` function for const arrays." />
-    <MESSAGE value="Upd: finish IR Scope and some counters of variables and labels." />
     <MESSAGE value="Upd: finish LLVM IR statements and modules (except variable definitions)." />
     <MESSAGE value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
     <MESSAGE value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
@@ -617,30 +620,28 @@
     <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
     <MESSAGE value="Upd: add Dominator Frontier." />
     <MESSAGE value="Upd: complete PhiInstr.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: complete PhiInstr.java" />
+    <MESSAGE value="Upd: complete Mem2Reg in IR." />
+    <MESSAGE value="Upd: use Phi instr to implement ternary expressions and `&amp;&amp;, ||` expressions." />
+    <MESSAGE value="Fix: phi instructions include incorrect predecessors in ternary and `&amp;&amp;`, `||` nodes." />
+    <MESSAGE value="Fix: Mem2Reg on IR fixed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Mem2Reg on IR fixed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Util/Type/IRType.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="38" />
+          <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="67" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>534</line>
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>430</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
-          <line>562</line>
-          <option name="timeStamp" value="48" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Midend/DomTreeBuilder.java</url>
+          <line>22</line>
+          <properties class="Midend.DomTreeBuilder" method="buildFunc">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

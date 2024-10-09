@@ -615,7 +615,7 @@ public class IRBuilder implements ASTVisitor {
                     varUnit.b.accept(this);
                     curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, newVar));
                 } else curBlock.addInstr(new StoreInstr(curBlock,
-                        ((node.type.isInt || node.type.isBool) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true)), newVar));
+                        (node.type.dim == 0 && (node.type.isInt || node.type.isBool) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true)), newVar));
             }
         }
     }

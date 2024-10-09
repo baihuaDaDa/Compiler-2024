@@ -5,6 +5,7 @@ import IR.Module.FuncDefMod;
 import IR.IRBlock;
 import IR.IRProgram;
 import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRGlobalPtr;
 import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
@@ -55,15 +56,17 @@ public class Mem2Reg {
 
     private void rename(IRBlock block) {
         block.phiInstrs.forEach((name, instr) -> {
-            int no = nums.get(name);
-            instr.result = new IRLocalVar("phi." + name + "." + (++no), instr.result.type);
-            nums.replace(name, no);
-            valStacks.get(name).push(instr.result);
+            if (allocVars.containsKey(name)) {
+                int no = nums.get(name);
+                instr.result = new IRLocalVar("phi." + name + "." + (++no), instr.result.type);
+                nums.replace(name, no);
+                valStacks.get(name).push(instr.result);
+            }
         });
         ArrayList<Instruction> instrs = block.instructions;
         ArrayList<Instruction> removeList = new ArrayList<>();
         for (var instr : instrs) {
-            if (instr instanceof AllocaInstr allocaInstr) removeList.add(instr);
+            if (instr instanceof AllocaInstr) removeList.add(instr);
             else if (instr instanceof StoreInstr storeInstr) {
                 if (storeInstr.pointer instanceof IRLocalVar && valStacks.containsKey(storeInstr.pointer.name)) {
                     var stack = valStacks.get(storeInstr.pointer.name);
@@ -74,14 +77,22 @@ public class Mem2Reg {
             } else if (instr instanceof LoadInstr loadInstr) {
                 if (loadInstr.pointer instanceof IRLocalVar && valStacks.containsKey(loadInstr.pointer.name)) {
                     var stack = valStacks.get(loadInstr.pointer.name);
-                    if (stack.empty()) continue;
-                    if (stack.peek() instanceof IRLocalVar) {
-                        loadInstr.result.name = ((IRLocalVar) stack.peek()).name;
-                        loadInstr.result.type = stack.peek().type;
+                    if (stack.empty()) {
                         removeList.add(instr);
-                    } else if (stack.peek() instanceof IRLiteral) {
-                        var x0 = new IRLiteral(stack.peek().type, 0);
-                        instrs.set(instrs.indexOf(instr), new BinaryInstr(block, "and", stack.peek(), x0, loadInstr.result));
+                        continue;
+                    }
+                    if (stack.peek() instanceof IRLocalVar localVar) {
+                        loadInstr.result.name = localVar.name;
+                        loadInstr.result.type = localVar.type;
+                        removeList.add(instr);
+                    } else if (stack.peek() instanceof IRLiteral literal) {
+                        var x0 = new IRLiteral(literal.type, 0);
+                        // TODO 有待改进，有不那么唐氏的做法
+                        instrs.set(instrs.indexOf(instr), new BinaryInstr(block, "add", literal, x0, loadInstr.result));
+                    } else if (stack.peek() instanceof IRGlobalPtr globalPtr) {
+                        if (!globalPtr.name.startsWith(".str.")) throw new RuntimeException("Unexpected global pointer type in `valStack`(not const string)");
+                        // TODO 有待改进，有不那么唐氏的做法
+                        instrs.set(instrs.indexOf(instr), new GetelementptrInstr(block, loadInstr.result, "i32", globalPtr, new IRLiteral(new IRType("i32"), 0)));
                     } else throw new RuntimeException("Unexpected type in `valStack`");
                 }
             }

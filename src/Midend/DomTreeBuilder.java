@@ -35,9 +35,10 @@ public class DomTreeBuilder {
                 var block = ord.get(i);
                 BitSet dom = new BitSet(func.body.size());
                 BitSet self = new BitSet(func.body.size());
-                dom.set(0, func.body.size(), true);
+                if (!block.pred.isEmpty()) dom.set(0, func.body.size(), true);
                 self.set(block.blockNo, true);
-                for (var pred : block.pred) dom.and(pred.dom);
+                for (var pred : block.pred)
+                    if (pred.dom != null) dom.and(pred.dom);
                 dom.or(self);
                 if (!dom.equals(block.dom)) {
                     block.dom = dom;
@@ -46,24 +47,30 @@ public class DomTreeBuilder {
             }
         }
         // Immediate Dominator
-        for (var block : func.body)
-            for (int j = 0; j < func.body.size(); ++j)
-                if (block.dom.get(j) && func.body.get(j).dom.cardinality() == block.dom.cardinality()) {
+        for (var block : func.body) {
+            if (block.dom == null) continue;
+            for (int j = 0; j < func.body.size(); ++j) {
+                if (func.body.get(j).dom == null) continue;
+                if (block.dom.get(j) && func.body.get(j).dom.cardinality() == block.dom.cardinality() - 1) {
                     block.idom = func.body.get(j);
                     break;
                 }
+            }
+        }
         // 节点可以是自己的支配边界（循环支配的情况）
         // Dominance Frontier and Children
         for (var block : func.body) {
-            for (var suc : block.suc)
-                if (suc.idom == block) block.children.add(suc);
+            if (block.dom == null) continue;
+            if (block.idom != null) block.idom.children.add(block);
             BitSet dominators = new BitSet(func.body.size());
             BitSet self = new BitSet(func.body.size());
             self.set(block.blockNo, true);
             for (var pred : block.pred)
                 dominators.or(minusSet(pred.dom, minusSet(block.dom, self)));
-            for (int j = 0; j < func.body.size(); ++j)
+            for (int j = 0; j < func.body.size(); ++j) {
+                if (func.body.get(j).dom == null) continue;
                 if (dominators.get(j)) func.body.get(j).domFrontier.add(block);
+            }
         }
     }
 
@@ -71,7 +78,7 @@ public class DomTreeBuilder {
     private void Traverse(ArrayList<IRBlock> ord, boolean[] visited, IRBlock block) {
         visited[block.blockNo] = true;
         for (var suc : block.suc)
-            if (!visited[block.blockNo]) Traverse(ord, visited, suc);
+            if (!visited[suc.blockNo]) Traverse(ord, visited, suc);
         ord.add(block);
     }
 
