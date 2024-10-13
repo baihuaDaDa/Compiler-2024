@@ -27,6 +27,14 @@ public class PhiInstr extends Instruction {
         addBranch(value, block);
     }
 
+    public void changeBlock(IRBlock newBlock, IRBlock origin) {
+        for (var pair : pairs)
+            if (pair.b == origin) {
+                pairs.set(pairs.indexOf(pair), new Pair<>(pair.a, newBlock));
+                break;
+            }
+    }
+
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();

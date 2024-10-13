@@ -48,7 +48,7 @@ public class DomTreeBuilder {
         }
         // Immediate Dominator
         for (var block : func.body) {
-            if (block.dom == null) continue;
+            if (block.dom == null) continue; // TODO 死基本块可以删除
             for (int j = 0; j < func.body.size(); ++j) {
                 if (func.body.get(j).dom == null) continue;
                 if (block.dom.get(j) && func.body.get(j).dom.cardinality() == block.dom.cardinality() - 1) {

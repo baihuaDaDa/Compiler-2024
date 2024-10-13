@@ -18,6 +18,7 @@ public class Mem2Reg {
     private HashMap<String, HashSet<IRBlock>> defs;
     private HashMap<String, Integer> nums;
     private HashMap<String, Stack<IREntity>> valStacks;
+    private int criticalEdgeCnt = 0;
 
     public Mem2Reg(IRProgram program) {
         this.program = program;
@@ -30,21 +31,18 @@ public class Mem2Reg {
     public void run() {
         DomTreeBuilder domTreeBuilder = new DomTreeBuilder(program);
         domTreeBuilder.build();
-        for (var func : program.funcDefs) {
-            collectAllocVarsAndDefs(func);
-            placePhi(func);
-            rename(func.body.getFirst());
-            reinit();
-        }
-        if (program.initFunc != null) {
-            collectAllocVarsAndDefs(program.initFunc);
-            placePhi(program.initFunc);
-            rename(program.initFunc.body.getFirst());
-            reinit();
-        }
-        collectAllocVarsAndDefs(program.mainFunc);
-        placePhi(program.mainFunc);
-        rename(program.mainFunc.body.getFirst());
+        program.funcDefs.forEach(this::runFunc);
+        if (program.initFunc != null) runFunc(program.initFunc);
+        runFunc(program.mainFunc);
+    }
+
+    private void runFunc(FuncDefMod func) {
+        collectAllocVarsAndDefs(func);
+        placePhi(func);
+        rename(func.body.getFirst());
+        boolean[] visited = new boolean[func.body.size()];
+        splitCriticalEdge(func.body.getFirst(), visited);
+        reinit();
     }
 
     private void reinit() {
@@ -52,6 +50,30 @@ public class Mem2Reg {
         defs.clear();
         nums.clear();
         valStacks.clear();
+    }
+
+    private void splitCriticalEdge(IRBlock block, boolean[] visited) {
+        visited[block.blockNo] = true;
+        var sucCopy = new HashSet<IRBlock>(block.suc);
+        for (var suc : sucCopy) {
+            if (visited[suc.blockNo]) continue;
+            if (block.suc.size() > 1 && suc.pred.size() > 1) {
+                IRBlock newBlock = new IRBlock(block.parent, String.format("critical_edge.%d", criticalEdgeCnt++));
+                newBlock.addInstr(new BrInstr(newBlock, null, suc, null));
+                block.parent.addBlock(newBlock);
+                var br = (BrInstr) block.instructions.getLast();
+                if (br.thenBlock == suc) br.thenBlock = newBlock;
+                else br.elseBlock = newBlock;
+                for (var phiInstr : suc.phiInstrs.values()) phiInstr.changeBlock(newBlock, block);
+                block.suc.remove(suc);
+                block.suc.add(newBlock);
+                newBlock.pred.add(block);
+                suc.pred.remove(block);
+                suc.pred.add(newBlock);
+                newBlock.suc.add(suc);
+            }
+            splitCriticalEdge(suc, visited);
+        }
     }
 
     private void rename(IRBlock block) {
