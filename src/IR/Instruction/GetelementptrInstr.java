@@ -9,6 +9,7 @@ import Util.Type.IRType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class GetelementptrInstr extends Instruction {
     public IRLocalVar result;
@@ -38,5 +39,19 @@ public class GetelementptrInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        HashSet<IRLocalVar> ret = new HashSet<>();
+        if (pointer instanceof IRLocalVar localPointer) ret.add(localPointer);
+        for (IREntity index : indices)
+            if (index instanceof IRLocalVar localIndex) ret.add(localIndex);
+        return ret;
     }
 }

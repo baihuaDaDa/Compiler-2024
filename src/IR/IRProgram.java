@@ -1,10 +1,14 @@
 package IR;
 
+import IR.Instruction.Instruction;
 import IR.Module.*;
 import Util.IRObject.IREntity.IRGlobalPtr;
+import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class IRProgram {
     public ArrayList<FuncDeclMod> funcDecls = null;
@@ -16,6 +20,9 @@ public class IRProgram {
     public FuncDefMod mainFunc = null;
     public int constArrayCnt = 0;
     public int loopCnt = 0, ifCnt = 0, ternaryCnt = 0, andOrCnt = 0;
+
+    // Live Analysis
+    public HashMap<Instruction, HashSet<IRLocalVar>> useMap, defMap, inMap, outMap;
 
     public IRProgram() {
         funcDecls = new ArrayList<>();
@@ -46,6 +53,10 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.malloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "ptr", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.boolToString", "i1"));
+        this.useMap = new HashMap<>();
+        this.defMap = new HashMap<>();
+        this.inMap = new HashMap<>();
+        this.outMap = new HashMap<>();
     }
 
     public String toString() {

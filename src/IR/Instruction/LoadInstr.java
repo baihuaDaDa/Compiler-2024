@@ -5,6 +5,8 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.IRObject.IREntity.IRVariable;
 
+import java.util.HashSet;
+
 public class LoadInstr extends Instruction {
     public IRLocalVar result;
     public IRVariable pointer;
@@ -23,5 +25,17 @@ public class LoadInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            if (pointer instanceof IRLocalVar localPointer) add(localPointer);
+        }};
     }
 }

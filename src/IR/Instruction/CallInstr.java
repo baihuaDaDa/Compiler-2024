@@ -3,16 +3,18 @@ package IR.Instruction;
 import IR.IRBlock;
 import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLocalVar;
 import Util.IRObject.IREntity.IRVariable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CallInstr extends Instruction {
-    public IRVariable result;
+    public IRLocalVar result;
     public String funcName;
     public ArrayList<IREntity> args;
 
-    public CallInstr(IRBlock parent, IRVariable result, String funcName, ArrayList<IREntity> args) {
+    public CallInstr(IRBlock parent, IRLocalVar result, String funcName, ArrayList<IREntity> args) {
         super(parent);
         this.result = result;
         this.funcName = funcName;
@@ -38,5 +40,20 @@ public class CallInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{
+            if (result != null) add(result);
+        }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            for (IREntity arg : args)
+                if (arg instanceof IRLocalVar localArg) add(localArg);
+        }};
     }
 }

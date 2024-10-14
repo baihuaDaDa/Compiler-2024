@@ -2,6 +2,9 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
+import Util.IRObject.IREntity.IRLocalVar;
+
+import java.util.HashSet;
 
 abstract public class Instruction {
     public IRBlock parent;
@@ -14,4 +17,8 @@ abstract public class Instruction {
     abstract public String toString();
 
     abstract public void accept(IRVisitor visitor);
+
+    abstract public HashSet<IRLocalVar> getDef();
+
+    abstract public HashSet<IRLocalVar> getUse();
 }

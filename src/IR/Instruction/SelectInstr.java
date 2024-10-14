@@ -5,6 +5,8 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashSet;
+
 public class SelectInstr extends Instruction {
     public IRLocalVar result;
     public IREntity cond, lhs, rhs;
@@ -25,5 +27,19 @@ public class SelectInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            if (cond instanceof IRLocalVar localCond) add(localCond);
+            if (lhs instanceof IRLocalVar localLhs) add(localLhs);
+            if (rhs instanceof IRLocalVar localRhs) add(localRhs);
+        }};
     }
 }

@@ -7,6 +7,7 @@ import Util.IRObject.IREntity.IRLocalVar;
 import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PhiInstr extends Instruction {
     public IRLocalVar result;
@@ -50,5 +51,15 @@ public class PhiInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>();
     }
 }

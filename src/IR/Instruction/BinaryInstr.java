@@ -5,6 +5,8 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashSet;
+
 public class BinaryInstr extends Instruction {
     public String op;
     public IREntity lhs, rhs;
@@ -26,6 +28,19 @@ public class BinaryInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            if (lhs instanceof IRLocalVar localLhs) add(localLhs);
+            if (rhs instanceof IRLocalVar localRhs) add(localRhs);
+        }};
     }
 
     static public String getOp(String op) {

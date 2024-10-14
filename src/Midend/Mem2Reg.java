@@ -60,6 +60,7 @@ public class Mem2Reg {
             if (block.suc.size() > 1 && suc.pred.size() > 1) {
                 IRBlock newBlock = new IRBlock(block.parent, String.format("critical_edge.%d", criticalEdgeCnt++));
                 newBlock.addInstr(new BrInstr(newBlock, null, suc, null));
+                // TODO 是否需要继续维护 blockNo
                 block.parent.addBlock(newBlock);
                 var br = (BrInstr) block.instructions.getLast();
                 if (br.thenBlock == suc) br.thenBlock = newBlock;

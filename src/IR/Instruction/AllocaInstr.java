@@ -5,6 +5,8 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
+import java.util.HashSet;
+
 public class AllocaInstr extends Instruction {
     public IRLocalVar result;
     public IRType type;
@@ -23,5 +25,15 @@ public class AllocaInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        throw new RuntimeException("AllocaInstr.getDef() should not be called");
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        throw new RuntimeException("AllocaInstr.getUse() should not be called");
     }
 }

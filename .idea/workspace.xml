@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: Mem2Reg on IR fixed.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: split critical edges.">
+      <change afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Backend/RegAllocator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -186,15 +197,8 @@
       <workItem from="1728369958964" duration="6056000" />
       <workItem from="1728479687392" duration="14881000" />
       <workItem from="1728541972043" duration="1355000" />
-      <workItem from="1728815907299" duration="4618000" />
-    </task>
-    <task id="LOCAL-00008" summary="Upd: finish Main (Semantic Part).">
-      <option name="closed" value="true" />
-      <created>1723444666697</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1723444666697</updated>
+      <workItem from="1728815907299" duration="9373000" />
+      <workItem from="1728877051544" duration="2917000" />
     </task>
     <task id="LOCAL-00009" summary="Upd: revise the class set of Types at the aim of processing empty const arrays.">
       <option name="closed" value="true" />
@@ -580,7 +584,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728495684242</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Upd: split critical edges.">
+      <option name="closed" value="true" />
+      <created>1728848371311</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1728848371312</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -598,7 +610,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish LLVM IR statements and modules (except variable definitions)." />
     <MESSAGE value="Upd: finish transforming all the naive expression nodes into LLVM IR instructions." />
     <MESSAGE value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
     <MESSAGE value="Upd: finish IR builder." />
@@ -623,24 +634,16 @@
     <MESSAGE value="Upd: use Phi instr to implement ternary expressions and `&amp;&amp;, ||` expressions." />
     <MESSAGE value="Fix: phi instructions include incorrect predecessors in ternary and `&amp;&amp;`, `||` nodes." />
     <MESSAGE value="Fix: Mem2Reg on IR fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Mem2Reg on IR fixed." />
+    <MESSAGE value="Upd: split critical edges." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: split critical edges." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
-          <line>112</line>
+          <line>113</line>
           <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Midend/DomTreeBuilder.java</url>
-          <line>22</line>
-          <properties class="Midend.DomTreeBuilder" method="buildFunc">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

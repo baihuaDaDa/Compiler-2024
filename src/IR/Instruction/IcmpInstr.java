@@ -3,7 +3,10 @@ package IR.Instruction;
 import IR.IRBlock;
 import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
+
+import java.util.HashSet;
 
 public class IcmpInstr extends Instruction {
     public String cond;
@@ -26,6 +29,19 @@ public class IcmpInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>() {{ add(result); }};
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            if (lhs instanceof IRLocalVar localLhs) add(localLhs);
+            if (rhs instanceof IRLocalVar localRhs) add(localRhs);
+        }};
     }
 
     static public String getCond(String op) {

@@ -3,6 +3,7 @@ package IR;
 import IR.Instruction.Instruction;
 import IR.Instruction.PhiInstr;
 import IR.Module.FuncDefMod;
+import Util.IRObject.IREntity.IRLocalVar;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -16,8 +17,8 @@ public class IRBlock {
     public FuncDefMod parent;
 
     // CFG
-    public HashSet<IRBlock> pred = new HashSet<>();
-    public HashSet<IRBlock> suc = new HashSet<>();
+    public HashSet<IRBlock> pred;
+    public HashSet<IRBlock> suc;
 
     // Dominator Tree
     public int blockNo;
@@ -31,6 +32,8 @@ public class IRBlock {
         this.label = label;
         this.phiInstrs = new HashMap<>();
         this.instructions = new ArrayList<>();
+        this.pred = new HashSet<>();
+        this.suc = new HashSet<>();
         this.children = new HashSet<>();
         this.domFrontier = new HashSet<>();
     }

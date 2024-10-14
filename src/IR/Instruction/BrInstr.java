@@ -4,6 +4,8 @@ import IR.IRBlock;
 import IR.IRVisitor;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashSet;
+
 public class BrInstr extends Instruction {
     public IRLocalVar cond;
     public IRBlock thenBlock, elseBlock;
@@ -24,5 +26,17 @@ public class BrInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getDef() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public HashSet<IRLocalVar> getUse() {
+        return new HashSet<>() {{
+            if (cond != null) add(cond);
+        }};
     }
 }
