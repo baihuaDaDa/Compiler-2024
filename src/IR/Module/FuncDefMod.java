@@ -2,6 +2,7 @@ package IR.Module;
 
 import IR.IRBlock;
 import IR.IRVisitor;
+import IR.Instruction.Instruction;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 

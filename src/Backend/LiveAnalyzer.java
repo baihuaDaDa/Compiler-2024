@@ -3,10 +3,12 @@ package Backend;
 import IR.IRBlock;
 import IR.IRProgram;
 import IR.Instruction.BrInstr;
+import IR.Instruction.Instruction;
 import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class LiveAnalyzer {
@@ -23,10 +25,16 @@ public class LiveAnalyzer {
     }
 
     public void analyzeFunc(FuncDefMod func) {
+        // get uses and defs
         GetUseDef(func);
+        // post traverse
         boolean[] visited = new boolean[func.body.size()];
         ArrayList<IRBlock> ord = new ArrayList<>();
         Traverse(ord, visited, func.body.getFirst());
+        // get linear order
+        HashMap<Instruction, Integer> linearOrderMap = new HashMap<>();
+        GetLinearOrder(linearOrderMap, ord);
+        // get live ins and live outs
         boolean converge = false;
         while (!converge) {
             converge = true;
@@ -77,6 +85,25 @@ public class LiveAnalyzer {
                 }
             }
         }
+        // get live intervals
+        // TODO 死代码块消除
+        for (var block : func.body) {
+            for (var instr : block.instructions) {
+                var ins = program.inMap.get(instr);
+                var linearOrder = linearOrderMap.get(instr);
+                for (var in : ins) {
+                    if (program.intervalMap.containsKey(in))
+                        program.intervalMap.get(in).end = Math.max(linearOrder, program.intervalMap.get(in).end);
+                    else program.intervalMap.put(in, new IRProgram.Interval(linearOrder, linearOrder));
+                }
+                var outs = program.outMap.get(instr);
+                for (var out : outs) {
+                    if (program.intervalMap.containsKey(out))
+                        program.intervalMap.get(out).start = Math.min(linearOrder, program.intervalMap.get(out).start);
+                    else program.intervalMap.put(out, new IRProgram.Interval(linearOrder, linearOrder));
+                }
+            }
+        }
     }
 
     private void GetUseDef(FuncDefMod func) {
@@ -95,5 +122,14 @@ public class LiveAnalyzer {
         for (var suc : block.suc)
             if (!visited[suc.blockNo]) Traverse(ord, visited, suc);
         ord.add(block);
+    }
+
+    private void GetLinearOrder(HashMap<Instruction, Integer> linearOrderMap, ArrayList<IRBlock> ord) {
+        int linearOrder = 0;
+        for (int i = ord.size() - 1; i >= 0; --i) {
+            var block = ord.get(i);
+            for (var instr : block.instructions)
+                linearOrderMap.put(instr, linearOrder++);
+        }
     }
 }

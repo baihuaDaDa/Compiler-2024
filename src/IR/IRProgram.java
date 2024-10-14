@@ -5,6 +5,7 @@ import IR.Module.*;
 import Util.IRObject.IREntity.IRGlobalPtr;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
+import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,24 @@ public class IRProgram {
 
     // Live Analysis
     public HashMap<Instruction, HashSet<IRLocalVar>> useMap, defMap, inMap, outMap;
+
+    public static class Interval implements Comparable<Interval> {
+        public int start, end;
+
+        public Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public int compareTo(Interval o) {
+            int tmp = Integer.compare(end, o.end);
+            if (tmp != 0) return tmp;
+            return Integer.compare(start, o.start);
+        }
+    }
+
+    public HashMap<IRLocalVar, Interval> intervalMap;
 
     public IRProgram() {
         funcDecls = new ArrayList<>();
@@ -57,6 +76,7 @@ public class IRProgram {
         this.defMap = new HashMap<>();
         this.inMap = new HashMap<>();
         this.outMap = new HashMap<>();
+        this.intervalMap = new HashMap<>();
     }
 
     public String toString() {
