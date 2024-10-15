@@ -8,7 +8,7 @@ import IR.Module.FuncDefMod;
 import java.util.*;
 
 public class LinearScanner {
-    private IRProgram program;
+    private final IRProgram program;
     private static final ArrayList<PhysicalReg> regList;
 
     static {
@@ -57,9 +57,7 @@ public class LinearScanner {
                 func.regMap.put(entry.getKey(), regList.get(regNo));
                 if (active.containsKey(interval.end)) active.get(interval.end).add(regNo);
                 else active.put(interval.end, new HashSet<>(List.of(regNo)));
-            } else {
-                // 溢出
-            }
+            } else func.spilledVars.add(entry.getKey()); // 溢出
         }
     }
 }

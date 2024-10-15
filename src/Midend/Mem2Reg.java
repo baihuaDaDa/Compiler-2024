@@ -13,11 +13,11 @@ import Util.Type.IRType;
 import java.util.*;
 
 public class Mem2Reg {
-    private IRProgram program;
-    private HashMap<String, IRType> allocVars;
-    private HashMap<String, HashSet<IRBlock>> defs;
-    private HashMap<String, Integer> nums;
-    private HashMap<String, Stack<IREntity>> valStacks;
+    private final IRProgram program;
+    private final HashMap<String, IRType> allocVars;
+    private final HashMap<String, HashSet<IRBlock>> defs;
+    private final HashMap<String, Integer> nums;
+    private final HashMap<String, Stack<IREntity>> valStacks;
     private int criticalEdgeCnt = 0;
 
     public Mem2Reg(IRProgram program) {
