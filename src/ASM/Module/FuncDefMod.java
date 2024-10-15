@@ -1,6 +1,7 @@
 package ASM.Module;
 
 import ASM.ASMSection;
+import Util.PhysicalReg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,18 +9,21 @@ import java.util.HashMap;
 public class FuncDefMod extends Module {
     public ArrayList<Block> body;
     public HashMap<String, Integer> paramMap;
-    public HashMap<String, Integer> virtualRegMap;
-    public HashMap<String, Integer> allocPtrMap;
-    public int virtualRegCnt = 0, allocCnt = 0, argCnt = 0, stackSize = 0;
+    public int argCnt = 0, stackSize = 0;
     // arguments中前八个用于暂存当前函数体的a0-a7，剩下的用于存储调用函数的第9个及以后的参数
 
-    public FuncDefMod(ASMSection parent, String label) {
-        super(parent, label);
+    // 寄存器分配后需存储形参、溢出变量、caller保存、callee保存
+    public HashMap<String, PhysicalReg> regMap;
+    public HashMap<String, Integer> spilledVarMap;
+    public int spilledVarCnt = 0;
+
+    public FuncDefMod(ASMSection parent, IR.Module.FuncDefMod mod) {
+        super(parent, mod.funcName);
         body = new ArrayList<>();
         paramMap = new HashMap<>();
-        virtualRegMap = new HashMap<>();
-        allocPtrMap = new HashMap<>();
-        body.add(new Block(this, label));
+        var entryBlock = new Block(this, label);
+        body.add(entryBlock);
+        mod.body.getFirst().asmBlock = entryBlock;
     }
 
     public void addBlock(Block block) {
@@ -30,24 +34,24 @@ public class FuncDefMod extends Module {
         return paramMap.containsKey(name);
     }
 
-    public boolean isAllocPtr(String name) {
-        return allocPtrMap.containsKey(name);
+    public boolean isPhysicalReg(String name) {
+        return regMap.containsKey(name);
     }
 
-    public boolean isVirtualReg(String name) {
-        return virtualRegMap.containsKey(name);
+    public boolean isSpilledVar(String name) {
+        return spilledVarMap.containsKey(name);
     }
 
     public int getParamReg(String name) {
         return paramMap.get(name) * 4 + stackSize;
     }
 
-    public int getAllocPtr(String name) {
-        return (allocPtrMap.get(name) + argCnt) * 4;
+    public PhysicalReg getReg(String name) {
+        return regMap.get(name);
     }
 
-    public int getVirtualReg(String name) {
-        return (virtualRegMap.get(name) + allocCnt + argCnt) * 4;
+    public int getSpilledVar(String name) {
+        return (spilledVarMap.get(name) + argCnt) * 4;
     }
 
     public int getArgReg(int no) {

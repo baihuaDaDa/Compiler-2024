@@ -20,6 +20,7 @@ public class FuncDefMod extends Module {
     public int dotICnt = 0; // for NewEmptyArray
 
     // for linear scanner
+    public int maxArgCnt = 0;
     public HashSet<IRLocalVar> spilledVars;
     public HashMap<IRLocalVar, PhysicalReg> regMap;
 

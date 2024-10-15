@@ -30,11 +30,10 @@ public class LinearScanner {
     }
 
     public void runFunc(FuncDefMod func) {
-        int argCnt = 0;
         for (var block : func.body)
             for (var instr : block.instructions)
-                if (instr instanceof CallInstr callInstr) argCnt = Math.max(callInstr.args.size(), argCnt);
-        int maxRegCnt = regList.size() - argCnt;
+                if (instr instanceof CallInstr callInstr) func.maxArgCnt = Math.max(callInstr.args.size(), func.maxArgCnt);
+        int maxRegCnt = regList.size() - func.maxArgCnt;
         var intervals = new ArrayList<>(program.intervalMap.entrySet());
         intervals.sort(Map.Entry.comparingByValue());
         // <被占用区间的右端点, 同一个右端点的所有寄存器的编号的集合> 因为没有MultiSet所以用TreeMap代替
