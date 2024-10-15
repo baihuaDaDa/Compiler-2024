@@ -1,5 +1,6 @@
 package IR.Module;
 
+import IR.Instruction.Instruction;
 import Util.PhysicalReg;
 import IR.IRBlock;
 import IR.IRVisitor;
@@ -19,8 +20,31 @@ public class FuncDefMod extends Module {
     public int anonymousVarCnt = 0;
     public int dotICnt = 0; // for NewEmptyArray
 
+    // Live Analysis
+    public HashMap<Instruction, HashSet<IRLocalVar>> useMap, defMap, inMap, outMap;
+
+    // Linear Scan
+    public int activeCnt = 0;
+
+    public static class Interval implements Comparable<Interval> {
+        public int start, end;
+
+        public Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public int compareTo(Interval o) {
+            int tmp = Integer.compare(end, o.end);
+            if (tmp != 0) return tmp;
+            return Integer.compare(start, o.start);
+        }
+    }
+
+    public HashMap<IRLocalVar, Interval> intervalMap;
+
     // for linear scanner
-    public int maxArgCnt = 0;
     public HashSet<IRLocalVar> spilledVars;
     public HashMap<IRLocalVar, PhysicalReg> regMap;
 
@@ -31,6 +55,11 @@ public class FuncDefMod extends Module {
         body = new ArrayList<>();
         localVars = new HashMap<>();
         addBlock(new IRBlock(this, "entry"));
+        this.useMap = new HashMap<>();
+        this.defMap = new HashMap<>();
+        this.inMap = new HashMap<>();
+        this.outMap = new HashMap<>();
+        this.intervalMap = new HashMap<>();
         spilledVars = new HashSet<>();
         regMap = new HashMap<>();
     }

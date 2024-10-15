@@ -17,9 +17,11 @@ import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 import org.antlr.v4.runtime.misc.Pair;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ASMBuilder implements IRVisitor {
+    // TODO 注意 IR 的基本块不是按逻辑顺序的
     public ASMProgram program;
     Block curBlock;
 
@@ -41,8 +43,7 @@ public class ASMBuilder implements IRVisitor {
             curBlock = asmBlock;
             block.asmBlock = asmBlock;
         }
-        for (var instr : block.instructions)
-            instr.accept(this);
+        for (var instr : block.instructions) instr.accept(this);
     }
 
     // for lw: reg1 -> dst, reg2 -> base, imm -> offset
@@ -50,18 +51,19 @@ public class ASMBuilder implements IRVisitor {
     // for *i: reg1 -> dst, reg2 -> src, imm -> imm
     private void addInstrWithOverflowedImm(String instr, PhysicalReg reg1, int imm, PhysicalReg reg2) {
         if (imm < -2048 || imm > 2047) {
-            // $t6 始终被占用了！！！
-            curBlock.addInstr(new LiInstr(curBlock, PhysicalReg.get("t6"), imm));
+            // $t2 始终被占用了！！！
+            // TODO 有没有可能不用$t2
+            curBlock.addInstr(new LiInstr(curBlock, PhysicalReg.get("t2"), imm));
             switch (instr) {
                 case "lw" -> {
-                    curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t6"), PhysicalReg.get("t6"), reg2));
-                    curBlock.addInstr(new LwInstr(curBlock, reg1, 0, PhysicalReg.get("t6")));
+                    curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t2"), PhysicalReg.get("t2"), reg2));
+                    curBlock.addInstr(new LwInstr(curBlock, reg1, 0, PhysicalReg.get("t2")));
                 }
                 case "sw" -> {
-                    curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t6"), PhysicalReg.get("t6"), reg2));
-                    curBlock.addInstr(new SwInstr(curBlock, reg1, 0, PhysicalReg.get("t6")));
+                    curBlock.addInstr(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t2"), PhysicalReg.get("t2"), reg2));
+                    curBlock.addInstr(new SwInstr(curBlock, reg1, 0, PhysicalReg.get("t2")));
                 }
-                default -> curBlock.addInstr(new ASM.Instruction.BinaryInstr(instr, curBlock, reg1, reg2, PhysicalReg.get("t6")));
+                default -> curBlock.addInstr(new ASM.Instruction.BinaryInstr(instr, curBlock, reg1, reg2, PhysicalReg.get("t2")));
             }
         } else switch (instr) {
             case "lw" -> curBlock.addInstr(new LwInstr(curBlock, reg1, imm, reg2));
@@ -69,6 +71,16 @@ public class ASMBuilder implements IRVisitor {
             default -> curBlock.addInstr(new ASM.Instruction.BinaryImmInstr(instr + "i", curBlock, reg1, reg2, imm));
         }
     }
+
+    private void addSwInstrBeforeJumpWithOverflowedImm(PhysicalReg src, int imm, PhysicalReg base) {
+        if (imm < -2048 || imm > 2047) {
+            // $t2 始终被占用了！！！
+            curBlock.addInstrBeforeJump(new LiInstr(curBlock, PhysicalReg.get("t2"), imm));
+            curBlock.addInstrBeforeJump(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t2"), PhysicalReg.get("t2"), base));
+            curBlock.addInstrBeforeJump(new SwInstr(curBlock, src, 0, PhysicalReg.get("t2")));
+        } else curBlock.addInstrBeforeJump(new SwInstr(curBlock, src, imm, base));
+    }
+
     private Pair<PhysicalReg, Integer> loadReg(IREntity entity, PhysicalReg dst, boolean isLeft) {
         switch (entity) {
             case IRLiteral literal -> {
@@ -77,13 +89,20 @@ public class ASMBuilder implements IRVisitor {
                 return new Pair<>(dst, 0);
             }
             case IRLocalVar localVar -> {
-                if (curBlock.parent.isPhysicalReg(localVar.name))
-                    return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
+                // 如果是 a 系列寄存器说明此时希望直接 load 到 dst 上
+                if (curBlock.parent.isPhysicalReg(localVar.name)){
+                    if (dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
+                    curBlock.addInstr(new MvInstr(curBlock, dst, curBlock.parent.getReg(localVar.name)));
+                    return new Pair<>(dst, 0);
+                }
                 else if (curBlock.parent.isParamReg(localVar.name)) {
                     assert !isLeft;
                     int index = curBlock.parent.paramMap.get(localVar.name);
-                    if (index < 8) return new Pair<>(PhysicalReg.get("a" + index), 0);
-                    else {
+                    if (index < 8) {
+                        if (dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
+                        curBlock.addInstr(new MvInstr(curBlock, dst, PhysicalReg.get("a" + index)));
+                        return new Pair<>(dst, 0);
+                    } else {
                         int offset = curBlock.parent.getParamReg(localVar.name);
                         addInstrWithOverflowedImm("lw", dst, offset, PhysicalReg.get("sp"));
                         return new Pair<>(dst, 0);
@@ -101,6 +120,22 @@ public class ASMBuilder implements IRVisitor {
                 return new Pair<>(dst, 0);
             }
             case null, default -> throw new RuntimeException("Unknown entity");
+        }
+    }
+
+    private void SSASolver(IRBlock block) {
+        for (var phiInstr : block.phiInstrs.values()) {
+            for (var branch : phiInstr.pairs) {
+                if (branch.b != block) {
+                    curBlock = branch.b.asmBlock;
+                    var result = loadReg(phiInstr.result, null, true);
+                    PhysicalReg src = loadReg(branch.a, PhysicalReg.get("t0"), false).a;
+                    if (result.a != null) curBlock.addInstrBeforeJump(new MvInstr(curBlock, result.a, src));
+                    else addSwInstrBeforeJumpWithOverflowedImm(src, result.b, PhysicalReg.get("sp"));
+                } else {
+
+                }
+            }
         }
     }
 
@@ -132,22 +167,43 @@ public class ASMBuilder implements IRVisitor {
         // TODO
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         int offset;
+        // 保存当前函数的前8个参数
         for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
             offset = curBlock.parent.getArgReg(i);
             addInstrWithOverflowedImm("sw", PhysicalReg.get("a" + i), offset, PhysicalReg.get("sp"));
         }
+        // 录入被调用函数的参数
         for (int i = 0; i < instr.args.size(); i++) {
-            loadReg(instr.args.get(i), PhysicalReg.get("t0"));
-            if (i < 8) curBlock.addInstr(new MvInstr(curBlock, PhysicalReg.get("a" + i), PhysicalReg.get("t0")));
+            if (i < 8) loadReg(instr.args.get(i), PhysicalReg.get("a" + i), false);
             else {
+                PhysicalReg arg = loadReg(instr.args.get(i), PhysicalReg.get("t0"), false).a;
                 offset = curBlock.parent.getArgReg(i);
-                addInstrWithOverflowedImm("sw", PhysicalReg.get("t0"), offset, PhysicalReg.get("sp"));
+                addInstrWithOverflowedImm("sw", arg, offset, PhysicalReg.get("sp"));
             }
+        }
+        // 保存 Caller Save 的寄存器
+        var saveOrd = new ArrayList<>(instr.parent.parent.outMap.get(instr));
+        int saveHead = curBlock.parent.getCallerSaveHead();
+        for (var localVar : saveOrd) {
+            if (!curBlock.parent.isPhysicalReg(localVar.name)) continue;
+            PhysicalReg reg = curBlock.parent.regMap.get(localVar.name);
+            if (PhysicalReg.isCalleeSaved(reg.name)) continue;
+            addInstrWithOverflowedImm("sw", reg, saveHead, PhysicalReg.get("sp"));
+            saveHead += 4;
         }
         curBlock.addInstr(new ASM.Instruction.CallInstr(curBlock, instr.funcName));
         if (instr.result != null) {
-            offset = curBlock.parent.getVirtualReg(instr.result.name);
-            addInstrWithOverflowedImm("sw", PhysicalReg.get("a0"), offset, PhysicalReg.get("sp"));
+            var result = loadReg(instr.result, null, true);
+            if (result.a != null) curBlock.addInstr(new MvInstr(curBlock, result.a, PhysicalReg.get("a0")));
+            else addInstrWithOverflowedImm("sw", PhysicalReg.get("a0"), result.b, PhysicalReg.get("sp"));
+        }
+        saveHead = curBlock.parent.getCallerSaveHead();
+        for (var localVar : saveOrd) {
+            if (!curBlock.parent.isPhysicalReg(localVar.name)) continue;
+            PhysicalReg reg = curBlock.parent.regMap.get(localVar.name);
+            if (PhysicalReg.isCalleeSaved(reg.name)) continue;
+            addInstrWithOverflowedImm("lw", reg, saveHead, PhysicalReg.get("sp"));
+            saveHead += 4;
         }
         for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
             offset = curBlock.parent.getArgReg(i);
@@ -211,7 +267,15 @@ public class ASMBuilder implements IRVisitor {
     public void visit(IR.Instruction.RetInstr instr) {
         // TODO
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
-        if (instr.value != null) loadReg(instr.value, PhysicalReg.get("a0"));
+        // save return value
+        if (instr.value != null) loadReg(instr.value, PhysicalReg.get("a0"), false);
+        // callee save reload
+        int saveHead = curBlock.parent.getCalleeSaveHead();
+        for (int i = 0; i < curBlock.parent.calleeSaveCnt; i++) {
+            addInstrWithOverflowedImm("lw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
+            saveHead += 4;
+        }
+        // load ra and restore sp
         addInstrWithOverflowedImm("lw", PhysicalReg.get("ra"), curBlock.parent.getRetReg(), PhysicalReg.get("sp"));
         addInstrWithOverflowedImm("add", PhysicalReg.get("sp"), curBlock.parent.stackSize, PhysicalReg.get("sp"));
         curBlock.addInstr(new ASM.Instruction.RetInstr(curBlock));
@@ -248,20 +312,33 @@ public class ASMBuilder implements IRVisitor {
         for (var entry : mod.regMap.entrySet())
             newFunc.regMap.put(entry.getKey().name, entry.getValue());
         curSection.addModule(newFunc);
-        curBlock = newFunc.body.getFirst();
         for (var block : mod.body)
-            for  (var instr : block.instructions) {
-                if (instr instanceof CallInstr)
-                    newFunc.argCnt = Math.max(newFunc.argCnt, ((CallInstr) instr).args.size());
-            }
+            for  (var instr : block.instructions)
+                if (instr instanceof CallInstr callInstr) {
+                    newFunc.argCnt = Math.max(newFunc.argCnt, (callInstr.args.size()));
+                    var outs = callInstr.parent.parent.outMap.get(instr);
+                    int nonSpilledCnt = 0;
+                    for (var out : outs)
+                        if (callInstr.parent.parent.regMap.containsKey(out)
+                                && !PhysicalReg.isCalleeSaved(callInstr.parent.parent.regMap.get(out).name)) nonSpilledCnt++;
+                    newFunc.callerSaveCnt = Math.max(newFunc.callerSaveCnt, nonSpilledCnt);
+                }
         for (var spilledVar : mod.spilledVars)
             newFunc.spilledVarMap.put(spilledVar.name, newFunc.spilledVarCnt++);
+        newFunc.calleeSaveCnt = Math.min(mod.activeCnt, 12);
         newFunc.stackSize = (newFunc.argCnt + newFunc.spilledVarCnt + 1) * 4;
         if (newFunc.stackSize % 16 != 0) newFunc.stackSize = ((newFunc.stackSize) / 16 + 1) * 16;
         addInstrWithOverflowedImm("add", PhysicalReg.get("sp"), -newFunc.stackSize, PhysicalReg.get("sp"));
         addInstrWithOverflowedImm("sw", PhysicalReg.get("ra"), newFunc.getRetReg(), PhysicalReg.get("sp"));
-        for (var block : mod.body)
-            block.accept(this);
+        int saveHead = newFunc.getCalleeSaveHead();
+        for (int i = 0; i < newFunc.calleeSaveCnt; i++) {
+            addInstrWithOverflowedImm("sw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
+            saveHead += 4;
+        }
+        curBlock = newFunc.body.getFirst();
+        for (var block : mod.body) block.accept(this);
+        // SSA 消除
+        for (var block : mod.body) SSASolver(block);
     }
     public void visit(IR.Module.GlobalVarDefMod mod) {
         var curSection = program.getSection(".data");

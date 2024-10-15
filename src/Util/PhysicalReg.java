@@ -56,6 +56,10 @@ public class PhysicalReg {
         return regMap.get(name);
     }
 
+    public static boolean isCalleeSaved(String name) {
+        return name.charAt(0) == 's';
+    }
+
     @Override
     public String toString() {
         return name;

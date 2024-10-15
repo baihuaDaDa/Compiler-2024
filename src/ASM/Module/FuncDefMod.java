@@ -10,12 +10,14 @@ public class FuncDefMod extends Module {
     public ArrayList<Block> body;
     public HashMap<String, Integer> paramMap;
     public int argCnt = 0, stackSize = 0;
-    // arguments中前八个用于暂存当前函数体的a0-a7，剩下的用于存储调用函数的第9个及以后的参数
+    // arguments 中前八个用于暂存当前函数体的 a0-a7，剩下的用于存储调用函数的第 9 个及以后的参数
+    // argCnt 代表需要保存的寄存器数量
 
     // 寄存器分配后需存储形参、溢出变量、caller保存、callee保存
     public HashMap<String, PhysicalReg> regMap;
     public HashMap<String, Integer> spilledVarMap;
-    public int spilledVarCnt = 0;
+    public int spilledVarCnt = 0, callerSaveCnt = 0, calleeSaveCnt = 0;
+    // 8 args to save (current func) --- more args to save (called func) --- spilled variables --- caller save --- callee save --- ra
 
     public FuncDefMod(ASMSection parent, IR.Module.FuncDefMod mod) {
         super(parent, mod.funcName);
@@ -56,6 +58,14 @@ public class FuncDefMod extends Module {
 
     public int getArgReg(int no) {
         return no * 4;
+    }
+
+    public int getCallerSaveHead() {
+        return (argCnt + spilledVarCnt) * 4;
+    }
+
+    public int getCalleeSaveHead() {
+        return (argCnt + spilledVarCnt + callerSaveCnt) * 4;
     }
 
     public int getRetReg() {

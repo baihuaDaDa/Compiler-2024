@@ -22,27 +22,6 @@ public class IRProgram {
     public int constArrayCnt = 0;
     public int loopCnt = 0, ifCnt = 0, ternaryCnt = 0, andOrCnt = 0;
 
-    // Live Analysis
-    public HashMap<Instruction, HashSet<IRLocalVar>> useMap, defMap, inMap, outMap;
-
-    public static class Interval implements Comparable<Interval> {
-        public int start, end;
-
-        public Interval(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        @Override
-        public int compareTo(Interval o) {
-            int tmp = Integer.compare(end, o.end);
-            if (tmp != 0) return tmp;
-            return Integer.compare(start, o.start);
-        }
-    }
-
-    public HashMap<IRLocalVar, Interval> intervalMap;
-
     public IRProgram() {
         funcDecls = new ArrayList<>();
         structDefs = new ArrayList<>();
@@ -72,11 +51,6 @@ public class IRProgram {
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.malloc", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), "array.copy", "ptr", "i32", "i32"));
         funcDecls.add(new FuncDeclMod(new IRType("ptr"), ".builtin.boolToString", "i1"));
-        this.useMap = new HashMap<>();
-        this.defMap = new HashMap<>();
-        this.inMap = new HashMap<>();
-        this.outMap = new HashMap<>();
-        this.intervalMap = new HashMap<>();
     }
 
     public String toString() {
