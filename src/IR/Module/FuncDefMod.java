@@ -1,13 +1,14 @@
 package IR.Module;
 
+import Util.PhysicalReg;
 import IR.IRBlock;
 import IR.IRVisitor;
-import IR.Instruction.Instruction;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class FuncDefMod extends Module {
     public IRType returnType;
@@ -18,6 +19,10 @@ public class FuncDefMod extends Module {
     public int anonymousVarCnt = 0;
     public int dotICnt = 0; // for NewEmptyArray
 
+    // for linear scanner
+    public HashSet<IRLocalVar> spilledVars;
+    public HashMap<IRLocalVar, PhysicalReg> regMap;
+
     public FuncDefMod(IRType returnType, String funcName, ArrayList<IRLocalVar> params) {
         this.returnType = returnType;
         this.funcName = funcName;
@@ -25,6 +30,8 @@ public class FuncDefMod extends Module {
         body = new ArrayList<>();
         localVars = new HashMap<>();
         addBlock(new IRBlock(this, "entry"));
+        spilledVars = new HashSet<>();
+        regMap = new HashMap<>();
     }
 
     @Override

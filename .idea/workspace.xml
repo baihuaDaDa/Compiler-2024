@@ -4,12 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: finish live analyzer.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: add live interval map.">
       <change afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Backend/SSASolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/BinaryImmInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryImmInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/BinaryInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/BnezInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/BnezInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/LaInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/LaInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/LiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/LiInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/LwInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/LwInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/MvInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/MvInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/SetInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/SetInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Instruction/SwInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Instruction/SwInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Operand/PhysicalReg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/PhysicalReg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,36 +54,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/test&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Makefile 目标.clean.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/test",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Main.executor": "Run"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
+  "keyToStringList": {
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024" />
@@ -94,7 +109,7 @@
       <visibility group="运行配置" flag="true" />
     </myKeys>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="应用程序.Main">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -114,6 +129,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="clean" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="clean" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile 目标.clean" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -186,15 +212,8 @@
       <workItem from="1728479687392" duration="14881000" />
       <workItem from="1728541972043" duration="1355000" />
       <workItem from="1728815907299" duration="9373000" />
-      <workItem from="1728877051544" duration="9171000" />
-    </task>
-    <task id="LOCAL-00010" summary="Upd: almost finish the semantic checker.">
-      <option name="closed" value="true" />
-      <created>1723495466178</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1723495466178</updated>
+      <workItem from="1728877051544" duration="12917000" />
+      <workItem from="1728975237941" duration="7013000" />
     </task>
     <task id="LOCAL-00011" summary="Upd: finish the semantic checker.">
       <option name="closed" value="true" />
@@ -580,7 +599,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728926460427</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Upd: add live interval map.">
+      <option name="closed" value="true" />
+      <created>1728933576776</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1728933576776</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -598,7 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR." />
     <MESSAGE value="Upd: finish IR builder." />
     <MESSAGE value="Upd: finish IR printer." />
     <MESSAGE value="Reset." />
@@ -623,7 +649,8 @@
     <MESSAGE value="Fix: Mem2Reg on IR fixed." />
     <MESSAGE value="Upd: split critical edges." />
     <MESSAGE value="Upd: finish live analyzer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: finish live analyzer." />
+    <MESSAGE value="Upd: add live interval map." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: add live interval map." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

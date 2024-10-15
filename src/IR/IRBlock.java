@@ -1,5 +1,6 @@
 package IR;
 
+import ASM.Module.Block;
 import IR.Instruction.Instruction;
 import IR.Instruction.PhiInstr;
 import IR.Module.FuncDefMod;
@@ -26,6 +27,9 @@ public class IRBlock {
     public IRBlock idom;
     public HashSet<IRBlock> children;
     public HashSet<IRBlock> domFrontier;
+
+    // SSA Solver
+    public Block asmBlock;
 
     public IRBlock(FuncDefMod parent, String label) {
         this.parent = parent;

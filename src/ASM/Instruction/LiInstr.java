@@ -1,7 +1,7 @@
 package ASM.Instruction;
 
 import ASM.Module.Block;
-import ASM.Operand.PhysicalReg;
+import Util.PhysicalReg;
 
 public class LiInstr extends Instruction {
     public PhysicalReg dst;

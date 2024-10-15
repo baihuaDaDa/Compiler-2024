@@ -3,7 +3,7 @@ package Backend;
 import ASM.ASMProgram;
 import ASM.Instruction.*;
 import ASM.Module.Block;
-import ASM.Operand.PhysicalReg;
+import Util.PhysicalReg;
 import IR.IRBlock;
 import IR.IRProgram;
 import IR.IRVisitor;
@@ -36,6 +36,7 @@ public class ASMBuilder implements IRVisitor {
             Block asmBlock = new Block(curBlock.parent, block.label);
             curBlock.parent.addBlock(asmBlock);
             curBlock = asmBlock;
+            block.asmBlock = asmBlock;
         }
         for (var instr : block.instructions)
             instr.accept(this);
@@ -215,7 +216,7 @@ public class ASMBuilder implements IRVisitor {
     public void visit(FuncDeclMod mod) {}
     public void visit(IR.Module.FuncDefMod mod) {
         var curSection = program.getSection(".text");
-        var newFunc = new ASM.Module.FuncDefMod(curSection, mod.funcName);
+        var newFunc = new ASM.Module.FuncDefMod(curSection, mod);
         for (int i = 0; i < mod.params.size(); i++)
             newFunc.paramMap.put(mod.params.get(i).name, i);
         curSection.addModule(newFunc);
