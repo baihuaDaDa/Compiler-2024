@@ -24,6 +24,8 @@ public class LinearScanner {
     }
 
     public void run() {
+        LiveAnalyzer liveAnalyzer = new LiveAnalyzer(program);
+        liveAnalyzer.analyze();
         program.funcDefs.forEach(this::runFunc);
         if (program.initFunc != null) runFunc(program.initFunc);
         runFunc(program.mainFunc);

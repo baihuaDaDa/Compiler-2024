@@ -26,6 +26,8 @@ public class FuncDefMod extends Module {
         var entryBlock = new Block(this, label);
         body.add(entryBlock);
         mod.body.getFirst().asmBlock = entryBlock;
+        regMap = new HashMap<>();
+        spilledVarMap = new HashMap<>();
     }
 
     public void addBlock(Block block) {

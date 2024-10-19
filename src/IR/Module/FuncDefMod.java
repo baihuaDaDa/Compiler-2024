@@ -21,7 +21,8 @@ public class FuncDefMod extends Module {
     public int dotICnt = 0; // for NewEmptyArray
 
     // Live Analysis
-    public HashMap<Instruction, HashSet<IRLocalVar>> useMap, defMap, inMap, outMap;
+    public HashMap<Instruction, HashSet<IRLocalVar>> useMap, inMap, outMap;
+    public HashMap<Instruction, IRLocalVar> defMap;
 
     // Linear Scan
     public int activeCnt = 0;

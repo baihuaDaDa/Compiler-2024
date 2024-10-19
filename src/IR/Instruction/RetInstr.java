@@ -28,8 +28,8 @@ public class RetInstr extends Instruction {
     }
 
     @Override
-    public HashSet<IRLocalVar> getDef() {
-        return new HashSet<>();
+    public IRLocalVar getDef() {
+        return null;
     }
 
     @Override

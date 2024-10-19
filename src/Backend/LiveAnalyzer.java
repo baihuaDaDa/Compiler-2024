@@ -6,6 +6,7 @@ import IR.Instruction.BrInstr;
 import IR.Instruction.Instruction;
 import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
+import Util.IRObject.IREntity.IRLocalVar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class LiveAnalyzer {
                 var instructions = func.body.get(i).instructions;
                 for (int j = instructions.size() - 1; j >= 0; --j) {
                     var instr = instructions.get(j);
-                    var defs = func.defMap.get(instr);
+                    var def = func.defMap.get(instr);
                     var outs = func.outMap.get(instr);
                     var ins = func.inMap.get(instr);
                     // scan_liveOut
@@ -78,8 +79,28 @@ public class LiveAnalyzer {
                     }
                     // scan_liveIn
                     for (var out : outs) {
-                        if (defs.contains(out)) continue;
+                        if (def == out) continue;
                         if (ins.contains(out)) continue;
+                        ins.add(out);
+                        converge = false;
+                    }
+                }
+                var phiInstructions = func.body.get(i).phiInstrs;
+                var ins = func.inMap.get(instructions.getFirst());
+                for (var phiInstr : phiInstructions.values()) {
+                    var tmpOuts = func.outMap.get(phiInstr);
+                    var tmpIns = func.inMap.get(phiInstr);
+                    var def = func.defMap.get(phiInstr);
+                    // scan_liveOut
+                    for (var in : ins) {
+                        if (tmpOuts.contains(in)) continue;
+                        tmpOuts.add(in);
+                        converge = false;
+                    }
+                    // scan_liveIn
+                    for (var out : tmpOuts) {
+                        if (def == out) continue;
+                        if (tmpIns.contains(out)) continue;
                         ins.add(out);
                         converge = false;
                     }
@@ -114,6 +135,15 @@ public class LiveAnalyzer {
                 func.defMap.put(instr, instr.getDef());
                 func.outMap.put(instr, new HashSet<>());
                 func.inMap.put(instr, new HashSet<>(func.useMap.get(instr)));
+            }
+        for (var block : func.body)
+            for (var phiInstr : block.phiInstrs.values()) {
+                func.defMap.put(phiInstr, phiInstr.getDef());
+                func.outMap.put(phiInstr, new HashSet<>());
+                func.inMap.put(phiInstr, new HashSet<>());
+                for (var branch : phiInstr.pairs)
+                    if (branch.a instanceof IRLocalVar localVar)
+                        func.useMap.get(branch.b.instructions.getLast()).add(localVar); // phi 的 use 在控制语句之前的一条语句
             }
     }
 

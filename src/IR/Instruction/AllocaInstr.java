@@ -28,7 +28,7 @@ public class AllocaInstr extends Instruction {
     }
 
     @Override
-    public HashSet<IRLocalVar> getDef() {
+    public IRLocalVar getDef() {
         throw new RuntimeException("AllocaInstr.getDef() should not be called");
     }
 

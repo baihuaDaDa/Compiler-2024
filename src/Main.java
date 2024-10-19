@@ -1,4 +1,6 @@
 import AST.Program.ProgramNode;
+import Backend.ASMBuilder;
+import Backend.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
@@ -23,7 +25,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/codegen/t57.mx");
+        InputStream input = new FileInputStream("testcases/codegen/t5.mx");
         OutputStream outputIR = new FileOutputStream("test.ll");
         OutputStream outputIROrigin = new FileOutputStream("test-origin.ll");
         OutputStream outputASM = new FileOutputStream("test.s");
@@ -48,11 +50,11 @@ public class Main {
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
-//            ASMBuilder asmBuilder = new ASMBuilder();
-//            asmBuilder.visit(irBuilder.program);
-//            ASMCFGBuilder asmCFGBuilder = new ASMCFGBuilder(asmBuilder.program);
-//            asmCFGBuilder.build();
-//            outputASM.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            LinearScanner linearScanner = new LinearScanner(irBuilder.program);
+            linearScanner.run();
+            ASMBuilder asmBuilder = new ASMBuilder();
+            asmBuilder.visit(irBuilder.program);
+            outputASM.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

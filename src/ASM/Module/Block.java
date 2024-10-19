@@ -13,18 +13,12 @@ public class Block {
     public String label;
     public ArrayList<Instruction> body;
 
-    // CFG
-    public HashSet<Block> pred;
-    public HashSet<Block> suc;
-
     // Live Analysis
 
     public Block(FuncDefMod parent, String label) {
         this.parent = parent;
         this.label = label;
         body = new ArrayList<>();
-        pred = new HashSet<>();
-        suc = new HashSet<>();
     }
 
     public void addInstr(Instruction instr) {

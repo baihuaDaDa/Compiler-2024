@@ -18,7 +18,7 @@ abstract public class Instruction {
 
     abstract public void accept(IRVisitor visitor);
 
-    abstract public HashSet<IRLocalVar> getDef();
+    abstract public IRLocalVar getDef();
 
     abstract public HashSet<IRLocalVar> getUse();
 }

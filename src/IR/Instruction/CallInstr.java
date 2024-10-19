@@ -43,10 +43,8 @@ public class CallInstr extends Instruction {
     }
 
     @Override
-    public HashSet<IRLocalVar> getDef() {
-        return new HashSet<>() {{
-            if (result != null) add(result);
-        }};
+    public IRLocalVar getDef() {
+        return result;
     }
 
     @Override

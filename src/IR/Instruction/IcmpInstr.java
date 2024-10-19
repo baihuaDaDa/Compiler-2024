@@ -32,8 +32,8 @@ public class IcmpInstr extends Instruction {
     }
 
     @Override
-    public HashSet<IRLocalVar> getDef() {
-        return new HashSet<>() {{ add(result); }};
+    public IRLocalVar getDef() {
+        return result;
     }
 
     @Override

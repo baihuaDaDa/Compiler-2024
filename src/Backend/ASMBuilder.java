@@ -83,8 +83,7 @@ public class ASMBuilder implements IRVisitor {
                     if (dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
                     curBlock.addInstr(new MvInstr(curBlock, dst, curBlock.parent.getReg(localVar.name)));
                     return new Pair<>(dst, 0);
-                }
-                else if (curBlock.parent.isParamReg(localVar.name)) {
+                } else if (curBlock.parent.isParamReg(localVar.name)) {
                     assert !isLeft;
                     int index = curBlock.parent.paramMap.get(localVar.name);
                     if (index < 8) {
@@ -299,6 +298,7 @@ public class ASMBuilder implements IRVisitor {
         newFunc.calleeSaveCnt = Math.min(mod.activeCnt, 12);
         newFunc.stackSize = (newFunc.argCnt + newFunc.spilledVarCnt + 1) * 4;
         if (newFunc.stackSize % 16 != 0) newFunc.stackSize = ((newFunc.stackSize) / 16 + 1) * 16;
+        curBlock = newFunc.body.getFirst();
         addInstrWithOverflowedImm("add", PhysicalReg.get("sp"), -newFunc.stackSize, PhysicalReg.get("sp"));
         addInstrWithOverflowedImm("sw", PhysicalReg.get("ra"), newFunc.getRetReg(), PhysicalReg.get("sp"));
         int saveHead = newFunc.getCalleeSaveHead();
@@ -306,7 +306,6 @@ public class ASMBuilder implements IRVisitor {
             addInstrWithOverflowedImm("sw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
             saveHead += 4;
         }
-        curBlock = newFunc.body.getFirst();
         for (var block : mod.body) block.accept(this);
         // SSA 消除
         SSAEliminator ssaEliminator = new SSAEliminator(mod);
