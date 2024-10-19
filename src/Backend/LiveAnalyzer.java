@@ -38,6 +38,7 @@ public class LiveAnalyzer {
         boolean converge = false;
         while (!converge) {
             converge = true;
+            // TODO 可以把 ret 的基本块入队，用反向 BFS 遍历
             for (int i = ord.size() - 1; i >= 0; --i) {
                 var instructions = func.body.get(i).instructions;
                 for (int j = instructions.size() - 1; j >= 0; --j) {

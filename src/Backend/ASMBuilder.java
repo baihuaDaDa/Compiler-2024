@@ -8,7 +8,6 @@ import IR.IRBlock;
 import IR.IRProgram;
 import IR.IRVisitor;
 import IR.Instruction.*;
-import IR.Instruction.BinaryInstr;
 import IR.Instruction.CallInstr;
 import IR.Module.*;
 import Util.IRObject.IREntity.IREntity;
@@ -17,8 +16,7 @@ import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 import org.antlr.v4.runtime.misc.Pair;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class ASMBuilder implements IRVisitor {
     // TODO 注意 IR 的基本块不是按逻辑顺序的
@@ -72,15 +70,6 @@ public class ASMBuilder implements IRVisitor {
         }
     }
 
-    private void addSwInstrBeforeJumpWithOverflowedImm(PhysicalReg src, int imm, PhysicalReg base) {
-        if (imm < -2048 || imm > 2047) {
-            // $t2 始终被占用了！！！
-            curBlock.addInstrBeforeJump(new LiInstr(curBlock, PhysicalReg.get("t2"), imm));
-            curBlock.addInstrBeforeJump(new ASM.Instruction.BinaryInstr("add", curBlock, PhysicalReg.get("t2"), PhysicalReg.get("t2"), base));
-            curBlock.addInstrBeforeJump(new SwInstr(curBlock, src, 0, PhysicalReg.get("t2")));
-        } else curBlock.addInstrBeforeJump(new SwInstr(curBlock, src, imm, base));
-    }
-
     private Pair<PhysicalReg, Integer> loadReg(IREntity entity, PhysicalReg dst, boolean isLeft) {
         switch (entity) {
             case IRLiteral literal -> {
@@ -123,22 +112,6 @@ public class ASMBuilder implements IRVisitor {
         }
     }
 
-    private void SSASolver(IRBlock block) {
-        for (var phiInstr : block.phiInstrs.values()) {
-            for (var branch : phiInstr.pairs) {
-                if (branch.b != block) {
-                    curBlock = branch.b.asmBlock;
-                    var result = loadReg(phiInstr.result, null, true);
-                    PhysicalReg src = loadReg(branch.a, PhysicalReg.get("t0"), false).a;
-                    if (result.a != null) curBlock.addInstrBeforeJump(new MvInstr(curBlock, result.a, src));
-                    else addSwInstrBeforeJumpWithOverflowedImm(src, result.b, PhysicalReg.get("sp"));
-                } else {
-
-                }
-            }
-        }
-    }
-
     public void visit(AllocaInstr instr) {}
     public void visit(IR.Instruction.BinaryInstr instr) {
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
@@ -164,7 +137,6 @@ public class ASMBuilder implements IRVisitor {
         } else curBlock.addInstr(new JInstr(curBlock, instr.thenBlock.label));
     }
     public void visit(IR.Instruction.CallInstr instr) {
-        // TODO
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         int offset;
         // 保存当前函数的前8个参数
@@ -265,7 +237,6 @@ public class ASMBuilder implements IRVisitor {
     }
     public void visit(PhiInstr instr) {}
     public void visit(IR.Instruction.RetInstr instr) {
-        // TODO
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         // save return value
         if (instr.value != null) loadReg(instr.value, PhysicalReg.get("a0"), false);
@@ -338,7 +309,8 @@ public class ASMBuilder implements IRVisitor {
         curBlock = newFunc.body.getFirst();
         for (var block : mod.body) block.accept(this);
         // SSA 消除
-        for (var block : mod.body) SSASolver(block);
+        SSAEliminator ssaEliminator = new SSAEliminator(mod);
+        ssaEliminator.run();
     }
     public void visit(IR.Module.GlobalVarDefMod mod) {
         var curSection = program.getSection(".data");
