@@ -1,4 +1,6 @@
 import AST.Program.ProgramNode;
+import Backend.ASMBuilder;
+import Backend.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
@@ -43,11 +45,11 @@ public class Compiler {
             mem2Reg.run();
             DCE dce = new DCE(irBuilder.program);
             dce.run();
-//            ASMBuilder asmBuilder = new ASMBuilder();
-//            asmBuilder.visit(irBuilder.program);
-//            ASMCFGBuilder asmCFGBuilder = new ASMCFGBuilder(asmBuilder.program);
-//            asmCFGBuilder.build();
-            output.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            LinearScanner linearScanner = new LinearScanner(irBuilder.program);
+            linearScanner.run();
+            ASMBuilder asmBuilder = new ASMBuilder();
+            asmBuilder.visit(irBuilder.program);
+            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

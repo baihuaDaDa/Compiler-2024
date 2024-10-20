@@ -87,7 +87,7 @@ public class ASMBuilder implements IRVisitor {
                     assert !isLeft;
                     int index = curBlock.parent.paramMap.get(localVar.name);
                     if (index < 8) {
-                        if (dst == null || dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
+                        if (dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
                         curBlock.addInstr(new MvInstr(curBlock, dst, PhysicalReg.get("a" + index)));
                         return new Pair<>(dst, 0);
                     } else {

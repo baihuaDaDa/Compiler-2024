@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem in the renaming part og Mem2Reg.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem in DCE.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
     </list>
@@ -190,15 +192,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="26605000" />
-    </task>
-    <task id="LOCAL-00019" summary="Fix: fix Makefile.">
-      <option name="closed" value="true" />
-      <created>1723723153055</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1723723153055</updated>
+      <workItem from="1729405263423" duration="33044000" />
     </task>
     <task id="LOCAL-00020" summary="Fix: fix several problems and pass the local test.">
       <option name="closed" value="true" />
@@ -584,7 +578,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729440379757</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Fix: fix a problem in DCE.">
+      <option name="closed" value="true" />
+      <created>1729457127749</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1729457127749</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish half of the ASM builder." />
     <MESSAGE value="Upd: finish asm builder." />
     <MESSAGE value="Fix: pass all the testcases except the three new ones(t75, t76, t77), relying on ravel." />
     <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
@@ -627,29 +628,12 @@
     <MESSAGE value="Fix: fix the live analysis of phi instr." />
     <MESSAGE value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in the renaming part og Mem2Reg." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem in the renaming part og Mem2Reg." />
+    <MESSAGE value="Fix: fix a problem in DCE." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem in DCE." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
-          <line>27</line>
-          <properties class="Backend.LiveAnalyzer" method="analyzeFunc">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
-          <line>33</line>
-          <properties class="Backend.LinearScanner" method="runFunc">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
           <line>128</line>
@@ -659,10 +643,19 @@
           </properties>
           <option name="timeStamp" value="85" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
+          <line>33</line>
+          <properties class="Backend.LinearScanner" method="runFunc">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="88" />
+          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
+          <line>102</line>
+          <option name="timeStamp" value="89" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

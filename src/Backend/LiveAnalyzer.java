@@ -11,6 +11,7 @@ import Util.IRObject.IREntity.IRLocalVar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 public class LiveAnalyzer {
     private final IRProgram program;
@@ -26,6 +27,7 @@ public class LiveAnalyzer {
     }
 
     public void analyzeFunc(FuncDefMod func) {
+        GetUseDef(func);
         // post traverse
         boolean[] visited = new boolean[func.body.size()];
         ArrayList<IRBlock> ord = new ArrayList<>();
@@ -59,16 +61,20 @@ public class LiveAnalyzer {
                         if (instr instanceof BrInstr brInstr) {
                             var tmpIns = func.inMap.get(brInstr.thenBlock.instructions.getFirst());
                             if (tmpIns == null) continue;
+                            HashSet<IRLocalVar> phiDefs = new HashSet<>();
+                            for (var phiInstr : brInstr.thenBlock.phiInstrs.values()) phiDefs.add(phiInstr.getDef());
                             for (var in : tmpIns) {
-                                if (outs.contains(in)) continue;
+                                if (outs.contains(in) || phiDefs.contains(in)) continue;
                                 outs.add(in);
                                 converge = false;
                             }
                             if (brInstr.elseBlock != null) {
                                 tmpIns = func.inMap.get(brInstr.elseBlock.instructions.getFirst());
                                 if (tmpIns == null) continue;
+                                phiDefs = new HashSet<>();
+                                for (var phiInstr : brInstr.elseBlock.phiInstrs.values()) phiDefs.add(phiInstr.getDef());
                                 for (var in : tmpIns) {
-                                    if (outs.contains(in)) continue;
+                                    if (outs.contains(in) || phiDefs.contains(in)) continue;
                                     outs.add(in);
                                     converge = false;
                                 }
@@ -83,31 +89,38 @@ public class LiveAnalyzer {
                         converge = false;
                     }
                 }
-                var phiInstructions = func.body.get(i).phiInstrs;
-                var ins = func.inMap.get(instructions.getFirst());
-                for (var phiInstr : phiInstructions.values()) {
-                    var tmpOuts = func.outMap.get(phiInstr);
-                    var tmpIns = func.inMap.get(phiInstr);
-                    var def = func.defMap.get(phiInstr);
-                    // scan_liveOut
-                    for (var in : ins) {
-                        if (tmpOuts.contains(in)) continue;
-                        tmpOuts.add(in);
-                        converge = false;
-                    }
-                    // scan_liveIn
-                    for (var out : tmpOuts) {
-                        if (def == out) continue;
-                        if (tmpIns.contains(out)) continue;
-                        ins.add(out);
-                        converge = false;
-                    }
-                }
+//                var phiInstructions = func.body.get(i).phiInstrs;
+//                var ins = func.inMap.get(instructions.getFirst());
+//                for (var phiInstr : phiInstructions.values()) {
+//                    var tmpOuts = func.outMap.get(phiInstr);
+//                    var tmpIns = func.inMap.get(phiInstr);
+//                    var def = func.defMap.get(phiInstr);
+//                    // scan_liveOut
+//                    for (var in : ins) {
+//                        if (tmpOuts.contains(in)) continue;
+//                        tmpOuts.add(in);
+//                        converge = false;
+//                    }
+//                    // scan_liveIn
+//                    for (var out : tmpOuts) {
+//                        if (def == out) continue;
+//                        if (tmpIns.contains(out)) continue;
+//                        ins.add(out);
+//                        converge = false;
+//                    }
+//                }
             }
         }
         // get live intervals
         // TODO 死代码块消除
         for (var block : func.body) {
+            for (var phiInstr : block.phiInstrs.values()) {
+                var def = func.defMap.get(phiInstr);
+                int linearOrder = linearOrderMap.get(phiInstr);
+                if (func.intervalMap.containsKey(def))
+                    func.intervalMap.get(def).start = Math.min(linearOrder, func.intervalMap.get(def).start);
+                else func.intervalMap.put(def, new FuncDefMod.Interval(linearOrder, linearOrderMap.get(phiInstr)));
+            }
             for (var instr : block.instructions) {
                 var ins = func.inMap.get(instr);
                 var linearOrder = linearOrderMap.get(instr);
@@ -126,6 +139,27 @@ public class LiveAnalyzer {
         }
     }
 
+    private void GetUseDef(FuncDefMod func) {
+        for (var block : func.body)
+            for (var instr : block.instructions) {
+                func.useMap.put(instr, instr.getUse());
+                func.defMap.put(instr, instr.getDef());
+                func.outMap.put(instr, new HashSet<>());
+                func.inMap.put(instr, new HashSet<>(func.useMap.get(instr)));
+            }
+        for (var block : func.body)
+            for (var phiInstr : block.phiInstrs.values()) {
+                func.defMap.put(phiInstr, phiInstr.getDef());
+                func.outMap.put(phiInstr, new HashSet<>());
+                func.inMap.put(phiInstr, new HashSet<>());
+                for (var branch : phiInstr.pairs)
+                    if (branch.a instanceof IRLocalVar localVar) {
+                        func.useMap.get(branch.b.instructions.getLast()).add(localVar); // phi 的 use 在控制语句之前的一条语句
+                        func.inMap.get(branch.b.instructions.getLast()).add(localVar); // in 也要同步一下
+                    }
+            }
+    }
+
     // Inverse Post Order
     private void Traverse(ArrayList<IRBlock> ord, boolean[] visited, IRBlock block) {
         visited[block.blockNo] = true;
@@ -136,10 +170,10 @@ public class LiveAnalyzer {
 
     private void GetLinearOrder(HashMap<Instruction, Integer> linearOrderMap, ArrayList<IRBlock> ord) {
         int linearOrder = 0;
-        for (int i = ord.size() - 1; i >= 0; --i) {
+        for (int i = 0; i < ord.size(); ++i) {
             var block = ord.get(i);
-            for (var instr : block.instructions)
-                linearOrderMap.put(instr, linearOrder++);
+            for (var phiInstr : block.phiInstrs.values()) linearOrderMap.put(phiInstr, linearOrder++);
+            for (var instr : block.instructions) linearOrderMap.put(instr, linearOrder++);
         }
     }
 }

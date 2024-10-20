@@ -62,7 +62,7 @@ public class SSAEliminator {
             case IRLocalVar localVar -> {
                 // 如果是 a 系列寄存器说明此时希望直接 load 到 dst 上
                 if (curBlock.parent.isPhysicalReg(localVar.name)){
-                    if (dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
+                    if (dst == null || dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
                     curBlock.addInstrBeforeJump(new MvInstr(curBlock, dst, curBlock.parent.getReg(localVar.name)));
                     return new Pair<>(dst, 0);
                 }

@@ -66,6 +66,9 @@ public class PhiInstr extends Instruction {
 
     @Override
     public HashSet<IRLocalVar> getUse() {
-        return new HashSet<>();
+        return new HashSet<>() {{
+            for (var pair : pairs)
+                if (pair.a instanceof IRLocalVar localVar) add(localVar);
+        }};
     }
 }
