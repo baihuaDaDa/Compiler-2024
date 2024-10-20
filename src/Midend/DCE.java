@@ -3,6 +3,7 @@ package Midend;
 import IR.IRProgram;
 import IR.Instruction.CallInstr;
 import IR.Instruction.Instruction;
+import IR.Instruction.PhiInstr;
 import IR.Module.FuncDefMod;
 import Util.IRObject.IREntity.IRLocalVar;
 
@@ -39,16 +40,18 @@ public class DCE {
             defList.remove(def);
             var usedDef = useList.get(def);
             if (usedDef.isEmpty() && !(defInstr instanceof CallInstr)) {
+                if (!(defInstr instanceof PhiInstr)) {
+                    var uses = func.useMap.get(defInstr);
+                    for (var use : uses) {
+                        useList.get(use).remove(defInstr);
+                        defList.add(use);
+                    }
+                }
                 defInstr.parent.instructions.remove(defInstr);
                 func.useMap.remove(defInstr);
                 func.defMap.remove(defInstr);
                 func.inMap.remove(defInstr);
                 func.outMap.remove(defInstr);
-                var uses = defInstr.getUse();
-                for (var use : uses) {
-                    useList.get(use).remove(defInstr);
-                    defList.add(use);
-                }
             }
         }
     }

@@ -80,14 +80,14 @@ public class ASMBuilder implements IRVisitor {
             case IRLocalVar localVar -> {
                 // 如果是 a 系列寄存器说明此时希望直接 load 到 dst 上
                 if (curBlock.parent.isPhysicalReg(localVar.name)){
-                    if (dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
+                    if (dst == null || dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
                     curBlock.addInstr(new MvInstr(curBlock, dst, curBlock.parent.getReg(localVar.name)));
                     return new Pair<>(dst, 0);
                 } else if (curBlock.parent.isParamReg(localVar.name)) {
                     assert !isLeft;
                     int index = curBlock.parent.paramMap.get(localVar.name);
                     if (index < 8) {
-                        if (dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
+                        if (dst == null || dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
                         curBlock.addInstr(new MvInstr(curBlock, dst, PhysicalReg.get("a" + index)));
                         return new Pair<>(dst, 0);
                     } else {
@@ -240,10 +240,12 @@ public class ASMBuilder implements IRVisitor {
         // save return value
         if (instr.value != null) loadReg(instr.value, PhysicalReg.get("a0"), false);
         // callee save reload
-        int saveHead = curBlock.parent.getCalleeSaveHead();
-        for (int i = 0; i < curBlock.parent.calleeSaveCnt; i++) {
-            addInstrWithOverflowedImm("lw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
-            saveHead += 4;
+        if (!instr.parent.parent.funcName.equals("main")) {
+            int saveHead = curBlock.parent.getCalleeSaveHead();
+            for (int i = 0; i < curBlock.parent.calleeSaveCnt; i++) {
+                addInstrWithOverflowedImm("lw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
+                saveHead += 4;
+            }
         }
         // load ra and restore sp
         addInstrWithOverflowedImm("lw", PhysicalReg.get("ra"), curBlock.parent.getRetReg(), PhysicalReg.get("sp"));
@@ -301,10 +303,12 @@ public class ASMBuilder implements IRVisitor {
         curBlock = newFunc.body.getFirst();
         addInstrWithOverflowedImm("add", PhysicalReg.get("sp"), -newFunc.stackSize, PhysicalReg.get("sp"));
         addInstrWithOverflowedImm("sw", PhysicalReg.get("ra"), newFunc.getRetReg(), PhysicalReg.get("sp"));
-        int saveHead = newFunc.getCalleeSaveHead();
-        for (int i = 0; i < newFunc.calleeSaveCnt; i++) {
-            addInstrWithOverflowedImm("sw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
-            saveHead += 4;
+        if (!mod.funcName.equals("main")) {
+            int saveHead = newFunc.getCalleeSaveHead();
+            for (int i = 0; i < newFunc.calleeSaveCnt; i++) {
+                addInstrWithOverflowedImm("sw", PhysicalReg.get("s" + i), saveHead, PhysicalReg.get("sp"));
+                saveHead += 4;
+            }
         }
         for (var block : mod.body) block.accept(this);
         // SSA 消除
