@@ -6,6 +6,7 @@ import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class RetInstr extends Instruction {
@@ -25,6 +26,12 @@ public class RetInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        if (value != null && value instanceof IRLocalVar localValue && renameMap.containsKey(localValue))
+            value = renameMap.get(localValue);
     }
 
     @Override

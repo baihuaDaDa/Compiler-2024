@@ -4,6 +4,7 @@ import Backend.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
+import Midend.DCE;
 import Midend.IRBuilder;
 import Midend.IRCFGBuilder;
 import Midend.Mem2Reg;
@@ -49,6 +50,8 @@ public class Main {
             irCFGBuilder.build();
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
+            DCE dce = new DCE(irBuilder.program);
+            dce.run();
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             LinearScanner linearScanner = new LinearScanner(irBuilder.program);
             linearScanner.run();

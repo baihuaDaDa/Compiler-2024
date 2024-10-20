@@ -5,6 +5,7 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class SelectInstr extends Instruction {
@@ -27,6 +28,11 @@ public class SelectInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        throw new RuntimeException("SelectInstr.rename() should not be called");
     }
 
     @Override

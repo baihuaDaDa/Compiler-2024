@@ -7,6 +7,7 @@ import Util.IRObject.IREntity.IRLocalVar;
 import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class PhiInstr extends Instruction {
@@ -51,6 +52,11 @@ public class PhiInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        throw new RuntimeException("PhiInstr.rename() should not be called");
     }
 
     @Override

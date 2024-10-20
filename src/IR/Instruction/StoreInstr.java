@@ -6,6 +6,7 @@ import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.IRObject.IREntity.IRVariable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class StoreInstr extends Instruction {
@@ -26,6 +27,14 @@ public class StoreInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        if (value instanceof IRLocalVar localValue && renameMap.containsKey(localValue))
+            value = renameMap.get(localValue);
+        if (pointer instanceof IRLocalVar localPointer && renameMap.containsKey(localPointer))
+            pointer = (IRVariable) renameMap.get(localPointer);
     }
 
     @Override

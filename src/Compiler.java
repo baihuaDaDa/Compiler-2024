@@ -2,6 +2,7 @@ import AST.Program.ProgramNode;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
+import Midend.DCE;
 import Midend.IRBuilder;
 import Midend.IRCFGBuilder;
 import Midend.Mem2Reg;
@@ -40,6 +41,8 @@ public class Compiler {
             irCFGBuilder.build();
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
+            DCE dce = new DCE(irBuilder.program);
+            dce.run();
 //            ASMBuilder asmBuilder = new ASMBuilder();
 //            asmBuilder.visit(irBuilder.program);
 //            ASMCFGBuilder asmCFGBuilder = new ASMCFGBuilder(asmBuilder.program);

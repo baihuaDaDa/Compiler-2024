@@ -7,6 +7,7 @@ import Util.IRObject.IREntity.IRLocalVar;
 import Util.IRObject.IREntity.IRVariable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class CallInstr extends Instruction {
@@ -40,6 +41,13 @@ public class CallInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        for (int i = 0; i < args.size(); ++i)
+            if (args.get(i) instanceof IRLocalVar localArg && renameMap.containsKey(localArg))
+                args.set(i, renameMap.get(localArg));
     }
 
     @Override

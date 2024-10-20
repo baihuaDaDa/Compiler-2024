@@ -9,6 +9,7 @@ import Util.Type.IRType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class GetelementptrInstr extends Instruction {
@@ -39,6 +40,15 @@ public class GetelementptrInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        if (pointer instanceof IRLocalVar localPointer && renameMap.containsKey(localPointer))
+            pointer = (IRVariable) renameMap.get(localPointer);
+        for (int i = 0; i < indices.size(); ++i)
+            if (indices.get(i) instanceof IRLocalVar localIndex && renameMap.containsKey(localIndex))
+                indices.set(i, renameMap.get(localIndex));
     }
 
     @Override

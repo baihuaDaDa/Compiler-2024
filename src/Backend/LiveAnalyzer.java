@@ -26,8 +26,6 @@ public class LiveAnalyzer {
     }
 
     public void analyzeFunc(FuncDefMod func) {
-        // get uses and defs
-        GetUseDef(func);
         // post traverse
         boolean[] visited = new boolean[func.body.size()];
         ArrayList<IRBlock> ord = new ArrayList<>();
@@ -126,25 +124,6 @@ public class LiveAnalyzer {
                 }
             }
         }
-    }
-
-    private void GetUseDef(FuncDefMod func) {
-        for (var block : func.body)
-            for (var instr : block.instructions) {
-                func.useMap.put(instr, instr.getUse());
-                func.defMap.put(instr, instr.getDef());
-                func.outMap.put(instr, new HashSet<>());
-                func.inMap.put(instr, new HashSet<>(func.useMap.get(instr)));
-            }
-        for (var block : func.body)
-            for (var phiInstr : block.phiInstrs.values()) {
-                func.defMap.put(phiInstr, phiInstr.getDef());
-                func.outMap.put(phiInstr, new HashSet<>());
-                func.inMap.put(phiInstr, new HashSet<>());
-                for (var branch : phiInstr.pairs)
-                    if (branch.a instanceof IRLocalVar localVar)
-                        func.useMap.get(branch.b.instructions.getLast()).add(localVar); // phi 的 use 在控制语句之前的一条语句
-            }
     }
 
     // Inverse Post Order

@@ -2,8 +2,10 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
+import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 abstract public class Instruction {
@@ -17,6 +19,8 @@ abstract public class Instruction {
     abstract public String toString();
 
     abstract public void accept(IRVisitor visitor);
+
+    abstract public void rename(HashMap<IRLocalVar, IREntity> renameMap);
 
     abstract public IRLocalVar getDef();
 

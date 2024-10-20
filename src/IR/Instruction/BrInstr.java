@@ -2,8 +2,10 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
+import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class BrInstr extends Instruction {
@@ -26,6 +28,13 @@ public class BrInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        if (cond != null && cond instanceof IRLocalVar localCond && renameMap.containsKey(localCond))
+            cond = (IRLocalVar) renameMap.get(localCond);
     }
 
     @Override

@@ -5,6 +5,7 @@ import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class BinaryInstr extends Instruction {
@@ -28,6 +29,12 @@ public class BinaryInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        if (lhs instanceof IRLocalVar localLhs && renameMap.containsKey(localLhs)) lhs = renameMap.get(localLhs);
+        if (rhs instanceof IRLocalVar localRhs && renameMap.containsKey(localRhs)) rhs = renameMap.get(localRhs);
     }
 
     @Override

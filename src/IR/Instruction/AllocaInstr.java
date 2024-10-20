@@ -2,9 +2,11 @@ package IR.Instruction;
 
 import IR.IRBlock;
 import IR.IRVisitor;
+import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class AllocaInstr extends Instruction {
@@ -25,6 +27,11 @@ public class AllocaInstr extends Instruction {
     @Override
     public void accept(IRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
+        throw new RuntimeException("AllocaInstr.rename() should not be called");
     }
 
     @Override

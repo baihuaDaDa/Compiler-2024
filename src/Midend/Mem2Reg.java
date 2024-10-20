@@ -54,7 +54,7 @@ public class Mem2Reg {
 
     private void splitCriticalEdge(IRBlock block, boolean[] visited) {
         visited[block.blockNo] = true;
-        var sucCopy = new HashSet<IRBlock>(block.suc);
+        var sucCopy = new HashSet<>(block.suc);
         for (var suc : sucCopy) {
             if (visited[suc.blockNo]) continue;
             if (block.suc.size() > 1 && suc.pred.size() > 1) {
@@ -88,36 +88,29 @@ public class Mem2Reg {
         });
         ArrayList<Instruction> instrs = block.instructions;
         ArrayList<Instruction> removeList = new ArrayList<>();
+        HashMap<IRLocalVar, IREntity> renameMap = new HashMap<>();
         for (var instr : instrs) {
-            if (instr instanceof AllocaInstr) removeList.add(instr);
-            else if (instr instanceof StoreInstr storeInstr) {
-                if (storeInstr.pointer instanceof IRLocalVar && valStacks.containsKey(storeInstr.pointer.name)) {
-                    var stack = valStacks.get(storeInstr.pointer.name);
-                    if (!(storeInstr.value instanceof IRLiteral) || !storeInstr.value.type.isSameType(new IRType("ptr")))
-                        stack.push(storeInstr.value);
-                    removeList.add(instr);
-                }
-            } else if (instr instanceof LoadInstr loadInstr) {
-                if (loadInstr.pointer instanceof IRLocalVar && valStacks.containsKey(loadInstr.pointer.name)) {
-                    var stack = valStacks.get(loadInstr.pointer.name);
-                    if (stack.empty()) {
+            switch (instr) {
+                case AllocaInstr allocaInstr -> removeList.add(instr);
+                case StoreInstr storeInstr -> {
+                    storeInstr.rename(renameMap);
+                    if (storeInstr.pointer instanceof IRLocalVar && valStacks.containsKey(storeInstr.pointer.name)) {
+                        var stack = valStacks.get(storeInstr.pointer.name);
+                        if (!(storeInstr.value instanceof IRLiteral) || !storeInstr.value.type.isSameType(new IRType("ptr")))
+                            stack.push(storeInstr.value);
                         removeList.add(instr);
-                        continue;
                     }
-                    if (stack.peek() instanceof IRLocalVar localVar) {
-                        loadInstr.result.name = localVar.name;
-                        loadInstr.result.type = localVar.type;
-                        removeList.add(instr);
-                    } else if (stack.peek() instanceof IRLiteral literal) {
-                        var x0 = new IRLiteral(literal.type, 0);
-                        // TODO 有待改进，有不那么唐氏的做法
-                        instrs.set(instrs.indexOf(instr), new BinaryInstr(block, "add", literal, x0, loadInstr.result));
-                    } else if (stack.peek() instanceof IRGlobalPtr globalPtr) {
-                        if (!globalPtr.name.startsWith(".str.")) throw new RuntimeException("Unexpected global pointer type in `valStack`(not const string)");
-                        // TODO 有待改进，有不那么唐氏的做法
-                        instrs.set(instrs.indexOf(instr), new GetelementptrInstr(block, loadInstr.result, "i32", globalPtr, new IRLiteral(new IRType("i32"), 0)));
-                    } else throw new RuntimeException("Unexpected type in `valStack`");
                 }
+                case LoadInstr loadInstr -> {
+                    loadInstr.rename(renameMap);
+                    if (loadInstr.pointer instanceof IRLocalVar && valStacks.containsKey(loadInstr.pointer.name)) {
+                        var stack = valStacks.get(loadInstr.pointer.name);
+                        removeList.add(instr);
+                        if (stack.empty()) continue;
+                        renameMap.put(loadInstr.result, stack.peek());
+                    }
+                }
+                default -> instr.rename(renameMap);
             }
         }
         instrs.removeAll(removeList);
