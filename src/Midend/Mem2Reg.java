@@ -18,6 +18,7 @@ public class Mem2Reg {
     private final HashMap<String, HashSet<IRBlock>> defs;
     private final HashMap<String, Integer> nums;
     private final HashMap<String, Stack<IREntity>> valStacks;
+    private final HashMap<IRLocalVar, IREntity> renameMap;
     private int criticalEdgeCnt = 0;
 
     public Mem2Reg(IRProgram program) {
@@ -26,6 +27,7 @@ public class Mem2Reg {
         this.defs = new HashMap<>();
         this.nums = new HashMap<>();
         this.valStacks = new HashMap<>();
+        this.renameMap = new HashMap<>();
     }
 
     public void run() {
@@ -50,6 +52,7 @@ public class Mem2Reg {
         defs.clear();
         nums.clear();
         valStacks.clear();
+        renameMap.clear();
     }
 
     private void splitCriticalEdge(IRBlock block, boolean[] visited) {
@@ -88,7 +91,6 @@ public class Mem2Reg {
         });
         ArrayList<Instruction> instrs = block.instructions;
         ArrayList<Instruction> removeList = new ArrayList<>();
-        HashMap<IRLocalVar, IREntity> renameMap = new HashMap<>();
         for (var instr : instrs) {
             switch (instr) {
                 case AllocaInstr allocaInstr -> removeList.add(instr);

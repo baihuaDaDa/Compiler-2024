@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/codegen/t5.mx");
+        InputStream input = new FileInputStream("testcases/codegen/t12.mx");
         OutputStream outputIR = new FileOutputStream("test.ll");
         OutputStream outputIROrigin = new FileOutputStream("test-origin.ll");
         OutputStream outputASM = new FileOutputStream("test.s");
@@ -53,11 +53,11 @@ public class Main {
             DCE dce = new DCE(irBuilder.program);
             dce.run();
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
-            LinearScanner linearScanner = new LinearScanner(irBuilder.program);
-            linearScanner.run();
-            ASMBuilder asmBuilder = new ASMBuilder();
-            asmBuilder.visit(irBuilder.program);
-            outputASM.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+//            LinearScanner linearScanner = new LinearScanner(irBuilder.program);
+//            linearScanner.run();
+//            ASMBuilder asmBuilder = new ASMBuilder();
+//            asmBuilder.visit(irBuilder.program);
+//            outputASM.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

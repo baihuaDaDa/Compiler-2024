@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix the live analysis of phi instr.">
-      <change afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: finish DCE and remake the renaming part of Mem2Reg.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BinaryInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/BrInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/CallInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/IcmpInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/Instruction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/LoadInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/RetInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/SelectInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/StoreInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +62,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+    "应用程序.Main.executor": "Debug"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -202,15 +186,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="14345000" />
-    </task>
-    <task id="LOCAL-00017" summary="Fix: fix Makefile.">
-      <option name="closed" value="true" />
-      <created>1723722944121</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1723722944121</updated>
+      <workItem from="1729405263423" duration="14986000" />
     </task>
     <task id="LOCAL-00018" summary="Fix: channel the input from stdin.">
       <option name="closed" value="true" />
@@ -596,7 +572,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729369216808</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Fix: finish DCE and remake the renaming part of Mem2Reg.">
+      <option name="closed" value="true" />
+      <created>1729427444621</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1729427444622</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,7 +598,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: pass all the LLVM IR tests!" />
     <MESSAGE value="Upd: finish ASM nodes." />
     <MESSAGE value="Upd: finish half of the ASM builder." />
     <MESSAGE value="Upd: finish asm builder." />
@@ -639,7 +622,8 @@
     <MESSAGE value="Upd: fix the caller save part and finish the callee save part." />
     <MESSAGE value="Upd: finish SSA solver." />
     <MESSAGE value="Fix: fix the live analysis of phi instr." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix the live analysis of phi instr." />
+    <MESSAGE value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -670,6 +654,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/IR/Instruction/GetelementptrInstr.java</url>
+          <line>45</line>
+          <properties class="IR.Instruction.GetelementptrInstr" method="rename">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
