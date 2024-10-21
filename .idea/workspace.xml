@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: improve RegAlloc algorithm.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix SSA Elimination.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASM/Module/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OnlineJudge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +87,7 @@
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Compiler-2024" />
       <projectPathOnTarget name="projectPathOnTarget" value="{exitCode=0, timeout=false, cancelled=false, stdout=/tmp/tmp.GuaufHEYuU , stderr=}/Compiler-2024" />
-      <target name="@@@LOCAL@@@" />
+      <target name="WSL - Ubuntu" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -106,6 +107,10 @@
       </makefile>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Makefile 目标.clean" />
+      <item itemvalue="应用程序.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Makefile 目标.clean" />
@@ -188,15 +193,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="61876000" />
-    </task>
-    <task id="LOCAL-00022" summary="Upd: add error types.">
-      <option name="closed" value="true" />
-      <created>1723746897278</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1723746897278</updated>
+      <workItem from="1729405263423" duration="66583000" />
     </task>
     <task id="LOCAL-00023" summary="Fix: let the program return -1 when throw error.">
       <option name="closed" value="true" />
@@ -582,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729488569286</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Fix: fix SSA Elimination.">
+      <option name="closed" value="true" />
+      <created>1729513036196</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1729513036196</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
     <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
     <MESSAGE value="Upd: finish CFG builder." />
     <MESSAGE value="Upd: finish Dominator Tree Builder." />
@@ -625,7 +629,8 @@
     <MESSAGE value="Fix: fix a problem in DCE." />
     <MESSAGE value="Fix: fix the live analysis of phi instructions." />
     <MESSAGE value="Fix: improve RegAlloc algorithm." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: improve RegAlloc algorithm." />
+    <MESSAGE value="Fix: fix SSA Elimination." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix SSA Elimination." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -639,6 +644,11 @@
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
           <line>167</line>
           <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="124" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>

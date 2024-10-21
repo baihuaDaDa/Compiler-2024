@@ -29,7 +29,7 @@ public class LiveAnalyzer {
     public void analyzeFunc(FuncDefMod func) {
         GetUseDef(func);
         // post traverse
-        boolean[] visited = new boolean[func.body.size()];
+        HashSet<IRBlock> visited = new HashSet<>();
         ArrayList<IRBlock> ord = new ArrayList<>();
         Traverse(ord, visited, func.body.getFirst());
         // get linear order
@@ -89,30 +89,9 @@ public class LiveAnalyzer {
                         converge = false;
                     }
                 }
-//                var phiInstructions = func.body.get(i).phiInstrs;
-//                var ins = func.inMap.get(instructions.getFirst());
-//                for (var phiInstr : phiInstructions.values()) {
-//                    var tmpOuts = func.outMap.get(phiInstr);
-//                    var tmpIns = func.inMap.get(phiInstr);
-//                    var def = func.defMap.get(phiInstr);
-//                    // scan_liveOut
-//                    for (var in : ins) {
-//                        if (tmpOuts.contains(in)) continue;
-//                        tmpOuts.add(in);
-//                        converge = false;
-//                    }
-//                    // scan_liveIn
-//                    for (var out : tmpOuts) {
-//                        if (def == out) continue;
-//                        if (tmpIns.contains(out)) continue;
-//                        ins.add(out);
-//                        converge = false;
-//                    }
-//                }
             }
         }
         // get live intervals
-        // TODO 死代码块消除
         for (var block : func.body) {
             for (var phiInstr : block.phiInstrs.values()) {
                 var def = func.defMap.get(phiInstr);
@@ -161,10 +140,10 @@ public class LiveAnalyzer {
     }
 
     // Inverse Post Order
-    private void Traverse(ArrayList<IRBlock> ord, boolean[] visited, IRBlock block) {
-        visited[block.blockNo] = true;
+    private void Traverse(ArrayList<IRBlock> ord, HashSet<IRBlock> visited, IRBlock block) {
+        visited.add(block);
         for (var suc : block.suc)
-            if (!visited[suc.blockNo]) Traverse(ord, visited, suc);
+            if (!visited.contains(suc)) Traverse(ord, visited, suc);
         ord.add(block);
     }
 
