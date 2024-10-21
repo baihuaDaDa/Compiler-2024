@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: eliminate dead basic block (those who aren't in CFG).">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: improve the allocation of memory in function stacks.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OnlineJudge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +50,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Download/Compiler-Design-Implementation-master(2)/Compiler-Design-Implementation-master",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -65,7 +61,7 @@
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
+    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
     "vue.rearranger.settings.migration": "true",
     "应用程序.Main.executor": "Run"
   },
@@ -195,15 +191,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="72606000" />
-    </task>
-    <task id="LOCAL-00024" summary="Fix: fix some wrong error type delimitations.">
-      <option name="closed" value="true" />
-      <created>1723749268141</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1723749268141</updated>
+      <workItem from="1729405263423" duration="76661000" />
     </task>
     <task id="LOCAL-00025" summary="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD">
       <option name="closed" value="true" />
@@ -589,7 +577,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729519832760</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Fix: improve the allocation of memory in function stacks.">
+      <option name="closed" value="true" />
+      <created>1729530985640</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1729530985640</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish CFG builder." />
     <MESSAGE value="Upd: finish Dominator Tree Builder." />
     <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
     <MESSAGE value="Upd: add Dominator Frontier." />
@@ -632,48 +627,20 @@
     <MESSAGE value="Fix: improve RegAlloc algorithm." />
     <MESSAGE value="Fix: fix SSA Elimination." />
     <MESSAGE value="Fix: eliminate dead basic block (those who aren't in CFG)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: eliminate dead basic block (those who aren't in CFG)." />
+    <MESSAGE value="Fix: improve the allocation of memory in function stacks." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: improve the allocation of memory in function stacks." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>164</line>
-          <option name="timeStamp" value="123" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>119</line>
-          <properties class="Backend.SSAEliminator" method="DfsErt">
+          <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
+          <line>57</line>
+          <properties class="Midend.Mem2Reg" method="splitCriticalEdge">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>63</line>
-          <properties class="Midend.DCE" method="Traverse">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="129" />
+          <option name="timeStamp" value="130" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

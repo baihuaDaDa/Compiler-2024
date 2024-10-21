@@ -59,7 +59,6 @@ public class Mem2Reg {
         visited[block.blockNo] = true;
         var sucCopy = new HashSet<>(block.suc);
         for (var suc : sucCopy) {
-            if (visited[suc.blockNo]) continue;
             if (block.suc.size() > 1 && suc.pred.size() > 1) {
                 IRBlock newBlock = new IRBlock(block.parent, String.format("critical_edge.%d", criticalEdgeCnt++));
                 newBlock.addInstr(new BrInstr(newBlock, null, suc, null));
@@ -76,6 +75,7 @@ public class Mem2Reg {
                 suc.pred.add(newBlock);
                 newBlock.suc.add(suc);
             }
+            if (visited[suc.blockNo]) continue;
             splitCriticalEdge(suc, visited);
         }
     }
