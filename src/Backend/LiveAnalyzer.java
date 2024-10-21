@@ -41,7 +41,7 @@ public class LiveAnalyzer {
             converge = true;
             // TODO 可以把 ret 的基本块入队，用反向 BFS 遍历
             for (int i = 0; i < ord.size(); ++i) {
-                var instructions = func.body.get(i).instructions;
+                var instructions = ord.get(i).instructions;
                 for (int j = instructions.size() - 1; j >= 0; --j) {
                     var instr = instructions.get(j);
                     var def = func.defMap.get(instr);
@@ -170,7 +170,7 @@ public class LiveAnalyzer {
 
     private void GetLinearOrder(HashMap<Instruction, Integer> linearOrderMap, ArrayList<IRBlock> ord) {
         int linearOrder = 0;
-        for (int i = 0; i < ord.size(); ++i) {
+        for (int i = ord.size() - 1; i >= 0; --i) {
             var block = ord.get(i);
             for (var phiInstr : block.phiInstrs.values()) linearOrderMap.put(phiInstr, linearOrder++);
             for (var instr : block.instructions) linearOrderMap.put(instr, linearOrder++);

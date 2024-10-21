@@ -51,7 +51,7 @@ public class DCE {
     }
 
     private void GetUseDef(FuncDefMod func) {
-        for (var block : func.body)
+        for (var block : func.body) {
             for (var instr : block.instructions) {
                 if (instr.getDef() != null) {
                     defMap.put(instr.getDef(), instr);
@@ -64,7 +64,6 @@ public class DCE {
                     else useList.put(use, new HashSet<>(Set.of(instr)));
                 }
             }
-        for (var block : func.body)
             for (var phiInstr : block.phiInstrs.values()) {
                 defMap.put(phiInstr.getDef(), phiInstr);
                 defList.add(phiInstr.getDef());
@@ -75,5 +74,6 @@ public class DCE {
                     else useList.put(use, new HashSet<>(Set.of(phiInstr)));
                 }
             }
+        }
     }
 }

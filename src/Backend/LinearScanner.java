@@ -38,8 +38,10 @@ public class LinearScanner {
         // <被占用区间的右端点, 同一个右端点的所有寄存器的编号的集合> 因为没有MultiSet所以用TreeMap代替
         var active = new TreeMap<Integer, HashSet<Integer>>();
         for (var entry : intervals) {
-            if (func.params.contains(entry.getKey()))
+            if (func.params.contains(entry.getKey())) {
                 func.regMap.put(entry.getKey(), PhysicalReg.get("a" + func.params.indexOf(entry.getKey())));
+                continue;
+            }
             var interval = entry.getValue();
             var availEntry = active.floorEntry(interval.start);
             if (availEntry != null) {

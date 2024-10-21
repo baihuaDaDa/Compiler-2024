@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem in DCE.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix the live analysis of phi instructions.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Module/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +66,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+    "应用程序.Main.executor": "Debug"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -192,15 +190,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="33044000" />
-    </task>
-    <task id="LOCAL-00020" summary="Fix: fix several problems and pass the local test.">
-      <option name="closed" value="true" />
-      <created>1723738031346</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1723738031346</updated>
+      <workItem from="1729405263423" duration="44563000" />
     </task>
     <task id="LOCAL-00021" summary="Fix: fix the only failure in `t66.mx`.">
       <option name="closed" value="true" />
@@ -586,7 +576,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729457127749</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Fix: fix the live analysis of phi instructions.">
+      <option name="closed" value="true" />
+      <created>1729463632872</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1729463632872</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +602,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish asm builder." />
     <MESSAGE value="Fix: pass all the testcases except the three new ones(t75, t76, t77), relying on ravel." />
     <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
     <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
@@ -629,19 +626,35 @@
     <MESSAGE value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in the renaming part og Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in DCE." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem in DCE." />
+    <MESSAGE value="Fix: fix the live analysis of phi instructions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix the live analysis of phi instructions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
+          <line>102</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>128</line>
-          <properties class="Backend.SSAEliminator" method="runBlock">
+          <line>116</line>
+          <properties class="Backend.SSAEliminator" method="DfsErt">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="85" />
+          <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
@@ -650,15 +663,24 @@
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="90" />
+          <option name="timeStamp" value="110" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="89" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/ASM/Module/Block.java</url>
+          <line>27</line>
+          <properties class="ASM.Module.Block" method="addInstrBeforeJump">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="114" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((IRLocalVar) root).name.substring(4)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
