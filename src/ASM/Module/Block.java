@@ -27,8 +27,10 @@ public class Block {
 
     public void addInstrBeforeJump(Instruction instr) {
         for (int i = body.size() - 1; i >= 0; i--)
-            if (!(body.get(i) instanceof JInstr) || !(body.get(i) instanceof BnezInstr))
+            if (!(body.get(i) instanceof JInstr) && !(body.get(i) instanceof BnezInstr)) {
                 body.add(i + 1, instr);
+                break;
+            }
     }
 
     @Override

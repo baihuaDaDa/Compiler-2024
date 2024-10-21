@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix the live analysis of phi instructions.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: improve RegAlloc algorithm.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ASM/Module/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +64,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Debug"
+    "应用程序.Main.executor": "Run"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -190,15 +188,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="44563000" />
-    </task>
-    <task id="LOCAL-00021" summary="Fix: fix the only failure in `t66.mx`.">
-      <option name="closed" value="true" />
-      <created>1723742631438</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1723742631438</updated>
+      <workItem from="1729405263423" duration="61876000" />
     </task>
     <task id="LOCAL-00022" summary="Upd: add error types.">
       <option name="closed" value="true" />
@@ -584,7 +574,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729463632872</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Fix: improve RegAlloc algorithm.">
+      <option name="closed" value="true" />
+      <created>1729488569286</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1729488569286</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: pass all the testcases except the three new ones(t75, t76, t77), relying on ravel." />
     <MESSAGE value="Fix: pass the new three testcases t75, t76 and t77, relying on ravel." />
     <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
     <MESSAGE value="Upd: finish CFG builder." />
@@ -627,7 +624,8 @@
     <MESSAGE value="Fix: fix a problem in the renaming part og Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in DCE." />
     <MESSAGE value="Fix: fix the live analysis of phi instructions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix the live analysis of phi instructions." />
+    <MESSAGE value="Fix: improve RegAlloc algorithm." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: improve RegAlloc algorithm." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -638,41 +636,18 @@
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/LiveAnalyzer.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="113" />
+          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>116</line>
+          <line>122</line>
           <properties class="Backend.SSAEliminator" method="DfsErt">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="106" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
-          <line>33</line>
-          <properties class="Backend.LinearScanner" method="runFunc">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="110" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/ASM/Module/Block.java</url>
-          <line>27</line>
-          <properties class="ASM.Module.Block" method="addInstrBeforeJump">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="114" />
+          <option name="timeStamp" value="122" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

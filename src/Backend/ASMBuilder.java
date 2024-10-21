@@ -312,7 +312,7 @@ public class ASMBuilder implements IRVisitor {
         }
         for (var block : mod.body) block.accept(this);
         // SSA 消除
-        SSAEliminator ssaEliminator = new SSAEliminator(mod);
+        SSAEliminator ssaEliminator = new SSAEliminator(mod, newFunc);
         ssaEliminator.run();
     }
     public void visit(IR.Module.GlobalVarDefMod mod) {
