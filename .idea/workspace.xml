@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix SSA Elimination.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: eliminate dead basic block (those who aren't in CFG).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASM/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/OnlineJudge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -193,15 +195,7 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="66583000" />
-    </task>
-    <task id="LOCAL-00023" summary="Fix: let the program return -1 when throw error.">
-      <option name="closed" value="true" />
-      <created>1723747837897</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1723747837897</updated>
+      <workItem from="1729405263423" duration="72606000" />
     </task>
     <task id="LOCAL-00024" summary="Fix: fix some wrong error type delimitations.">
       <option name="closed" value="true" />
@@ -587,7 +581,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729513036196</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Fix: eliminate dead basic block (those who aren't in CFG).">
+      <option name="closed" value="true" />
+      <created>1729519832760</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1729519832760</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +607,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: pass all the testcases, relying on REIMU." />
     <MESSAGE value="Upd: finish CFG builder." />
     <MESSAGE value="Upd: finish Dominator Tree Builder." />
     <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
@@ -630,19 +631,20 @@
     <MESSAGE value="Fix: fix the live analysis of phi instructions." />
     <MESSAGE value="Fix: improve RegAlloc algorithm." />
     <MESSAGE value="Fix: fix SSA Elimination." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix SSA Elimination." />
+    <MESSAGE value="Fix: eliminate dead basic block (those who aren't in CFG)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: eliminate dead basic block (those who aren't in CFG)." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
-          <line>102</line>
+          <line>95</line>
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>167</line>
+          <line>164</line>
           <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -650,14 +652,28 @@
           <line>135</line>
           <option name="timeStamp" value="124" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>122</line>
+          <line>119</line>
           <properties class="Backend.SSAEliminator" method="DfsErt">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
+          <line>63</line>
+          <properties class="Midend.DCE" method="Traverse">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="129" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

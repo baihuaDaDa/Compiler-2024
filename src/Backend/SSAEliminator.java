@@ -38,13 +38,10 @@ public class SSAEliminator {
         public Color(IREntity entity) {
             switch (entity) {
                 case IRLocalVar localVar -> {
-                    if (func.regMap.containsKey(localVar)) reg = func.regMap.get(localVar);
-                    else if (func.spilledVars.contains(localVar)) offset = asmFunc.getSpilledVar(localVar.name);
-                    else if (func.params.contains(localVar)) {
-                        int index = func.params.indexOf(localVar);
-                        if (index < 8) reg = PhysicalReg.get("a" + index);
-                        else offset = asmFunc.getParamReg(localVar.name);
-                    } else throw new RuntimeException("Unknown local variable when constructing `Color`");
+                    if (asmFunc.isPhysicalReg(localVar.name)) reg = asmFunc.getReg(localVar.name);
+                    else if (asmFunc.isSpilledVar(localVar.name)) offset = asmFunc.getSpilledVar(localVar.name);
+                    else if (asmFunc.isParamReg(localVar.name)) offset = asmFunc.getParamReg(localVar.name);
+                    else throw new RuntimeException("Unknown local variable when constructing `Color`");
                 }
                 case IRLiteral literal -> this.literal = literal;
                 case IRGlobalPtr globalPtr -> this.globalPtr = globalPtr;

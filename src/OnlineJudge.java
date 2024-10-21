@@ -1,9 +1,12 @@
 import AST.Program.ProgramNode;
 import Backend.ASMBuilder;
+import Backend.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
+import Midend.DCE;
 import Midend.IRBuilder;
+import Midend.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -38,6 +41,12 @@ public class OnlineJudge {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
+            Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
+            mem2Reg.run();
+            DCE dce = new DCE(irBuilder.program);
+            dce.run();
+            LinearScanner linearScanner = new LinearScanner(irBuilder.program);
+            linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
             output.write(builtin.readAllBytes());

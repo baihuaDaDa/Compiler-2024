@@ -85,16 +85,9 @@ public class ASMBuilder implements IRVisitor {
                     return new Pair<>(dst, 0);
                 } else if (curBlock.parent.isParamReg(localVar.name)) {
                     assert !isLeft;
-                    int index = curBlock.parent.paramMap.get(localVar.name);
-                    if (index < 8) {
-                        if (dst.name.charAt(0) != 'a' || dst == PhysicalReg.get("a" + index)) return new Pair<>(PhysicalReg.get("a" + index), 0);
-                        curBlock.addInstr(new MvInstr(curBlock, dst, PhysicalReg.get("a" + index)));
-                        return new Pair<>(dst, 0);
-                    } else {
-                        int offset = curBlock.parent.getParamReg(localVar.name);
-                        addInstrWithOverflowedImm("lw", dst, offset, PhysicalReg.get("sp"));
-                        return new Pair<>(dst, 0);
-                    }
+                    int offset = curBlock.parent.getParamReg(localVar.name);
+                    addInstrWithOverflowedImm("lw", dst, offset, PhysicalReg.get("sp"));
+                    return new Pair<>(dst, 0);
                 } else if (curBlock.parent.isSpilledVar(localVar.name)) {
                     int offset = curBlock.parent.getSpilledVar(localVar.name);
                     if (isLeft) return new Pair<>(null, offset);
@@ -137,21 +130,6 @@ public class ASMBuilder implements IRVisitor {
     }
     public void visit(IR.Instruction.CallInstr instr) {
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
-        int offset;
-        // 保存当前函数的前8个参数
-        for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
-            offset = curBlock.parent.getArgReg(i);
-            addInstrWithOverflowedImm("sw", PhysicalReg.get("a" + i), offset, PhysicalReg.get("sp"));
-        }
-        // 录入被调用函数的参数
-        for (int i = 0; i < instr.args.size(); i++) {
-            if (i < 8) loadReg(instr.args.get(i), PhysicalReg.get("a" + i), false);
-            else {
-                PhysicalReg arg = loadReg(instr.args.get(i), PhysicalReg.get("t0"), false).a;
-                offset = curBlock.parent.getArgReg(i);
-                addInstrWithOverflowedImm("sw", arg, offset, PhysicalReg.get("sp"));
-            }
-        }
         // 保存 Caller Save 的寄存器
         var saveOrd = new ArrayList<>(instr.parent.parent.outMap.get(instr));
         int saveHead = curBlock.parent.getCallerSaveHead();
@@ -161,6 +139,15 @@ public class ASMBuilder implements IRVisitor {
             if (PhysicalReg.isCalleeSaved(reg.name)) continue;
             addInstrWithOverflowedImm("sw", reg, saveHead, PhysicalReg.get("sp"));
             saveHead += 4;
+        }
+        // 录入被调用函数的参数
+        for (int i = 0; i < instr.args.size(); i++) {
+            if (i < 8) loadReg(instr.args.get(i), PhysicalReg.get("a" + i), false);
+            else {
+                PhysicalReg arg = loadReg(instr.args.get(i), PhysicalReg.get("t0"), false).a;
+                int offset = curBlock.parent.getSpilledArg(i - 8);
+                addInstrWithOverflowedImm("sw", arg, offset, PhysicalReg.get("sp"));
+            }
         }
         curBlock.addInstr(new ASM.Instruction.CallInstr(curBlock, instr.funcName));
         if (instr.result != null) {
@@ -175,10 +162,6 @@ public class ASMBuilder implements IRVisitor {
             if (PhysicalReg.isCalleeSaved(reg.name)) continue;
             addInstrWithOverflowedImm("lw", reg, saveHead, PhysicalReg.get("sp"));
             saveHead += 4;
-        }
-        for (int i = 0; i < Math.min(8, instr.args.size()); i++) {
-            offset = curBlock.parent.getArgReg(i);
-            addInstrWithOverflowedImm("lw", PhysicalReg.get("a" + i), offset, PhysicalReg.get("sp"));
         }
     }
     public void visit(GetelementptrInstr instr) {
@@ -279,15 +262,15 @@ public class ASMBuilder implements IRVisitor {
     public void visit(IR.Module.FuncDefMod mod) {
         var curSection = program.getSection(".text");
         var newFunc = new ASM.Module.FuncDefMod(curSection, mod);
-        for (int i = 0; i < mod.params.size(); i++)
-            newFunc.paramMap.put(mod.params.get(i).name, i);
+        for (int i = 8; i < mod.params.size(); i++)
+            newFunc.paramMap.put(mod.params.get(i).name, i - 8);
         for (var entry : mod.regMap.entrySet())
             newFunc.regMap.put(entry.getKey().name, entry.getValue());
         curSection.addModule(newFunc);
         for (var block : mod.body)
             for  (var instr : block.instructions)
                 if (instr instanceof CallInstr callInstr) {
-                    newFunc.argCnt = Math.max(newFunc.argCnt, (callInstr.args.size()));
+                    newFunc.spilledArgCnt = Math.max(newFunc.spilledArgCnt, (callInstr.args.size() - 8));
                     var outs = callInstr.parent.parent.outMap.get(instr);
                     int nonSpilledCnt = 0;
                     for (var out : outs)
@@ -298,7 +281,7 @@ public class ASMBuilder implements IRVisitor {
         for (var spilledVar : mod.spilledVars)
             newFunc.spilledVarMap.put(spilledVar.name, newFunc.spilledVarCnt++);
         newFunc.calleeSaveCnt = Math.min(mod.activeCnt, 12);
-        newFunc.stackSize = (newFunc.argCnt + newFunc.spilledVarCnt + 1) * 4;
+        newFunc.stackSize = (newFunc.spilledArgCnt + newFunc.spilledVarCnt + newFunc.callerSaveCnt + newFunc.calleeSaveCnt + 1) * 4;
         if (newFunc.stackSize % 16 != 0) newFunc.stackSize = ((newFunc.stackSize) / 16 + 1) * 16;
         curBlock = newFunc.body.getFirst();
         addInstrWithOverflowedImm("add", PhysicalReg.get("sp"), -newFunc.stackSize, PhysicalReg.get("sp"));
