@@ -40,7 +40,8 @@ public class LinearScanner {
         for (var entry : intervals) {
             // TODO 可以让 a0-a7 也参与寄存器分配
             if (func.params.contains(entry.getKey())) {
-                func.regMap.put(entry.getKey(), PhysicalReg.get("a" + func.params.indexOf(entry.getKey())));
+                if (func.params.indexOf(entry.getKey()) < 8)
+                    func.regMap.put(entry.getKey(), PhysicalReg.get("a" + func.params.indexOf(entry.getKey())));
                 continue;
             }
             var interval = entry.getValue();
