@@ -75,32 +75,99 @@ public class ASMBuilder implements IRVisitor {
             case IRLiteral literal -> {
                 // TODO 立即数可以不用存进寄存器
                 curBlock.addInstr(new LiInstr(curBlock, dst, literal.value));
-                return new Pair<>(dst, 0);
+                return new Pair<>(dst, -1);
             }
             case IRLocalVar localVar -> {
                 // 如果是 a 系列寄存器说明此时希望直接 load 到 dst 上
                 if (curBlock.parent.isPhysicalReg(localVar.name)){
                     if (dst == null || dst.name.charAt(0) != 'a') return new Pair<>(curBlock.parent.getReg(localVar.name), 0);
                     curBlock.addInstr(new MvInstr(curBlock, dst, curBlock.parent.getReg(localVar.name)));
-                    return new Pair<>(dst, 0);
+                    return new Pair<>(dst, -1);
                 } else if (curBlock.parent.isParamReg(localVar.name)) {
                     assert !isLeft;
                     int offset = curBlock.parent.getParamReg(localVar.name);
                     addInstrWithOverflowedImm("lw", dst, offset, PhysicalReg.get("sp"));
-                    return new Pair<>(dst, 0);
+                    return new Pair<>(dst, -1);
                 } else if (curBlock.parent.isSpilledVar(localVar.name)) {
                     int offset = curBlock.parent.getSpilledVar(localVar.name);
                     if (isLeft) return new Pair<>(null, offset);
                     addInstrWithOverflowedImm("lw", dst, offset, PhysicalReg.get("sp"));
-                    return new Pair<>(dst, 0);
-                } else throw new RuntimeException("Unknown local variable");
+                    return new Pair<>(dst, -1);
+                } else return new Pair<>(null, -1); // 不活跃变量
             }
             case IRGlobalPtr irGlobalPtr -> {
                 curBlock.addInstr(new LaInstr(curBlock, dst, irGlobalPtr.name));
                 // global var -> ptr to the value, string literal -> ptr of the head
-                return new Pair<>(dst, 0);
+                return new Pair<>(dst, -1);
             }
             case null, default -> throw new RuntimeException("Unknown entity");
+        }
+    }
+
+    private void DfsErt(int cur, int root, boolean isTree, HashMap<Integer, HashSet<Integer>> successors, boolean[] visited) {
+        visited[cur] = true;
+        var sucs = successors.get(cur);
+        if (sucs == null) return;
+        PhysicalReg backup = null;
+        if (cur == root && !isTree) {
+            curBlock.addInstr(new MvInstr(curBlock, PhysicalReg.get("t1"), PhysicalReg.get("a" + cur)));
+            backup = PhysicalReg.get("t1"); // 备份
+        }
+        for (var suc : sucs) {
+            if (suc != root) DfsErt(suc, root, isTree, successors, visited);
+            var result = PhysicalReg.get("a" + suc);
+            PhysicalReg src = (backup != null ? backup : PhysicalReg.get("a" + cur));
+            curBlock.addInstrBeforeJump(new MvInstr(curBlock, result, src));
+        }
+    }
+
+    private void LoadArgs(CallInstr instr) {
+        HashMap<Integer, Integer> predecessors = new HashMap<>();
+        HashMap<Integer, HashSet<Integer>> successors = new HashMap<>();
+        int maxArgCnt = Math.min(instr.args.size(), 8);
+        // 需要并行，新参数可能覆盖旧参数
+        for (int i = 0; i < instr.args.size(); i++) {
+            var arg = instr.args.get(i);
+            if (i < 8) {
+                // 对 a0-a7 建图
+                if (arg instanceof IRLocalVar && instr.parent.parent.params.contains(arg)) {
+                    int paramIndex = instr.parent.parent.params.indexOf(arg);
+                    if (paramIndex < maxArgCnt) {
+                        predecessors.put(i, paramIndex);
+                        if (successors.containsKey(paramIndex)) successors.get(paramIndex).add(i);
+                        else successors.put(paramIndex, new HashSet<>(List.of(i)));
+                    }
+                }
+            } else {
+                // 先把溢出的参数存起来
+                PhysicalReg argReg = loadReg(arg, PhysicalReg.get("t0"), false).a;
+                int offset = curBlock.parent.getSpilledArg(i - 8);
+                addInstrWithOverflowedImm("sw", argReg, offset, PhysicalReg.get("sp"));
+            }
+        }
+        // 加载前八个新参数
+        boolean[] visited = new boolean[8];
+        for (int i : predecessors.keySet()) {
+            if (visited[i]) continue;
+            boolean isTree = false;
+            // 寻找根节点
+            int root = i;
+            while (!visited[root]) {
+                visited[root] = true;
+                if (!predecessors.containsKey(root)) {
+                    isTree = true;
+                    break;
+                }
+                root = predecessors.get(root);
+            }
+            DfsErt(root, root, isTree, successors, visited);
+        }
+        // 最后给没有数据冲突的参数赋值
+        for (int i = 0; i < maxArgCnt; i++) {
+            var arg = instr.args.get(i);
+            if (arg instanceof IRLocalVar && instr.parent.parent.params.contains(arg)) continue;
+            var src = loadReg(arg, PhysicalReg.get("t0"), false);
+            curBlock.addInstr(new MvInstr(curBlock, PhysicalReg.get("a" + i), src.a));
         }
     }
 
@@ -141,19 +208,14 @@ public class ASMBuilder implements IRVisitor {
             saveHead += 4;
         }
         // 录入被调用函数的参数
-        for (int i = 0; i < instr.args.size(); i++) {
-            if (i < 8) loadReg(instr.args.get(i), PhysicalReg.get("a" + i), false);
-            else {
-                PhysicalReg arg = loadReg(instr.args.get(i), PhysicalReg.get("t0"), false).a;
-                int offset = curBlock.parent.getSpilledArg(i - 8);
-                addInstrWithOverflowedImm("sw", arg, offset, PhysicalReg.get("sp"));
-            }
-        }
+        LoadArgs(instr);
         curBlock.addInstr(new ASM.Instruction.CallInstr(curBlock, instr.funcName));
         if (instr.result != null) {
             var result = loadReg(instr.result, null, true);
-            if (result.a != null) curBlock.addInstr(new MvInstr(curBlock, result.a, PhysicalReg.get("a0")));
-            else addInstrWithOverflowedImm("sw", PhysicalReg.get("a0"), result.b, PhysicalReg.get("sp"));
+            if (result.a != null || result.b != -1) {
+                if (result.a != null) curBlock.addInstr(new MvInstr(curBlock, result.a, PhysicalReg.get("a0")));
+                else addInstrWithOverflowedImm("sw", PhysicalReg.get("a0"), result.b, PhysicalReg.get("sp"));
+            }
         }
         saveHead = curBlock.parent.getCallerSaveHead();
         for (var localVar : saveOrd) {

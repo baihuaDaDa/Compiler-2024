@@ -13,6 +13,9 @@ import Util.IRObject.IREntity.IRLocalVar;
 import Util.PhysicalReg;
 import org.antlr.v4.runtime.misc.Pair;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,11 +24,15 @@ public class SSAEliminator {
     private final FuncDefMod func;
     private final ASM.Module.FuncDefMod asmFunc;
     private Block curBlock;
+    private HashMap<PhysicalReg, Color> regColorMap;
+    private HashMap<Integer, Color> offsetColorMap;
     private HashMap<IREntity, Color> colorMap;
 
     public SSAEliminator(FuncDefMod func, ASM.Module.FuncDefMod asmFunc) {
         this.func = func;
         this.asmFunc = asmFunc;
+        regColorMap = new HashMap<>();
+        offsetColorMap = new HashMap<>();
         colorMap = new HashMap<>();
     }
 
@@ -48,6 +55,11 @@ public class SSAEliminator {
                 default -> throw new RuntimeException("Unknown entity when constructing `Color`");
             }
         }
+
+//        @Override
+//        public String toString() {
+//            return reg != null ? reg.name : offset != -1 ? Integer.toString(offset) : literal != null ? literal.toString() : globalPtr.name;
+//        }
     }
 
     public void run() {
@@ -98,32 +110,17 @@ public class SSAEliminator {
         } else throw new RuntimeException("Unknown entity");
     }
 
-    // 寻找基环。若存在基环，则返回环中任意一个节点；若不存在，则返回树的根节点
-    private HashSet<Color> FindRoot(HashMap<Color, Color> predecessors) {
-        HashSet<Color> roots = new HashSet<>();
-        HashSet<Color> visited = new HashSet<>();
-        for (var root : predecessors.keySet()) {
-            if (visited.contains(root)) continue;
-            while (!visited.contains(root)) {
-                visited.add(root);
-                if (!predecessors.containsKey(root)) break;
-                root = predecessors.get(root);
-            }
-            roots.add(root);
-        }
-        return roots;
-    }
-
     /** 后序遍历外向基环图
      * @param isTree 记录是否构成外向基环图，若为 true 则为树。
      */
-    private void DfsErt(Color cur, Color root, boolean isTree, HashMap<Color, HashSet<Color>> successors, HashMap<Color, Color> predecessors) {
+    private void DfsErt(Color cur, Color root, boolean isTree, HashMap<Color, HashSet<Color>> successors, HashSet<Color> visited) {
+        visited.add(cur);
         var sucs = successors.get(cur);
         if (sucs == null) return;
         PhysicalReg backup = null;
         if (cur == root && !isTree) backup = loadRegBeforeJump(cur, PhysicalReg.get("t1"), false, true).a; // 备份
         for (var suc : sucs) {
-            if (suc != root) DfsErt(suc, root, isTree, successors, predecessors);
+            if (suc != root) DfsErt(suc, root, isTree, successors, visited);
             var result = loadRegBeforeJump(suc, null, true, false);
             PhysicalReg src = (backup != null ? backup : loadRegBeforeJump(cur, PhysicalReg.get("t0"), false, false).a);
             if (result.a != null) curBlock.addInstrBeforeJump(new MvInstr(curBlock, result.a, src));
@@ -134,11 +131,22 @@ public class SSAEliminator {
     public void runBlock(IRBlock block) {
         HashMap<IRBlock, HashMap<Color, HashSet<Color>>> successors = new HashMap<>();
         HashMap<IRBlock, HashMap<Color, Color>> predecessors = new HashMap<>();
-        HashMap<PhysicalReg, Color> regMap = new HashMap<>();
+        HashSet<Color> colorSet = new HashSet<>();
         for (var phiInstr : block.phiInstrs.values()) {
-            if (!colorMap.containsKey(phiInstr.result)) colorMap.put(phiInstr.result, new Color(phiInstr.result));
-            var color = colorMap.get(phiInstr.result);
-            if (color.reg != null) regMap.put(color.reg, color);
+            Color newColor;
+            if (colorMap.containsKey(phiInstr.result)) newColor = colorMap.get(phiInstr.result);
+            else {
+                newColor = new Color(phiInstr.result);
+                if (newColor.reg != null) {
+                    if (!regColorMap.containsKey(newColor.reg)) regColorMap.put(newColor.reg, newColor);
+                    else newColor = regColorMap.get(newColor.reg);
+                } else if (newColor.offset != -1) {
+                    if (!offsetColorMap.containsKey(newColor.offset)) offsetColorMap.put(newColor.offset, newColor);
+                    else newColor = offsetColorMap.get(newColor.offset);
+                }
+                colorMap.put(phiInstr.result, newColor);
+            }
+            colorSet.add(newColor);
         }
         for (var phiInstr : block.phiInstrs.values())
             for (var branch : phiInstr.pairs) {
@@ -147,10 +155,16 @@ public class SSAEliminator {
                 if (colorMap.containsKey(branch.a)) predColor = colorMap.get(branch.a);
                 else {
                     predColor = new Color(branch.a);
-                    if (!regMap.containsKey(predColor.reg)) continue;
-                    predColor = regMap.get(predColor.reg);
+                    if (predColor.reg != null) {
+                        if (!regColorMap.containsKey(predColor.reg)) regColorMap.put(predColor.reg, predColor);
+                        else predColor = regColorMap.get(predColor.reg);
+                    } else if (predColor.offset != -1) {
+                        if (!offsetColorMap.containsKey(predColor.offset)) offsetColorMap.put(predColor.offset, predColor);
+                        else predColor = offsetColorMap.get(predColor.offset);
+                    }
                     colorMap.put(branch.a, predColor);
                 }
+                if (!colorSet.contains(predColor)) continue;
                 if (!successors.containsKey(branch.b)) {
                     successors.put(branch.b, new HashMap<>());
                     predecessors.put(branch.b, new HashMap<>());
@@ -167,32 +181,28 @@ public class SSAEliminator {
             var blockSucs = successors.get(preBlock);
             var blockPreds = predecessors.get(preBlock);
             // find ring or root
-            var roots = FindRoot(blockPreds);
-            // dfs
-            for (var root : roots) {
-                boolean isTree = !blockPreds.containsKey(root);
-                if (isTree)
-                    for (var phiInstr : block.phiInstrs.values())
-                        if (colorMap.get(phiInstr.result) == root) {
-                            for (var branch : phiInstr.pairs)
-                                if (branch.b == preBlock) {
-                                    var newRoot = new Color(branch.a);
-                                    colorMap.put(branch.a, newRoot);
-                                    blockPreds.put(root, newRoot);
-                                    blockSucs.put(newRoot, new HashSet<>(List.of(root)));
-                                    root = newRoot;
-                                    break;
-                                }
-                            break;
-                        }
-                DfsErt(root, root, isTree, blockSucs, blockPreds);
+            HashSet<Color> visited = new HashSet<>();
+            for (var root : blockPreds.keySet()) {
+                if (visited.contains(root)) continue;
+                // 寻找基环。若存在基环，则返回环中任意一个节点；若不存在，则返回树的根节点
+                boolean isTree = false;
+                while (!visited.contains(root)) {
+                    visited.add(root);
+                    if (!blockPreds.containsKey(root)) {
+                        isTree = true;
+                        break;
+                    }
+                    root = blockPreds.get(root);
+                }
+                DfsErt(root, root, isTree, blockSucs, visited); // 深搜外向基环图
             }
         }
         for (var phiInstr : block.phiInstrs.values())
             for (var branch : phiInstr.pairs) {
-                if (predecessors.containsKey(branch.b) && predecessors.get(branch.b).containsKey(colorMap.get(phiInstr.result))) continue;
+                var predColor = colorMap.get(phiInstr.result);
+                if (predecessors.containsKey(branch.b) && predecessors.get(branch.b).containsKey(predColor)) continue;
                 curBlock = branch.b.asmBlock;
-                var result = loadRegBeforeJump(colorMap.get(phiInstr.result), null, true, false);
+                var result = loadRegBeforeJump(predColor, null, true, false);
                 PhysicalReg src = loadRegBeforeJump(new Color(branch.a), PhysicalReg.get("t0"), false, false).a;
                 if (result.a != null) curBlock.addInstrBeforeJump(new MvInstr(curBlock, result.a, src));
                 else addInstrBeforeJumpWithOverflowedImm("sw", src, result.b, PhysicalReg.get("sp"));

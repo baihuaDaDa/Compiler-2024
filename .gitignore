@@ -12,3 +12,5 @@ test.s
 builtin.s
 test.in
 test.out
+test-script.s
+debug.txt

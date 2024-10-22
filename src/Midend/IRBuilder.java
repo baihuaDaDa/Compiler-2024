@@ -518,6 +518,7 @@ public class IRBuilder implements ASTVisitor {
     }
     public void visit(AtomExprNode node) {
         if (node.isLiteral) {
+            // TODO string literal can be improved
             if (node.literal.type.isNull) lastExpr = new IRExpression(new IRLiteral(new IRType("ptr"), true));
             else if (node.literal.type.dim > 0) node.literal.constArray.accept(this);
             else if (node.literal.type.isString) lastExpr = new IRExpression(NewStringLiteral(node.literal.constString));

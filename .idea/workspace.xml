@@ -4,10 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: improve the allocation of memory in function stacks.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem of spilling critical edges.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/IRVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,15 +201,8 @@
       <workItem from="1729050966747" duration="21180000" />
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
-      <workItem from="1729405263423" duration="76661000" />
-    </task>
-    <task id="LOCAL-00025" summary="Fix: change &quot;Dimension Out of Bound&quot; to &quot;Dimension Out Of Bound&quot;. XD">
-      <option name="closed" value="true" />
-      <created>1723749352470</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1723749352470</updated>
+      <workItem from="1729405263423" duration="76876000" />
+      <workItem from="1729575512429" duration="31062000" />
     </task>
     <task id="LOCAL-00026" summary="Upd: finish IR types and entities, instruction IR nodes and the builtin functions.">
       <option name="closed" value="true" />
@@ -585,7 +588,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729530985640</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Fix: fix a problem of spilling critical edges.">
+      <option name="closed" value="true" />
+      <created>1729534580745</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1729534580745</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +614,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish Dominator Tree Builder." />
     <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
     <MESSAGE value="Upd: add Dominator Frontier." />
     <MESSAGE value="Upd: complete PhiInstr.java" />
@@ -628,19 +638,25 @@
     <MESSAGE value="Fix: fix SSA Elimination." />
     <MESSAGE value="Fix: eliminate dead basic block (those who aren't in CFG)." />
     <MESSAGE value="Fix: improve the allocation of memory in function stacks." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: improve the allocation of memory in function stacks." />
+    <MESSAGE value="Fix: fix a problem of spilling critical edges." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem of spilling critical edges." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
-          <line>57</line>
-          <properties class="Midend.Mem2Reg" method="splitCriticalEdge">
+          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
+          <line>123</line>
+          <properties class="Backend.ASMBuilder" method="LoadArgs">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="130" />
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="133" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

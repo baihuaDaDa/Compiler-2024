@@ -16,6 +16,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import Util.MxErrorListener;
 
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -24,6 +25,7 @@ public class Compiler {
     public static void main(String[] args) throws Exception {
         InputStream input = System.in;
         OutputStream output = System.out;
+        OutputStream foutput = new FileOutputStream("test-script.s");
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
             lexer.removeErrorListeners();
@@ -49,6 +51,7 @@ public class Compiler {
             linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
+            foutput.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
