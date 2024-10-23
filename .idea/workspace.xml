@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: compile `builtin.ll` again with `-O2` mode.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Debug"
+    "应用程序.Main.executor": "Run"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -193,15 +193,7 @@
       <workItem from="1729405263423" duration="76876000" />
       <workItem from="1729575512429" duration="33084000" />
       <workItem from="1729661240215" duration="13623000" />
-      <workItem from="1729678085227" duration="4774000" />
-    </task>
-    <task id="LOCAL-00032" summary="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR.">
-      <option name="closed" value="true" />
-      <created>1724454130357</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1724454130357</updated>
+      <workItem from="1729678085227" duration="8217000" />
     </task>
     <task id="LOCAL-00033" summary="Upd: finish IR builder.">
       <option name="closed" value="true" />
@@ -587,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729681300905</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`.">
+      <option name="closed" value="true" />
+      <created>1729683443410</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1729683443410</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: Mem2Reg on IR fixed." />
     <MESSAGE value="Upd: split critical edges." />
     <MESSAGE value="Upd: finish live analyzer." />
     <MESSAGE value="Upd: add live interval map." />
@@ -630,34 +629,35 @@
     <MESSAGE value="Fix: fix a problem of `NewEmptyArray` in `IRBuilder.java`." />
     <MESSAGE value="Fix: fix a problem of CFG." />
     <MESSAGE value="Upd: compile `builtin.ll` again with `-O2` mode." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: compile `builtin.ll` again with `-O2` mode." />
+    <MESSAGE value="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <condition expression="block.label.equals(&quot;loop_end.4&quot;)" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>196</line>
-          <option name="timeStamp" value="142" />
+          <line>131</line>
+          <option name="timeStamp" value="147" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="143" />
+          <line>150</line>
+          <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="144" />
+          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
+          <line>178</line>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="150" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="((IRLocalVar) root).name.substring(4)" language="JAVA" />
-        <watch expression="defList" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

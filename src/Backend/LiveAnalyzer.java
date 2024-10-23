@@ -151,7 +151,8 @@ public class LiveAnalyzer {
         int linearOrder = 0;
         for (int i = ord.size() - 1; i >= 0; --i) {
             var block = ord.get(i);
-            for (var phiInstr : block.phiInstrs.values()) linearOrderMap.put(phiInstr, linearOrder++);
+            for (var phiInstr : block.phiInstrs.values()) linearOrderMap.put(phiInstr, linearOrder);
+            linearOrder++;
             for (var instr : block.instructions) linearOrderMap.put(instr, linearOrder++);
         }
     }
