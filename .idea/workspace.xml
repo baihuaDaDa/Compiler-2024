@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem of CFG.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: compile `builtin.ll` again with `-O2` mode.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,15 +193,7 @@
       <workItem from="1729405263423" duration="76876000" />
       <workItem from="1729575512429" duration="33084000" />
       <workItem from="1729661240215" duration="13623000" />
-      <workItem from="1729678085227" duration="2570000" />
-    </task>
-    <task id="LOCAL-00031" summary="Upd: finish transforming all the naive expression nodes into LLVM IR instructions.">
-      <option name="closed" value="true" />
-      <created>1724438054001</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1724438054001</updated>
+      <workItem from="1729678085227" duration="4774000" />
     </task>
     <task id="LOCAL-00032" summary="Upd: finish transforming all the nodes except array nodes and formatted string nodes into LLVM IR.">
       <option name="closed" value="true" />
@@ -586,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729679180423</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Upd: compile `builtin.ll` again with `-O2` mode.">
+      <option name="closed" value="true" />
+      <created>1729681300905</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1729681300905</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,7 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: phi instructions include incorrect predecessors in ternary and `&amp;&amp;`, `||` nodes." />
     <MESSAGE value="Fix: Mem2Reg on IR fixed." />
     <MESSAGE value="Upd: split critical edges." />
     <MESSAGE value="Upd: finish live analyzer." />
@@ -629,7 +629,8 @@
     <MESSAGE value="Fix: fix a problem of transferring parameters in call instructions." />
     <MESSAGE value="Fix: fix a problem of `NewEmptyArray` in `IRBuilder.java`." />
     <MESSAGE value="Fix: fix a problem of CFG." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem of CFG." />
+    <MESSAGE value="Upd: compile `builtin.ll` again with `-O2` mode." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: compile `builtin.ll` again with `-O2` mode." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -419,7 +419,6 @@ public class IRBuilder implements ASTVisitor {
             case "&&", "||" -> {
                 node.lhs.accept(this);
                 var lhs = lastExpr.value;
-                var predLhs = curBlock;
                 if (lhs instanceof IRLiteral) {
                     if (node.op.equals("&&"))
                         if (((IRLiteral) lhs).value != 0) node.rhs.accept(this);
@@ -428,6 +427,9 @@ public class IRBuilder implements ASTVisitor {
                     int no = program.andOrCnt++;
                     IRBlock rhsBlock = new IRBlock(curBlock.parent, String.format("and_or_rhs.%d", no));
                     IRBlock endBlock = new IRBlock(curBlock.parent, String.format("and_or_end.%d", no));
+                    var ptr = new IRLocalVar(String.format(".short_path.%d", no), new IRType("ptr"));
+                    curBlock.addInstr(new AllocaInstr(curBlock, ptr, new IRType("i1")));
+                    curBlock.addInstr(new StoreInstr(curBlock, lhs, ptr));
                     if (node.op.equals("&&")) curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, rhsBlock, endBlock));
                     else curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lhs, endBlock, rhsBlock));
                     curBlock = rhsBlock;
@@ -435,15 +437,12 @@ public class IRBuilder implements ASTVisitor {
                     node.rhs.accept(this);
                     var tmpResult = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("i1"));
                     curBlock.addInstr(new BinaryInstr(curBlock, BinaryInstr.getOp(node.op), lhs, lastExpr.value, tmpResult));
+                    curBlock.addInstr(new StoreInstr(curBlock, tmpResult, ptr));
                     curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
-                    IRBlock predRhs = curBlock;
                     curBlock = endBlock;
                     curBlock.parent.addBlock(endBlock);
                     var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("i1"));
-                    var phiInstr = new PhiInstr(curBlock, tmp);
-                    phiInstr.addBranch(lhs, predLhs);
-                    phiInstr.addBranch(tmpResult, predRhs);
-                    curBlock.addPhiInstr(phiInstr);
+                    curBlock.addInstr(new LoadInstr(curBlock, tmp, ptr));
                     lastExpr = new IRExpression(tmp);
                 }
             }
@@ -474,33 +473,27 @@ public class IRBuilder implements ASTVisitor {
             IRBlock elseBlock = new IRBlock(curBlock.parent, String.format("ternary_else.%d", ternaryNo));
             IRBlock endBlock = new IRBlock(curBlock.parent, String.format("ternary_end.%d", ternaryNo));
             boolean isVoid = node.type.isSameType(new ExprType("void", 0));
-            IREntity thenResult = null, elseResult = null;
-            IRBlock predThen = null, predElse = null;
+            IRLocalVar resultPtr = null;
+            if (!isVoid) {
+                resultPtr = new IRLocalVar(String.format(".ternary.%d", ternaryNo), new IRType("ptr"));
+                curBlock.addInstr(new AllocaInstr(curBlock, resultPtr, new IRType(node.type)));
+            }
             curBlock.addInstr(new BrInstr(curBlock, (IRLocalVar) lastExpr.value, thenBlock, elseBlock));
             curBlock = thenBlock;
             curBlock.parent.addBlock(thenBlock);
             node.thenExpr.accept(this);
-            if (!isVoid) {
-                thenResult = lastExpr.value;
-                predThen = curBlock;
-            }
+            if (!isVoid) curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, resultPtr));
             curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
             curBlock = elseBlock;
             curBlock.parent.addBlock(elseBlock);
             node.elseExpr.accept(this);
-            if (!isVoid) {
-                elseResult = lastExpr.value;
-                predElse = curBlock;
-            }
+            if (!isVoid) curBlock.addInstr(new StoreInstr(curBlock, lastExpr.value, resultPtr));
             curBlock.addInstr(new BrInstr(curBlock, null, endBlock, null));
             curBlock = endBlock;
             curBlock.parent.addBlock(endBlock);
             if (isVoid) return;
             var tmp = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
-            var phiInstr = new PhiInstr(curBlock, tmp);
-            phiInstr.addBranch(thenResult, predThen);
-            phiInstr.addBranch(elseResult, predElse);
-            curBlock.addPhiInstr(phiInstr);
+            curBlock.addInstr(new LoadInstr(curBlock, tmp, resultPtr));
             lastExpr = new IRExpression(tmp);
         }
     }
