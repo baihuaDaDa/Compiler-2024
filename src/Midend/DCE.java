@@ -33,15 +33,6 @@ public class DCE {
     }
 
     public void runFunc(FuncDefMod func) {
-        HashSet<IRBlock> visited = new HashSet<>();
-        ArrayList<IRBlock> ord = new ArrayList<>();
-        Traverse(ord, visited, func.body.getFirst());
-        // 此处直接删除了控制流图上后序遍历没有访问到的基本块
-        // 注意此时基本块的标号 @blockNo 已经失效
-        ArrayList<IRBlock> removeList = new ArrayList<>();
-        for (var block : func.body)
-            if (!ord.contains(block)) removeList.add(block);
-        func.body.removeAll(removeList);
         // get uses and defs
         GetUseDef(func);
         // delete unused instructions
@@ -59,13 +50,6 @@ public class DCE {
                 defInstr.parent.instructions.remove(defInstr);
             }
         }
-    }
-
-    private void Traverse(ArrayList<IRBlock> ord, HashSet<IRBlock> visited, IRBlock block) {
-        visited.add(block);
-        for (var suc : block.suc)
-            if (!visited.contains(suc)) Traverse(ord, visited, suc);
-        ord.add(block);
     }
 
     private void GetUseDef(FuncDefMod func) {

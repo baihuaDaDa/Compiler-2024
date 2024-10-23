@@ -3,6 +3,7 @@ package IR.Instruction;
 import IR.IRBlock;
 import IR.IRVisitor;
 import Util.IRObject.IREntity.IREntity;
+import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 
 import java.util.HashMap;
@@ -33,8 +34,20 @@ public class BrInstr extends Instruction {
 
     @Override
     public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
-        if (cond != null && cond instanceof IRLocalVar localCond && renameMap.containsKey(localCond))
-            cond = (IRLocalVar) renameMap.get(localCond);
+        if (cond != null && cond instanceof IRLocalVar localCond && renameMap.containsKey(localCond))  {
+            IREntity newVar = renameMap.get(localCond);
+            if (newVar instanceof IRLocalVar localVar) cond = localVar;
+            else if (newVar instanceof IRLiteral literal) {
+                // TODO 可能需要修改 CFG 和 DomTree
+                cond = null;
+                if (literal.value == 1) elseBlock = null;
+                else {
+                    thenBlock = elseBlock;
+                    elseBlock = null;
+                }
+            }
+            else throw new RuntimeException("Unknown entity in renameMap");
+        }
     }
 
     @Override
