@@ -13,11 +13,13 @@ import java.util.HashSet;
 public class PhiInstr extends Instruction {
     public IRLocalVar result;
     public ArrayList<Pair<IREntity, IRBlock>> pairs = null;
+    public String originalName = null;
 
     public PhiInstr(IRBlock parent, IRLocalVar result) {
         super(parent);
         this.result = result;
         pairs = new ArrayList<>();
+        originalName = result.name;
     }
 
     public void addBranch(IREntity value, IRBlock block) {

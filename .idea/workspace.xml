@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a misconception in the analysis of phi instructions.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LiveAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+    "应用程序.Main.executor": "Debug"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -193,15 +195,7 @@
       <workItem from="1729405263423" duration="76876000" />
       <workItem from="1729575512429" duration="33084000" />
       <workItem from="1729661240215" duration="13623000" />
-      <workItem from="1729678085227" duration="8217000" />
-    </task>
-    <task id="LOCAL-00033" summary="Upd: finish IR builder.">
-      <option name="closed" value="true" />
-      <created>1724521872779</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1724521872779</updated>
+      <workItem from="1729678085227" duration="9978000" />
     </task>
     <task id="LOCAL-00034" summary="Upd: finish IR printer.">
       <option name="closed" value="true" />
@@ -587,7 +581,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729683443410</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Fix: fix a misconception in the analysis of phi instructions.">
+      <option name="closed" value="true" />
+      <created>1729687501664</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1729687501664</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -605,7 +607,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: split critical edges." />
     <MESSAGE value="Upd: finish live analyzer." />
     <MESSAGE value="Upd: add live interval map." />
     <MESSAGE value="Upd: finish linear scanner except the spilling part." />
@@ -630,13 +631,14 @@
     <MESSAGE value="Fix: fix a problem of CFG." />
     <MESSAGE value="Upd: compile `builtin.ll` again with `-O2` mode." />
     <MESSAGE value="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`." />
+    <MESSAGE value="Fix: fix a misconception in the analysis of phi instructions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a misconception in the analysis of phi instructions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <condition expression="block.label.equals(&quot;loop_end.4&quot;)" language="JAVA" />
+          <condition expression="block.label.equals(&quot;ternary_end.0&quot;)" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
           <line>131</line>
           <option name="timeStamp" value="147" />
@@ -644,17 +646,18 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
           <line>150</line>
-          <option name="timeStamp" value="148" />
+          <option name="timeStamp" value="151" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>178</line>
-          <option name="timeStamp" value="149" />
+          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="152" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="150" />
+          <condition expression="def.name.equals(&quot;phi..ternary.3.3&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="154" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

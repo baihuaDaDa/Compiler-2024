@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/sema/misc-package/misc-16.mx");
+        InputStream input = new FileInputStream("testcases/optim-new/efficiency.mx");
         OutputStream outputIR = new FileOutputStream("test.ll");
         OutputStream outputIROrigin = new FileOutputStream("test-origin.ll");
         OutputStream outputASM = new FileOutputStream("test.s");

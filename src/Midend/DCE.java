@@ -47,7 +47,8 @@ public class DCE {
                     useList.get(use).remove(defInstr);
                     defList.add(use);
                 }
-                defInstr.parent.instructions.remove(defInstr);
+                if (!defInstr.parent.instructions.remove(defInstr))
+                    defInstr.parent.phiInstrs.remove(((PhiInstr) defInstr).originalName);
             }
         }
     }
