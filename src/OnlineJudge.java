@@ -6,6 +6,7 @@ import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.DCE;
 import Midend.IRBuilder;
+import Midend.IRCFGBuilder;
 import Midend.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
@@ -41,6 +42,8 @@ public class OnlineJudge {
             astRoot.accept(new SemanticChecker(gScope));
             IRBuilder irBuilder = new IRBuilder(gScope);
             irBuilder.visit(astRoot);
+            IRCFGBuilder irCFGBuilder = new IRCFGBuilder(irBuilder.program);
+            irCFGBuilder.build();
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
             DCE dce = new DCE(irBuilder.program);
