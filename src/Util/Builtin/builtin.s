@@ -7,9 +7,11 @@
 	.type	print,@function
 print:                                  # @print
 # %bb.0:
-	mv	a1, a0
-	lui	a0, %hi(.L.str)
-	addi	a0, a0, %lo(.L.str)
+	lui	a1, %hi(.L.str)
+	addi	a1, a1, %lo(.L.str)
+	mv	a2, a0
+	mv	a0, a1
+	mv	a1, a2
 	tail	printf
 .Lfunc_end0:
 	.size	print, .Lfunc_end0-print
@@ -19,9 +21,11 @@ print:                                  # @print
 	.type	println,@function
 println:                                # @println
 # %bb.0:
-	mv	a1, a0
-	lui	a0, %hi(.L.str.1)
-	addi	a0, a0, %lo(.L.str.1)
+	lui	a1, %hi(.L.str.1)
+	addi	a1, a1, %lo(.L.str.1)
+	mv	a2, a0
+	mv	a0, a1
+	mv	a1, a2
 	tail	printf
 .Lfunc_end1:
 	.size	println, .Lfunc_end1-println
@@ -31,9 +35,11 @@ println:                                # @println
 	.type	printInt,@function
 printInt:                               # @printInt
 # %bb.0:
-	mv	a1, a0
-	lui	a0, %hi(.L.str.2)
-	addi	a0, a0, %lo(.L.str.2)
+	lui	a1, %hi(.L.str.2)
+	addi	a1, a1, %lo(.L.str.2)
+	mv	a2, a0
+	mv	a0, a1
+	mv	a1, a2
 	tail	printf
 .Lfunc_end2:
 	.size	printInt, .Lfunc_end2-printInt
@@ -43,9 +49,11 @@ printInt:                               # @printInt
 	.type	printlnInt,@function
 printlnInt:                             # @printlnInt
 # %bb.0:
-	mv	a1, a0
-	lui	a0, %hi(.L.str.3)
-	addi	a0, a0, %lo(.L.str.3)
+	lui	a1, %hi(.L.str.3)
+	addi	a1, a1, %lo(.L.str.3)
+	mv	a2, a0
+	mv	a0, a1
+	mv	a1, a2
 	tail	printf
 .Lfunc_end3:
 	.size	printlnInt, .Lfunc_end3-printlnInt
@@ -57,16 +65,17 @@ getString:                              # @getString
 # %bb.0:
 	addi	sp, sp, -16
 	sw	ra, 12(sp)                      # 4-byte Folded Spill
+	sw	s0, 8(sp)                       # 4-byte Folded Spill
 	li	a0, 256
 	call	malloc
-	mv	a1, a0
-	sw	a1, 8(sp)                       # 4-byte Folded Spill
+	mv	s0, a0
 	lui	a0, %hi(.L.str)
 	addi	a0, a0, %lo(.L.str)
+	mv	a1, s0
 	call	scanf
-                                        # kill: def $x11 killed $x10
-	lw	a0, 8(sp)                       # 4-byte Folded Reload
+	mv	a0, s0
 	lw	ra, 12(sp)                      # 4-byte Folded Reload
+	lw	s0, 8(sp)                       # 4-byte Folded Reload
 	addi	sp, sp, 16
 	ret
 .Lfunc_end4:
@@ -97,17 +106,21 @@ toString:                               # @toString
 # %bb.0:
 	addi	sp, sp, -16
 	sw	ra, 12(sp)                      # 4-byte Folded Spill
-	sw	a0, 4(sp)                       # 4-byte Folded Spill
+	sw	s0, 8(sp)                       # 4-byte Folded Spill
+	sw	s1, 4(sp)                       # 4-byte Folded Spill
+	mv	s0, a0
 	li	a0, 16
 	call	malloc
-	lw	a2, 4(sp)                       # 4-byte Folded Reload
-	sw	a0, 8(sp)                       # 4-byte Folded Spill
-	lui	a1, %hi(.L.str.2)
-	addi	a1, a1, %lo(.L.str.2)
+	mv	s1, a0
+	lui	a0, %hi(.L.str.2)
+	addi	a1, a0, %lo(.L.str.2)
+	mv	a0, s1
+	mv	a2, s0
 	call	sprintf
-                                        # kill: def $x11 killed $x10
-	lw	a0, 8(sp)                       # 4-byte Folded Reload
+	mv	a0, s1
 	lw	ra, 12(sp)                      # 4-byte Folded Reload
+	lw	s0, 8(sp)                       # 4-byte Folded Reload
+	lw	s1, 4(sp)                       # 4-byte Folded Reload
 	addi	sp, sp, 16
 	ret
 .Lfunc_end6:
@@ -129,25 +142,27 @@ string.substring:                       # @string.substring
 # %bb.0:
 	addi	sp, sp, -32
 	sw	ra, 28(sp)                      # 4-byte Folded Spill
-	sw	a1, 12(sp)                      # 4-byte Folded Spill
-	sw	a0, 16(sp)                      # 4-byte Folded Spill
-	sub	a0, a2, a1
-	sw	a0, 20(sp)                      # 4-byte Folded Spill
-	addi	a0, a0, 1
+	sw	s0, 24(sp)                      # 4-byte Folded Spill
+	sw	s1, 20(sp)                      # 4-byte Folded Spill
+	sw	s2, 16(sp)                      # 4-byte Folded Spill
+	sw	s3, 12(sp)                      # 4-byte Folded Spill
+	mv	s3, a1
+	mv	s2, a0
+	sub	s1, a2, a1
+	addi	a0, s1, 1
 	call	malloc
-	lw	a3, 12(sp)                      # 4-byte Folded Reload
-	lw	a1, 16(sp)                      # 4-byte Folded Reload
-	lw	a2, 20(sp)                      # 4-byte Folded Reload
-	sw	a0, 24(sp)                      # 4-byte Folded Spill
-	add	a1, a1, a3
+	mv	s0, a0
+	add	a1, s2, s3
+	mv	a2, s1
 	call	memcpy
-	lw	a1, 20(sp)                      # 4-byte Folded Reload
-                                        # kill: def $x12 killed $x10
-	lw	a0, 24(sp)                      # 4-byte Folded Reload
-	add	a2, a0, a1
-	li	a1, 0
-	sb	a1, 0(a2)
+	add	s1, s1, s0
+	sb	zero, 0(s1)
+	mv	a0, s0
 	lw	ra, 28(sp)                      # 4-byte Folded Reload
+	lw	s0, 24(sp)                      # 4-byte Folded Reload
+	lw	s1, 20(sp)                      # 4-byte Folded Reload
+	lw	s2, 16(sp)                      # 4-byte Folded Reload
+	lw	s3, 12(sp)                      # 4-byte Folded Reload
 	addi	sp, sp, 32
 	ret
 .Lfunc_end8:
@@ -189,37 +204,40 @@ string.add:                             # @string.add
 # %bb.0:
 	addi	sp, sp, -32
 	sw	ra, 28(sp)                      # 4-byte Folded Spill
-	sw	a1, 12(sp)                      # 4-byte Folded Spill
-	sw	a0, 4(sp)                       # 4-byte Folded Spill
+	sw	s0, 24(sp)                      # 4-byte Folded Spill
+	sw	s1, 20(sp)                      # 4-byte Folded Spill
+	sw	s2, 16(sp)                      # 4-byte Folded Spill
+	sw	s3, 12(sp)                      # 4-byte Folded Spill
+	sw	s4, 8(sp)                       # 4-byte Folded Spill
+	sw	s5, 4(sp)                       # 4-byte Folded Spill
+	mv	s2, a1
+	mv	s3, a0
 	call	strlen
-	mv	a1, a0
-	lw	a0, 12(sp)                      # 4-byte Folded Reload
-	sw	a1, 8(sp)                       # 4-byte Folded Spill
+	mv	s0, a0
+	mv	a0, s2
 	call	strlen
-	lw	a1, 8(sp)                       # 4-byte Folded Reload
-	sw	a0, 16(sp)                      # 4-byte Folded Spill
-	add	a0, a0, a1
-	sw	a0, 20(sp)                      # 4-byte Folded Spill
-	addi	a0, a0, 1
+	mv	s4, a0
+	add	s5, a0, s0
+	addi	a0, s5, 1
 	call	malloc
-	lw	a1, 4(sp)                       # 4-byte Folded Reload
-	lw	a2, 8(sp)                       # 4-byte Folded Reload
-	sw	a0, 24(sp)                      # 4-byte Folded Spill
+	mv	s1, a0
+	mv	a1, s3
+	mv	a2, s0
 	call	memcpy
-	lw	a3, 8(sp)                       # 4-byte Folded Reload
-	lw	a1, 12(sp)                      # 4-byte Folded Reload
-	lw	a2, 16(sp)                      # 4-byte Folded Reload
-                                        # kill: def $x14 killed $x10
-	lw	a0, 24(sp)                      # 4-byte Folded Reload
-	add	a0, a0, a3
+	add	a0, s1, s0
+	mv	a1, s2
+	mv	a2, s4
 	call	memcpy
-	lw	a1, 20(sp)                      # 4-byte Folded Reload
-                                        # kill: def $x12 killed $x10
-	lw	a0, 24(sp)                      # 4-byte Folded Reload
-	add	a2, a0, a1
-	li	a1, 0
-	sb	a1, 0(a2)
+	add	s5, s5, s1
+	sb	zero, 0(s5)
+	mv	a0, s1
 	lw	ra, 28(sp)                      # 4-byte Folded Reload
+	lw	s0, 24(sp)                      # 4-byte Folded Reload
+	lw	s1, 20(sp)                      # 4-byte Folded Reload
+	lw	s2, 16(sp)                      # 4-byte Folded Reload
+	lw	s3, 12(sp)                      # 4-byte Folded Reload
+	lw	s4, 8(sp)                       # 4-byte Folded Reload
+	lw	s5, 4(sp)                       # 4-byte Folded Reload
 	addi	sp, sp, 32
 	ret
 .Lfunc_end11:
@@ -293,9 +311,7 @@ string.greater:                         # @string.greater
 	addi	sp, sp, -16
 	sw	ra, 12(sp)                      # 4-byte Folded Spill
 	call	strcmp
-	mv	a1, a0
-	li	a0, 0
-	slt	a0, a0, a1
+	sgtz	a0, a0
 	lw	ra, 12(sp)                      # 4-byte Folded Reload
 	addi	sp, sp, 16
 	ret
@@ -344,14 +360,16 @@ array.malloc:                           # @array.malloc
 # %bb.0:
 	addi	sp, sp, -16
 	sw	ra, 12(sp)                      # 4-byte Folded Spill
-	sw	a1, 8(sp)                       # 4-byte Folded Spill
+	sw	s0, 8(sp)                       # 4-byte Folded Spill
+	mv	s0, a1
 	mul	a0, a1, a0
 	addi	a0, a0, 4
 	call	malloc
-	lw	a1, 8(sp)                       # 4-byte Folded Reload
-	sw	a1, 0(a0)
-	addi	a0, a0, 4
+	addi	a1, a0, 4
+	sw	s0, 0(a0)
+	mv	a0, a1
 	lw	ra, 12(sp)                      # 4-byte Folded Reload
+	lw	s0, 8(sp)                       # 4-byte Folded Reload
 	addi	sp, sp, 16
 	ret
 .Lfunc_end20:
@@ -362,77 +380,60 @@ array.malloc:                           # @array.malloc
 	.type	array.copy,@function
 array.copy:                             # @array.copy
 # %bb.0:
-	addi	sp, sp, -48
-	sw	ra, 44(sp)                      # 4-byte Folded Spill
-	sw	a2, 28(sp)                      # 4-byte Folded Spill
-	sw	a1, 32(sp)                      # 4-byte Folded Spill
-	sw	a0, 36(sp)                      # 4-byte Folded Spill
-	li	a1, 0
-	sw	a1, 40(sp)                      # 4-byte Folded Spill
-	beqz	a0, .LBB21_6
-	j	.LBB21_1
-.LBB21_1:
-	lw	a0, 28(sp)                      # 4-byte Folded Reload
-	lw	a1, 36(sp)                      # 4-byte Folded Reload
-	lw	a1, -4(a1)
-	sw	a1, 24(sp)                      # 4-byte Folded Spill
-	li	a1, 1
-	beq	a0, a1, .LBB21_4
-	j	.LBB21_2
-.LBB21_2:
-	lw	a1, 24(sp)                      # 4-byte Folded Reload
-	li	a0, 0
-                                        # implicit-def: $x12
-	bge	a0, a1, .LBB21_6
-	j	.LBB21_3
-.LBB21_3:
-	lw	a0, 28(sp)                      # 4-byte Folded Reload
-	addi	a0, a0, -1
-	sw	a0, 16(sp)                      # 4-byte Folded Spill
-	li	a0, 0
-	sw	a0, 20(sp)                      # 4-byte Folded Spill
-	j	.LBB21_5
-.LBB21_4:
-	lw	a0, 24(sp)                      # 4-byte Folded Reload
-	lw	a1, 32(sp)                      # 4-byte Folded Reload
-	mul	a0, a0, a1
-	sw	a0, 8(sp)                       # 4-byte Folded Spill
-	addi	a0, a0, 4
+	addi	sp, sp, -32
+	sw	ra, 28(sp)                      # 4-byte Folded Spill
+	sw	s0, 24(sp)                      # 4-byte Folded Spill
+	sw	s1, 20(sp)                      # 4-byte Folded Spill
+	sw	s2, 16(sp)                      # 4-byte Folded Spill
+	sw	s3, 12(sp)                      # 4-byte Folded Spill
+	sw	s4, 8(sp)                       # 4-byte Folded Spill
+	beqz	a0, .LBB21_3
+# %bb.1:
+	mv	s2, a1
+	mv	s0, a0
+	lw	s3, -4(a0)
+	li	a0, 1
+	bne	a2, a0, .LBB21_4
+# %bb.2:
+	mul	s1, s3, s2
+	addi	a0, s1, 4
 	call	malloc
-	lw	a3, 24(sp)                      # 4-byte Folded Reload
-	lw	a1, 36(sp)                      # 4-byte Folded Reload
-	lw	a2, 8(sp)                       # 4-byte Folded Reload
-	sw	a3, 0(a0)
-	addi	a0, a0, 4
-	sw	a0, 12(sp)                      # 4-byte Folded Spill
+	sw	s3, 0(a0)
+	addi	s3, a0, 4
+	mv	a0, s3
+	mv	a1, s0
+	mv	a2, s1
 	call	memcpy
-                                        # kill: def $x11 killed $x10
-	lw	a0, 12(sp)                      # 4-byte Folded Reload
-	sw	a0, 40(sp)                      # 4-byte Folded Spill
-	j	.LBB21_6
-.LBB21_5:                               # =>This Inner Loop Header: Depth=1
-	lw	a3, 20(sp)                      # 4-byte Folded Reload
-	lw	a2, 16(sp)                      # 4-byte Folded Reload
-	lw	a1, 32(sp)                      # 4-byte Folded Reload
-	lw	a0, 36(sp)                      # 4-byte Folded Reload
-	sw	a3, 4(sp)                       # 4-byte Folded Spill
-	slli	a3, a3, 2
-	add	a0, a0, a3
-	lw	a0, 0(a0)
+	j	.LBB21_8
+.LBB21_3:
+	li	s3, 0
+	j	.LBB21_8
+.LBB21_4:
+	blez	s3, .LBB21_7
+# %bb.5:
+	addi	s4, a2, -1
+	slli	s1, s3, 2
+	add	s1, s1, s0
+                                        # implicit-def: $x19
+.LBB21_6:                               # =>This Inner Loop Header: Depth=1
+	lw	a0, 0(s0)
+	mv	a1, s2
+	mv	a2, s4
 	call	array.copy
-	lw	a1, 24(sp)                      # 4-byte Folded Reload
-                                        # kill: def $x12 killed $x10
-	lw	a0, 4(sp)                       # 4-byte Folded Reload
-	addi	a0, a0, 1
-	mv	a2, a0
-	sw	a2, 20(sp)                      # 4-byte Folded Spill
-                                        # implicit-def: $x12
-	bne	a0, a1, .LBB21_5
-	j	.LBB21_6
-.LBB21_6:
-	lw	a0, 40(sp)                      # 4-byte Folded Reload
-	lw	ra, 44(sp)                      # 4-byte Folded Reload
-	addi	sp, sp, 48
+	addi	s0, s0, 4
+	bne	s0, s1, .LBB21_6
+	j	.LBB21_8
+.LBB21_7:
+                                        # implicit-def: $x19
+.LBB21_8:                               # %.loopexit
+	mv	a0, s3
+	lw	ra, 28(sp)                      # 4-byte Folded Reload
+	lw	s0, 24(sp)                      # 4-byte Folded Reload
+	lw	s1, 20(sp)                      # 4-byte Folded Reload
+	lw	s2, 16(sp)                      # 4-byte Folded Reload
+	lw	s3, 12(sp)                      # 4-byte Folded Reload
+	lw	s4, 8(sp)                       # 4-byte Folded Reload
+	addi	sp, sp, 32
 	ret
 .Lfunc_end21:
 	.size	array.copy, .Lfunc_end21-array.copy
@@ -442,21 +443,14 @@ array.copy:                             # @array.copy
 	.type	.builtin.boolToString,@function
 .builtin.boolToString:                  # @.builtin.boolToString
 # %bb.0:
-	addi	sp, sp, -16
-                                        # kill: def $x11 killed $x10
-	lui	a1, %hi(.L.str.5)
-	addi	a1, a1, %lo(.L.str.5)
-	sw	a1, 8(sp)                       # 4-byte Folded Spill
-	lui	a1, %hi(.L.str.4)
-	addi	a1, a1, %lo(.L.str.4)
-	sw	a1, 12(sp)                      # 4-byte Folded Spill
 	bnez	a0, .LBB22_2
 # %bb.1:
-	lw	a0, 8(sp)                       # 4-byte Folded Reload
-	sw	a0, 12(sp)                      # 4-byte Folded Spill
+	lui	a0, %hi(.L.str.5)
+	addi	a0, a0, %lo(.L.str.5)
+	ret
 .LBB22_2:
-	lw	a0, 12(sp)                      # 4-byte Folded Reload
-	addi	sp, sp, 16
+	lui	a0, %hi(.L.str.4)
+	addi	a0, a0, %lo(.L.str.4)
 	ret
 .Lfunc_end22:
 	.size	.builtin.boolToString, .Lfunc_end22-.builtin.boolToString
