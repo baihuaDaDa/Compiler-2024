@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a misconception in the analysis of phi instructions.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem in DCE about not eliminating dead phi instructions.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/PhiInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DCE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DCE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +62,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Debug"
+    "应用程序.Main.executor": "Run"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -195,15 +193,7 @@
       <workItem from="1729405263423" duration="76876000" />
       <workItem from="1729575512429" duration="33084000" />
       <workItem from="1729661240215" duration="13623000" />
-      <workItem from="1729678085227" duration="9978000" />
-    </task>
-    <task id="LOCAL-00034" summary="Upd: finish IR printer.">
-      <option name="closed" value="true" />
-      <created>1724522991361</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1724522991361</updated>
+      <workItem from="1729678085227" duration="11869000" />
     </task>
     <task id="LOCAL-00035" summary="Reset.">
       <option name="closed" value="true" />
@@ -589,7 +579,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729687501664</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Fix: fix a problem in DCE about not eliminating dead phi instructions.">
+      <option name="closed" value="true" />
+      <created>1729689203815</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1729689203815</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish live analyzer." />
     <MESSAGE value="Upd: add live interval map." />
     <MESSAGE value="Upd: finish linear scanner except the spilling part." />
     <MESSAGE value="Upd: finish the spilling part." />
@@ -632,7 +629,8 @@
     <MESSAGE value="Upd: compile `builtin.ll` again with `-O2` mode." />
     <MESSAGE value="Fix: change the method on translating ternary and short_path expressions from using `phi` to using `store` and `load`." />
     <MESSAGE value="Fix: fix a misconception in the analysis of phi instructions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a misconception in the analysis of phi instructions." />
+    <MESSAGE value="Fix: fix a problem in DCE about not eliminating dead phi instructions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem in DCE about not eliminating dead phi instructions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -642,22 +640,6 @@
           <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
           <line>131</line>
           <option name="timeStamp" value="147" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/SSAEliminator.java</url>
-          <line>150</line>
-          <option name="timeStamp" value="151" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="152" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <condition expression="def.name.equals(&quot;phi..ternary.3.3&quot;)" language="JAVA" />
-          <url>file://$PROJECT_DIR$/src/Midend/DCE.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="154" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

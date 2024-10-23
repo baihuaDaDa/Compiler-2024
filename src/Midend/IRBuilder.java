@@ -96,8 +96,6 @@ public class IRBuilder implements ASTVisitor {
     public void visit(FuncDefNode node) {
         ArrayList<IRLocalVar> params = new ArrayList<>();
         var func = new FuncDefMod(new IRType(node.type), node.funcName, params);
-        if (node.funcName.equals("main")) program.mainFunc = func;
-        else program.funcDefs.add(func);
         curScope = new IRScope(curScope);
         curBlock = func.body.getFirst();
         if (curScope.className != null) {
@@ -107,6 +105,8 @@ public class IRBuilder implements ASTVisitor {
             curBlock.addInstr(new AllocaInstr(curBlock, thisPtr, new IRType("ptr")));
             curBlock.addInstr(new StoreInstr(curBlock, params.getFirst(), thisPtr));
         }
+        if (func.funcName.equals("main")) program.mainFunc = func;
+        else program.funcDefs.add(func);
         for (var param : node.paramList) {
             var irParam = new IRLocalVar(param.b, new IRType(param.a));
             params.add(irParam);
