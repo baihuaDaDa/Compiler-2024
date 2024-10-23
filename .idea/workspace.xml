@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem of spilling critical edges.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix a problem of linear scan with regard to parameters.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/SSAEliminator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRProgram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRProgram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/IRVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/IRVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/Module.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/DomTreeBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/IRBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/IRBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -202,23 +193,8 @@
       <workItem from="1729166729924" duration="2035000" />
       <workItem from="1729319044603" duration="16388000" />
       <workItem from="1729405263423" duration="76876000" />
-      <workItem from="1729575512429" duration="31062000" />
-    </task>
-    <task id="LOCAL-00026" summary="Upd: finish IR types and entities, instruction IR nodes and the builtin functions.">
-      <option name="closed" value="true" />
-      <created>1724177472036</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1724177472036</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Upd: finish all the IR nodes.">
-      <option name="closed" value="true" />
-      <created>1724237640689</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1724237640689</updated>
+      <workItem from="1729575512429" duration="33084000" />
+      <workItem from="1729661240215" duration="8876000" />
     </task>
     <task id="LOCAL-00028" summary="Upd: finish the `array.copy` function for const arrays.">
       <option name="closed" value="true" />
@@ -596,7 +572,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729534580745</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Fix: fix a problem of building ert.">
+      <option name="closed" value="true" />
+      <created>1729631395384</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1729631395385</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Fix: fix a problem of linear scan with regard to parameters.">
+      <option name="closed" value="true" />
+      <created>1729631866802</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1729631866802</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,8 +606,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: fix CFG builders in IR and ASM." />
-    <MESSAGE value="Upd: add Dominator Frontier." />
     <MESSAGE value="Upd: complete PhiInstr.java" />
     <MESSAGE value="Upd: complete Mem2Reg in IR." />
     <MESSAGE value="Upd: use Phi instr to implement ternary expressions and `&amp;&amp;, ||` expressions." />
@@ -639,7 +629,9 @@
     <MESSAGE value="Fix: eliminate dead basic block (those who aren't in CFG)." />
     <MESSAGE value="Fix: improve the allocation of memory in function stacks." />
     <MESSAGE value="Fix: fix a problem of spilling critical edges." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem of spilling critical edges." />
+    <MESSAGE value="Fix: fix a problem of building ert." />
+    <MESSAGE value="Fix: fix a problem of linear scan with regard to parameters." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix a problem of linear scan with regard to parameters." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -653,10 +645,14 @@
           </properties>
           <option name="timeStamp" value="132" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Backend/LinearScanner.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="133" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Midend/IRBuilder.java</url>
+          <line>253</line>
+          <properties class="Midend.IRBuilder" method="NewEmptyArray">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="136" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

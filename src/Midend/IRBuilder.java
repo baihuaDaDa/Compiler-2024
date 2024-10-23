@@ -279,9 +279,10 @@ public class IRBuilder implements ASTVisitor {
             // body
             curBlock = loopBody;
             curBlock.parent.addBlock(loopBody);
+            var newSubArray = NewEmptyArray(dim + 1, sizes);
             var indPtr = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType("ptr"));
             curBlock.addInstr(new GetelementptrInstr(curBlock, indPtr, "ptr", newArr, iValue));
-            curBlock.addInstr(new StoreInstr(curBlock, NewEmptyArray(dim + 1, sizes), indPtr));
+            curBlock.addInstr(new StoreInstr(curBlock, newSubArray, indPtr));
             curBlock.addInstr(new BrInstr(curBlock, null, loopStep, null));
             // step
             curBlock = loopStep;
