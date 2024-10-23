@@ -164,8 +164,8 @@ public class ASMBuilder implements IRVisitor {
         }
         // 最后给没有数据冲突的参数赋值
         for (int i = 0; i < maxArgCnt; i++) {
+            if (predecessors.containsKey(i)) continue;
             var arg = instr.args.get(i);
-            if (arg instanceof IRLocalVar && instr.parent.parent.params.contains(arg)) continue;
             var src = loadReg(arg, PhysicalReg.get("t0"), false);
             curBlock.addInstr(new MvInstr(curBlock, PhysicalReg.get("a" + i), src.a));
         }
@@ -199,9 +199,10 @@ public class ASMBuilder implements IRVisitor {
         curBlock.addInstr(new CommentInstr(curBlock, instr.toString()));
         // 保存 Caller Save 的寄存器
         var saveOrd = new ArrayList<>(instr.parent.parent.outMap.get(instr));
+        var def = instr.getDef();
         int saveHead = curBlock.parent.getCallerSaveHead();
         for (var localVar : saveOrd) {
-            if (!curBlock.parent.isPhysicalReg(localVar.name)) continue;
+            if (localVar == def || !curBlock.parent.isPhysicalReg(localVar.name)) continue;
             PhysicalReg reg = curBlock.parent.regMap.get(localVar.name);
             if (PhysicalReg.isCalleeSaved(reg.name)) continue;
             addInstrWithOverflowedImm("sw", reg, saveHead, PhysicalReg.get("sp"));
@@ -219,7 +220,7 @@ public class ASMBuilder implements IRVisitor {
         }
         saveHead = curBlock.parent.getCallerSaveHead();
         for (var localVar : saveOrd) {
-            if (!curBlock.parent.isPhysicalReg(localVar.name)) continue;
+            if (localVar == def || !curBlock.parent.isPhysicalReg(localVar.name)) continue;
             PhysicalReg reg = curBlock.parent.regMap.get(localVar.name);
             if (PhysicalReg.isCalleeSaved(reg.name)) continue;
             addInstrWithOverflowedImm("lw", reg, saveHead, PhysicalReg.get("sp"));
@@ -334,10 +335,12 @@ public class ASMBuilder implements IRVisitor {
                 if (instr instanceof CallInstr callInstr) {
                     newFunc.spilledArgCnt = Math.max(newFunc.spilledArgCnt, (callInstr.args.size() - 8));
                     var outs = callInstr.parent.parent.outMap.get(instr);
+                    var def = callInstr.parent.parent.defMap.get(instr);
                     int nonSpilledCnt = 0;
                     for (var out : outs)
                         if (callInstr.parent.parent.regMap.containsKey(out)
-                                && !PhysicalReg.isCalleeSaved(callInstr.parent.parent.regMap.get(out).name)) nonSpilledCnt++;
+                                && !PhysicalReg.isCalleeSaved(callInstr.parent.parent.regMap.get(out).name)
+                                && out != def) nonSpilledCnt++;
                     newFunc.callerSaveCnt = Math.max(newFunc.callerSaveCnt, nonSpilledCnt);
                 }
         for (var spilledVar : mod.spilledVars)
