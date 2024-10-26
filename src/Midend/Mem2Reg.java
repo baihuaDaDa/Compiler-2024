@@ -10,6 +10,7 @@ import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Mem2Reg {
@@ -43,7 +44,7 @@ public class Mem2Reg {
         placePhi(func);
         rename(func.body.getFirst());
         boolean[] visited = new boolean[func.body.size()];
-        splitCriticalEdge(func.body.getFirst(), visited);
+        _splitCriticalEdge(func);
         reinit();
     }
 
@@ -53,6 +54,32 @@ public class Mem2Reg {
         nums.clear();
         valStacks.clear();
         renameMap.clear();
+    }
+
+    private void _splitCriticalEdge(FuncDefMod func) {
+        ArrayList<IRBlock> edgeList = new ArrayList<>();
+        for (var block : func.body) {
+            var sucCopy = new HashSet<>(block.suc);
+            for (var suc : sucCopy) {
+                if (block.suc.size() > 1 && suc.pred.size() > 1) {
+                    IRBlock newBlock = new IRBlock(block.parent, String.format("critical_edge.%d", criticalEdgeCnt++));
+                    newBlock.addInstr(new BrInstr(newBlock, null, suc, null));
+                    // 不需要维护 blockNo，因为在之后的死代码块消除中 blockNo 总会失效
+                    edgeList.add(newBlock);
+                    var br = (BrInstr) block.instructions.getLast();
+                    if (br.thenBlock == suc) br.thenBlock = newBlock;
+                    else br.elseBlock = newBlock;
+                    for (var phiInstr : suc.phiInstrs.values()) phiInstr.changeBlock(newBlock, block);
+                    block.suc.remove(suc);
+                    block.suc.add(newBlock);
+                    newBlock.pred.add(block);
+                    suc.pred.remove(block);
+                    suc.pred.add(newBlock);
+                    newBlock.suc.add(suc);
+                }
+            }
+        }
+        func.body.addAll(edgeList);
     }
 
     private void splitCriticalEdge(IRBlock block, boolean[] visited) {

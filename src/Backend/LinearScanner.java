@@ -12,10 +12,12 @@ public class LinearScanner {
     private static final ArrayList<PhysicalReg> regList;
 
     static {
+        // TODO 什么样的寄存器分配顺序是最优的？
         regList = new ArrayList<>();
-        // s0-11, t2-6 (t0-1 are used to store temporary value), a0-a7 (except args of functions)
-        for (int i = 0; i <= 11; i++) regList.add(PhysicalReg.get("s" + i));
+        // s0-11, t2-6 (t0-1 are used to store temporary value), gp (aggressive), tp (aggressive), a0-a7 (except args of functions)
         for (int i = 3; i <= 6; i++) regList.add(PhysicalReg.get("t" + i));
+        for (int i = 0; i <= 11; i++) regList.add(PhysicalReg.get("s" + i));
+        regList.addAll(List.of(PhysicalReg.get("gp"), PhysicalReg.get("tp")));
         for (int i = 7; i >= 0 ; --i) regList.add(PhysicalReg.get("a" + i));
     }
 

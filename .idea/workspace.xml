@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix in IRBuildr about missing methods called `main`." />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: slightly improve SSA Elimination.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,37 +38,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Makefile 目标.clean.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.s",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Makefile 目标.clean.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024" />
@@ -190,23 +194,9 @@
       <workItem from="1729405263423" duration="76876000" />
       <workItem from="1729575512429" duration="33084000" />
       <workItem from="1729661240215" duration="13623000" />
-      <workItem from="1729678085227" duration="12226000" />
-    </task>
-    <task id="LOCAL-00036" summary="Reset.">
-      <option name="closed" value="true" />
-      <created>1724536473527</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1724536473527</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Reset.">
-      <option name="closed" value="true" />
-      <created>1724536642352</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1724536642352</updated>
+      <workItem from="1729678085227" duration="16266000" />
+      <workItem from="1729704829057" duration="2296000" />
+      <workItem from="1729921115792" duration="4804000" />
     </task>
     <task id="LOCAL-00038" summary="Fix: fix some problems and pass `basic-2.mx`.">
       <option name="closed" value="true" />
@@ -584,7 +574,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729691198232</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="Upd: update the main function for OnlineJudge.">
+      <option name="closed" value="true" />
+      <created>1729691446203</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1729691446203</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Upd: slightly improve SSA Elimination.">
+      <option name="closed" value="true" />
+      <created>1729930109189</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1729930109189</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,8 +608,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: finish linear scanner except the spilling part." />
-    <MESSAGE value="Upd: finish the spilling part." />
     <MESSAGE value="Upd: rewrite ASM builder except the callee save part." />
     <MESSAGE value="Upd: fix the caller save part and finish the callee save part." />
     <MESSAGE value="Upd: finish SSA solver." />
@@ -627,7 +631,24 @@
     <MESSAGE value="Fix: fix a misconception in the analysis of phi instructions." />
     <MESSAGE value="Fix: fix a problem in DCE about not eliminating dead phi instructions." />
     <MESSAGE value="Fix: fix in IRBuildr about missing methods called `main`." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix in IRBuildr about missing methods called `main`." />
+    <MESSAGE value="Upd: update the main function for OnlineJudge." />
+    <MESSAGE value="Upd: slightly improve SSA Elimination." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: slightly improve SSA Elimination." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
+          <line>84</line>
+          <properties class="Midend.Mem2Reg" method="splitCriticalEdge">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
