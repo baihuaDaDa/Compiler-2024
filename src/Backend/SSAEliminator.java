@@ -113,14 +113,14 @@ public class SSAEliminator {
     /** 后序遍历外向基环图
      * @param isTree 记录是否构成外向基环图，若为 true 则为树。
      */
-    private void DfsErt(Color cur, Color root, boolean isTree, HashMap<Color, HashSet<Color>> successors, HashSet<Color> visited) {
+    private void DfsErt(Color cur, Color root, boolean isTree, HashMap<Color, HashSet<Color>> successors, HashMap<Color, Color> predecessors, HashSet<Color> visited) {
         visited.add(cur);
         var sucs = successors.get(cur);
         if (sucs == null) return;
         PhysicalReg backup = null;
-        if (cur == root && !isTree) backup = loadRegBeforeJump(cur, PhysicalReg.get("t1"), false, true).a; // 备份
+        if (cur == root && !isTree && predecessors.get(cur) != cur) backup = loadRegBeforeJump(cur, PhysicalReg.get("t1"), false, true).a; // 备份
         for (var suc : sucs) {
-            if (suc != root) DfsErt(suc, root, isTree, successors, visited);
+            if (suc != root) DfsErt(suc, root, isTree, successors, predecessors, visited);
             var result = loadRegBeforeJump(suc, null, true, false);
             PhysicalReg src = (backup != null ? backup : loadRegBeforeJump(cur, PhysicalReg.get("t0"), false, false).a);
             if (result.a != null) curBlock.addInstrBeforeJump(new MvInstr(curBlock, result.a, src));
@@ -194,7 +194,7 @@ public class SSAEliminator {
                     }
                     root = blockPreds.get(root);
                 }
-                DfsErt(root, root, isTree, blockSucs, visited); // 深搜外向基环图
+                DfsErt(root, root, isTree, blockSucs, blockPreds, visited); // 深搜外向基环图
             }
         }
         for (var phiInstr : block.phiInstrs.values())
