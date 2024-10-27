@@ -506,7 +506,7 @@ public class IRBuilder implements ASTVisitor {
         // 使用赋值表达式的值是未定义的，所以没有lastExpr
     }
     private IRGlobalPtr NewStringLiteral(String value) {
-        var ptr = new IRGlobalPtr(String.format(".str.%d", program.stringLiteralDefs.size()), new IRType("ptr"));
+        var ptr = new IRGlobalPtr(String.format(".str.%d", program.stringLiteralDefs.size()), new IRType("ptr"), null);
         program.globalVarMap.put(ptr.name, ptr);
         program.stringLiteralDefs.add(new StringLiteralDefMod(value, ptr));
         return ptr;
@@ -590,7 +590,7 @@ public class IRBuilder implements ASTVisitor {
     public void visit(VarDefNode node) {
         for (var varUnit : node.vars) {
             if (curScope == null) {
-                var newVar = new IRGlobalPtr(varUnit.a, new IRType("ptr"));
+                var newVar = new IRGlobalPtr(varUnit.a, new IRType("ptr"), new IRType(node.type));
                 program.globalVarMap.put(newVar.name, newVar);
                 program.globalVarDefs.add(new GlobalVarDefMod(newVar,
                         ((node.type.dim == 0 && (node.type.isInt || node.type.isBool)) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true))));
@@ -640,7 +640,7 @@ public class IRBuilder implements ASTVisitor {
         return newArr;
     }
     public void visit(ConstArrayNode node) {
-        var ptr = new IRGlobalPtr(String.format(".arr.%d", program.constArrayCnt++), new IRType("ptr"));
+        var ptr = new IRGlobalPtr(String.format(".arr.%d", program.constArrayCnt++), new IRType("ptr"), new IRType("ptr"));
         program.globalVarMap.put(ptr.name, ptr);
         program.globalVarDefs.add(new GlobalVarDefMod(ptr, new IRLiteral(new IRType("ptr"), true)));
         var originBlock = curBlock;
