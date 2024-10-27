@@ -74,26 +74,23 @@ public class Global2Local {
         // localize const global pointers
         for (var scc : dag)
             for (var globalPtr : scc.loadList)
-                // TODO 算法可以优化，搜到一个可以 localize 的就说明它的后继都可以 localize
+                // TODO 算法可以优化，搜到一个可以 localize 的就说明它的后继都可以 localize（用拓扑序）
                 if (ConstantDFS(scc, globalPtr))
                     for (var func : scc.funcDefs) {
-                        IRLocalVar global2local = null;
+                        IRLocalVar global2local = new IRLocalVar(String.format("gConst.%s", globalPtr.name), globalPtr.objectType);
                         HashMap<IRLocalVar, IREntity> renameMap = new HashMap<>();
                         for (var block : func.body) {
                             ArrayList<Instruction> removeList = new ArrayList<>();
                             for (var instr : block.instructions) {
-                                if (instr instanceof LoadInstr loadInstr && loadInstr.pointer instanceof IRGlobalPtr) {
-                                    if (global2local == null) global2local = loadInstr.result;
-                                    else {
-                                        renameMap.put(loadInstr.result, global2local);
-                                        removeList.add(instr);
-                                    }
+                                if (instr instanceof LoadInstr loadInstr && loadInstr.pointer == globalPtr) {
+                                    renameMap.put(loadInstr.result, global2local);
+                                    removeList.add(instr);
                                 } else instr.rename(renameMap);
                             }
                             block.instructions.removeAll(removeList);
                         }
+                        func.body.getFirst().addInstr(0, new LoadInstr(func.body.getFirst(), global2local, globalPtr));
                     }
-
         // localize variable global pointers
         for (var scc : dag) {
             if (scc.funcDefs.size() > 1) continue;
@@ -101,14 +98,24 @@ public class Global2Local {
                 if (VariableDFS(scc, globalPtr)) {
                     var func = scc.funcDefs.iterator().next();
                     var global2local = new IRLocalVar(String.format("gVar.%s", globalPtr.name), new IRType("ptr"));
-                    func.body.getFirst().instructions.addFirst(new AllocaInstr(func.body.getFirst(), global2local, globalPtr.type));
                     for (var block : func.body)
                         for (var instr : block.instructions) {
-                            if (instr instanceof LoadInstr loadInstr && loadInstr.pointer instanceof IRGlobalPtr)
+                            if (instr instanceof LoadInstr loadInstr && loadInstr.pointer == globalPtr)
                                 loadInstr.pointer = global2local;
-                            if (instr instanceof StoreInstr storeInstr && storeInstr.pointer instanceof IRGlobalPtr)
+                            else if (instr instanceof StoreInstr storeInstr && storeInstr.pointer == globalPtr)
                                 storeInstr.pointer = global2local;
+                            else if (instr instanceof RetInstr) {
+                                int index = block.instructions.indexOf(instr);
+                                var storeGlobal2local = new IRLocalVar(String.format("gVar.store.%s", globalPtr.name), globalPtr.objectType);
+                                block.addInstr(index, new LoadInstr(block, storeGlobal2local, global2local));
+                                block.addInstr(index + 1, new StoreInstr(block, storeGlobal2local, globalPtr));
+                                break;
+                            }
                         }
+                    func.body.getFirst().addInstr(0, new AllocaInstr(func.body.getFirst(), global2local, globalPtr.objectType));
+                    var loadGlobal2local = new IRLocalVar(String.format("gVar.load.%s", globalPtr.name), globalPtr.objectType);
+                    func.body.getFirst().addInstr(1, new LoadInstr(func.body.getFirst(), loadGlobal2local, globalPtr));
+                    func.body.getFirst().addInstr(2, new StoreInstr(func.body.getFirst(), loadGlobal2local, global2local));
                 }
         }
     }
@@ -121,7 +128,7 @@ public class Global2Local {
                     var calling = funcDefs.get(callInstr.funcName);
                     calling.callers.add(cur);
                     cur.callings.add(calling);
-                    PostOrderDFS(calling);
+                    if (!visited.contains(calling)) PostOrderDFS(calling);
                 }
         ord.add(cur);
     }
@@ -129,11 +136,11 @@ public class Global2Local {
     private void SecondDFS(FuncDefMod cur, SCCNode scc) {
         scc.funcDefs.add(cur);
         colorMap.put(cur, scc);
-        for (var calling : cur.callings) {
-            if (!colorMap.containsKey(calling)) SecondDFS(calling, scc);
-            else {
-                scc.successors.add(colorMap.get(calling));
-                colorMap.get(calling).predecessors.add(scc);
+        for (var caller : cur.callers) {
+            if (!colorMap.containsKey(caller)) SecondDFS(caller, scc);
+            else if (colorMap.get(caller) != scc) {
+                scc.predecessors.add(colorMap.get(caller));
+                colorMap.get(caller).successors.add(scc);
             }
         }
     }
@@ -145,8 +152,9 @@ public class Global2Local {
     }
 
     private boolean VariableDFS(SCCNode cur, IRGlobalPtr target) {
-        boolean ret = !cur.loadList.contains(target) && !cur.storeList.contains(target);
-        for (var suc : cur.successors) ret &= VariableDFS(suc, target);
+        boolean ret = true;
+        for (var suc : cur.successors)
+            ret &= VariableDFS(suc, target) && !suc.loadList.contains(target) && !suc.storeList.contains(target);
         return ret;
     }
 }

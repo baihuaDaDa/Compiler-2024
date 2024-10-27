@@ -30,9 +30,7 @@ public class AllocaInstr extends Instruction {
     }
 
     @Override
-    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {
-        throw new RuntimeException("AllocaInstr.rename() should not be called");
-    }
+    public void rename(HashMap<IRLocalVar, IREntity> renameMap) {}
 
     @Override
     public IRLocalVar getDef() {

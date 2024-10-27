@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation.">
-      <change afterPath="$PROJECT_DIR$/src/Midend/Global2Local.java" afterDir="false" />
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: add object type of global pointer.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OnlineJudge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Midend/Global2Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Global2Local.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,37 +39,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Makefile 目标.clean.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;two.files.diff.last.used.file&quot;: &quot;D:/Desktop/IdeaProjects/Compiler-2024/src/Compiler.java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Makefile 目标.clean.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Desktop/IdeaProjects/Compiler-2024/test.ll",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.ll",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.Main.executor": "Run"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
+  "keyToStringList": {
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\IdeaProjects\Compiler-2024" />
@@ -201,31 +198,7 @@
       <workItem from="1729678085227" duration="16266000" />
       <workItem from="1729704829057" duration="2296000" />
       <workItem from="1729921115792" duration="9564000" />
-      <workItem from="1730014834966" duration="11702000" />
-    </task>
-    <task id="LOCAL-00039" summary="Fix: fix most of the problems; only 6 testcases left failed.">
-      <option name="closed" value="true" />
-      <created>1724606360185</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1724606360185</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Fix: fix most of the problems; only 1 testcases left failed.">
-      <option name="closed" value="true" />
-      <created>1724614042471</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1724614042471</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Fix: pass all the LLVM IR tests!">
-      <option name="closed" value="true" />
-      <created>1724616251612</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1724616251612</updated>
+      <workItem from="1730014834966" duration="24893000" />
     </task>
     <task id="LOCAL-00042" summary="Upd: finish ASM nodes.">
       <option name="closed" value="true" />
@@ -595,7 +568,31 @@
       <option name="project" value="LOCAL" />
       <updated>1729931659894</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Upd: add Global2Local.">
+      <option name="closed" value="true" />
+      <created>1730035393331</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1730035393331</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Fix: unify the references of global pointer.">
+      <option name="closed" value="true" />
+      <created>1730045485260</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1730045485260</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Upd: add object type of global pointer.">
+      <option name="closed" value="true" />
+      <created>1730046770182</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1730046770182</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,9 +610,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: fix the caller save part and finish the callee save part." />
-    <MESSAGE value="Upd: finish SSA solver." />
-    <MESSAGE value="Fix: fix the live analysis of phi instr." />
     <MESSAGE value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in the renaming part og Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in DCE." />
@@ -638,7 +632,21 @@
     <MESSAGE value="Upd: update the main function for OnlineJudge." />
     <MESSAGE value="Upd: slightly improve SSA Elimination." />
     <MESSAGE value="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation." />
+    <MESSAGE value="Upd: add Global2Local." />
+    <MESSAGE value="Fix: unify the references of global pointer." />
+    <MESSAGE value="Upd: add object type of global pointer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: add object type of global pointer." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Midend/Global2Local.java</url>
+          <line>101</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
