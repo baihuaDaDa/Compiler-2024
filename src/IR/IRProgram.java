@@ -16,6 +16,7 @@ public class IRProgram {
     public ArrayList<StructDefMod> structDefs = null;
     public ArrayList<StringLiteralDefMod> stringLiteralDefs = null;
     public ArrayList<GlobalVarDefMod> globalVarDefs = null;
+    public HashMap<String, IRGlobalPtr> globalVarMap = null;
     public ArrayList<FuncDefMod> funcDefs = null;
     public FuncDefMod initFunc = null;
     public FuncDefMod mainFunc = null;
@@ -27,6 +28,7 @@ public class IRProgram {
         structDefs = new ArrayList<>();
         funcDefs = new ArrayList<>();
         globalVarDefs = new ArrayList<>();
+        globalVarMap = new HashMap<>();
         stringLiteralDefs = new ArrayList<>();
         funcDecls.add(new FuncDeclMod(new IRType("void"), "print", "ptr"));
         funcDecls.add(new FuncDeclMod(new IRType("void"), "println", "ptr"));

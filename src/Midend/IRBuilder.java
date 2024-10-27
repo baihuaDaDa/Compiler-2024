@@ -507,6 +507,7 @@ public class IRBuilder implements ASTVisitor {
     }
     private IRGlobalPtr NewStringLiteral(String value) {
         var ptr = new IRGlobalPtr(String.format(".str.%d", program.stringLiteralDefs.size()), new IRType("ptr"));
+        program.globalVarMap.put(ptr.name, ptr);
         program.stringLiteralDefs.add(new StringLiteralDefMod(value, ptr));
         return ptr;
     }
@@ -536,7 +537,7 @@ public class IRBuilder implements ASTVisitor {
                 curBlock.addInstr(new LoadInstr(curBlock, thisPtr, new IRLocalVar("this.1", new IRType("ptr"))));
                 curBlock.addInstr(new GetelementptrInstr(curBlock, (IRLocalVar) ptr, String.format("%%class.%s", curScope.className), thisPtr,
                         new IRLiteral(new IRType("i32"), 0), new IRLiteral(new IRType("i32"), gScope.getClassMemberIndex(curScope.className, node.identifier))));
-            } else ptr = new IRGlobalPtr(node.identifier, new IRType("ptr"));
+            } else ptr = program.globalVarMap.get(node.identifier);
             var value = new IRLocalVar(Integer.toString(curBlock.parent.anonymousVarCnt++), new IRType(node.type));
             curBlock.addInstr(new LoadInstr(curBlock, value, ptr));
             lastExpr = new IRExpression(value, ptr);
@@ -590,6 +591,7 @@ public class IRBuilder implements ASTVisitor {
         for (var varUnit : node.vars) {
             if (curScope == null) {
                 var newVar = new IRGlobalPtr(varUnit.a, new IRType("ptr"));
+                program.globalVarMap.put(newVar.name, newVar);
                 program.globalVarDefs.add(new GlobalVarDefMod(newVar,
                         ((node.type.dim == 0 && (node.type.isInt || node.type.isBool)) ? new IRLiteral(new IRType("i32"), 0) : new IRLiteral(new IRType("ptr"), true))));
                 if (varUnit.b != null) {
@@ -639,6 +641,7 @@ public class IRBuilder implements ASTVisitor {
     }
     public void visit(ConstArrayNode node) {
         var ptr = new IRGlobalPtr(String.format(".arr.%d", program.constArrayCnt++), new IRType("ptr"));
+        program.globalVarMap.put(ptr.name, ptr);
         program.globalVarDefs.add(new GlobalVarDefMod(ptr, new IRLiteral(new IRType("ptr"), true)));
         var originBlock = curBlock;
         if (program.initFunc == null)
