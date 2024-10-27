@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: slightly improve SSA Elimination.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation.">
+      <change afterPath="$PROJECT_DIR$/src/Midend/Global2Local.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Module/FuncDefMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Mem2Reg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OnlineJudge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OnlineJudge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,15 +200,8 @@
       <workItem from="1729661240215" duration="13623000" />
       <workItem from="1729678085227" duration="16266000" />
       <workItem from="1729704829057" duration="2296000" />
-      <workItem from="1729921115792" duration="4804000" />
-    </task>
-    <task id="LOCAL-00038" summary="Fix: fix some problems and pass `basic-2.mx`.">
-      <option name="closed" value="true" />
-      <created>1724541802551</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1724541802551</updated>
+      <workItem from="1729921115792" duration="9564000" />
+      <workItem from="1730014834966" duration="11702000" />
     </task>
     <task id="LOCAL-00039" summary="Fix: fix most of the problems; only 6 testcases left failed.">
       <option name="closed" value="true" />
@@ -590,7 +587,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729930109189</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation.">
+      <option name="closed" value="true" />
+      <created>1729931659894</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1729931659894</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -608,7 +613,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upd: rewrite ASM builder except the callee save part." />
     <MESSAGE value="Upd: fix the caller save part and finish the callee save part." />
     <MESSAGE value="Upd: finish SSA solver." />
     <MESSAGE value="Fix: fix the live analysis of phi instr." />
@@ -633,22 +637,8 @@
     <MESSAGE value="Fix: fix in IRBuildr about missing methods called `main`." />
     <MESSAGE value="Upd: update the main function for OnlineJudge." />
     <MESSAGE value="Upd: slightly improve SSA Elimination." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: slightly improve SSA Elimination." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Midend/Mem2Reg.java</url>
-          <line>84</line>
-          <properties class="Midend.Mem2Reg" method="splitCriticalEdge">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="156" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Upd: improve the algorithm of adding critical edges and add two more registers in RegAllocation." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
