@@ -16,8 +16,8 @@ public class LinearScanner {
         regList = new ArrayList<>();
         // s0-11, t2-6 (t0-1 are used to store temporary value), gp (aggressive), tp (aggressive), a0-a7 (except args of functions)
         for (int i = 3; i <= 6; i++) regList.add(PhysicalReg.get("t" + i));
-        for (int i = 0; i <= 11; i++) regList.add(PhysicalReg.get("s" + i));
         regList.addAll(List.of(PhysicalReg.get("gp"), PhysicalReg.get("tp")));
+        for (int i = 0; i <= 11; i++) regList.add(PhysicalReg.get("s" + i));
         for (int i = 7; i >= 0 ; --i) regList.add(PhysicalReg.get("a" + i));
     }
 

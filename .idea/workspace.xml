@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Upd: add object type of global pointer.">
+    <list default="true" id="f7e644f2-d0ae-4a97-8dd3-eadcc3b7d134" name="更改" comment="Fix: fix Global2Local.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IR/Instruction/AllocaInstr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Midend/Global2Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Midend/Global2Local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/ASMBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Backend/LinearScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/LinearScanner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +63,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "two.files.diff.last.used.file": "D:/Desktop/IdeaProjects/Compiler-2024/test.ll",
     "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+    "应用程序.Main.executor": "Debug"
   },
   "keyToStringList": {
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
@@ -198,15 +197,10 @@
       <workItem from="1729678085227" duration="16266000" />
       <workItem from="1729704829057" duration="2296000" />
       <workItem from="1729921115792" duration="9564000" />
-      <workItem from="1730014834966" duration="24893000" />
-    </task>
-    <task id="LOCAL-00042" summary="Upd: finish ASM nodes.">
-      <option name="closed" value="true" />
-      <created>1724693191269</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1724693191269</updated>
+      <workItem from="1730014834966" duration="28521000" />
+      <workItem from="1730127681652" duration="689000" />
+      <workItem from="1730202647185" duration="1324000" />
+      <workItem from="1730283178760" duration="3220000" />
     </task>
     <task id="LOCAL-00043" summary="Upd: finish half of the ASM builder.">
       <option name="closed" value="true" />
@@ -592,7 +586,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730046770182</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Fix: fix Global2Local.">
+      <option name="closed" value="true" />
+      <created>1730052704628</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1730052704628</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +612,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix: finish DCE and remake the renaming part of Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in the renaming part og Mem2Reg." />
     <MESSAGE value="Fix: fix a problem in DCE." />
     <MESSAGE value="Fix: fix the live analysis of phi instructions." />
@@ -635,15 +636,16 @@
     <MESSAGE value="Upd: add Global2Local." />
     <MESSAGE value="Fix: unify the references of global pointer." />
     <MESSAGE value="Upd: add object type of global pointer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upd: add object type of global pointer." />
+    <MESSAGE value="Fix: fix Global2Local." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: fix Global2Local." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Midend/Global2Local.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/src/Backend/ASMBuilder.java</url>
+          <line>347</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

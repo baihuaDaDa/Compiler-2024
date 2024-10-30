@@ -345,7 +345,7 @@ public class ASMBuilder implements IRVisitor {
                 }
         for (var spilledVar : mod.spilledVars)
             newFunc.spilledVarMap.put(spilledVar.name, newFunc.spilledVarCnt++);
-        newFunc.calleeSaveCnt = Math.min(mod.activeCnt, 12);
+        newFunc.calleeSaveCnt = Math.min(Math.max(mod.activeCnt - 6, 0), 12);
         newFunc.stackSize = (newFunc.spilledArgCnt + newFunc.spilledVarCnt + newFunc.callerSaveCnt + newFunc.calleeSaveCnt + 1) * 4;
         if (newFunc.stackSize % 16 != 0) newFunc.stackSize = ((newFunc.stackSize) / 16 + 1) * 16;
         curBlock = newFunc.body.getFirst();
