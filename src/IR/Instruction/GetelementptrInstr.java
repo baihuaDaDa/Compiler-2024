@@ -27,6 +27,15 @@ public class GetelementptrInstr extends Instruction {
         Collections.addAll(this.indices, indices);
     }
 
+    // for inline
+    public GetelementptrInstr(IRBlock parent, IRLocalVar result, String type, IRVariable pointer) {
+        super(parent);
+        this.result = result;
+        this.type = type;
+        this.pointer = pointer;
+        this.indices = new ArrayList<>();
+    }
+
     @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();

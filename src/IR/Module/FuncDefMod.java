@@ -20,6 +20,9 @@ public class FuncDefMod extends Module {
     public int anonymousVarCnt = 0;
     public int dotICnt = 0; // for NewEmptyArray
 
+    // Inline
+    public HashMap<FuncDefMod, Integer> inlineFuncCnt;
+
     // Global2Local
     public HashSet<FuncDefMod> callings;
     public HashSet<FuncDefMod> callers;
@@ -60,6 +63,7 @@ public class FuncDefMod extends Module {
         body = new ArrayList<>();
         localVars = new HashMap<>();
         addBlock(new IRBlock(this, "entry"));
+        this.inlineFuncCnt = new HashMap<>();
         this.callings = new HashSet<>();
         this.callers = new HashSet<>();
         this.useMap = new HashMap<>();

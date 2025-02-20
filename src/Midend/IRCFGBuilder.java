@@ -17,12 +17,26 @@ public class IRCFGBuilder {
     }
 
     public void build() {
+        clear();
         program.funcDefs.forEach(this::buildFunc);
         if (program.initFunc != null) buildFunc(program.initFunc);
         buildFunc(program.mainFunc);
     }
 
-    public void buildFunc(FuncDefMod func) {
+    private void clear() {
+        program.funcDefs.forEach(this::clearFunc);
+        if (program.initFunc != null) clearFunc(program.initFunc);
+        buildFunc(program.mainFunc);
+    }
+
+    private void clearFunc(FuncDefMod func) {
+        for (var block : func.body) {
+            block.suc = new HashSet<>();
+            block.pred = new HashSet<>();
+        }
+    }
+
+    private void buildFunc(FuncDefMod func) {
         HashSet<IRBlock> visited = new HashSet<>();
         buildBlock(func.body.getFirst(), visited);
         // 此处直接删除了控制流图上没有的基本块
@@ -33,7 +47,7 @@ public class IRCFGBuilder {
         }
     }
 
-    public void buildBlock(IRBlock block, HashSet<IRBlock> visited) {
+    private void buildBlock(IRBlock block, HashSet<IRBlock> visited) {
         visited.add(block);
         var ctrlInstr = block.instructions.getLast();
         if (ctrlInstr instanceof RetInstr) return;

@@ -51,7 +51,10 @@ public class Main {
             mem2Reg.run();
             DCE dce = new DCE(irBuilder.program);
             dce.run();
+            Inline inline = new Inline(irBuilder.program, 1);
+            inline.run();
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            irCFGBuilder.build(); // 更新 CFG
             LinearScanner linearScanner = new LinearScanner(irBuilder.program);
             linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();
