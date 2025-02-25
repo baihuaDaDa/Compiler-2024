@@ -1,10 +1,14 @@
 import AST.Program.ProgramNode;
 import Backend.ASMBuilder;
-import Backend.LinearScanner;
+import Backend.ASMOptimizer.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.*;
+import Midend.IROptimizer.DCE;
+import Midend.IROptimizer.Global2Local;
+import Midend.IROptimizer.IRCFGBuilder;
+import Midend.IROptimizer.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -14,7 +18,6 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import Util.MxErrorListener;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;

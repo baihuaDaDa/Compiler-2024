@@ -1,16 +1,14 @@
-package Midend;
+package Midend.IROptimizer;
 
 import IR.Instruction.*;
 import IR.Module.FuncDefMod;
 import IR.IRBlock;
 import IR.IRProgram;
 import Util.IRObject.IREntity.IREntity;
-import Util.IRObject.IREntity.IRGlobalPtr;
 import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;
 import Util.Type.IRType;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Mem2Reg {

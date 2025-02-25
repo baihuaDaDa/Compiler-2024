@@ -1,6 +1,5 @@
-package Midend;
+package Midend.IROptimizer;
 
-import IR.IRBlock;
 import IR.IRProgram;
 import IR.Instruction.CallInstr;
 import IR.Instruction.Instruction;
@@ -8,7 +7,6 @@ import IR.Instruction.PhiInstr;
 import IR.Module.FuncDefMod;
 import Util.IRObject.IREntity.IRLocalVar;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package Midend;
+package Midend.IROptimizer;
 
 import IR.IRBlock;
 import IR.IRProgram;
@@ -6,7 +6,6 @@ import IR.Instruction.BrInstr;
 import IR.Instruction.RetInstr;
 import IR.Module.FuncDefMod;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class IRCFGBuilder {

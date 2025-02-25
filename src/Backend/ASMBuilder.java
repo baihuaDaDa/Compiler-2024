@@ -3,6 +3,7 @@ package Backend;
 import ASM.ASMProgram;
 import ASM.Instruction.*;
 import ASM.Module.Block;
+import Backend.ASMOptimizer.SSAEliminator;
 import Util.PhysicalReg;
 import IR.IRBlock;
 import IR.IRProgram;

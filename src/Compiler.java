@@ -1,10 +1,14 @@
 import AST.Program.ProgramNode;
 import Backend.ASMBuilder;
-import Backend.LinearScanner;
+import Backend.ASMOptimizer.LinearScanner;
 import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.*;
+import Midend.IROptimizer.DCE;
+import Midend.IROptimizer.Global2Local;
+import Midend.IROptimizer.IRCFGBuilder;
+import Midend.IROptimizer.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;

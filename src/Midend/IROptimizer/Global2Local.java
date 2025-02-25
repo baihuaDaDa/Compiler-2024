@@ -1,4 +1,4 @@
-package Midend;
+package Midend.IROptimizer;
 
 import IR.IRProgram;
 import IR.Instruction.*;
