@@ -1,4 +1,4 @@
-package Backend.ASMOptimizer;
+package Backend.ASMOptimizer.Util;
 
 import IR.IRBlock;
 import IR.IRProgram;

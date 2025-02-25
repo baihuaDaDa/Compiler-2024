@@ -1,4 +1,4 @@
-package Midend.IROptimizer;
+package Midend.IROptimizer.Util;
 
 import IR.IRBlock;
 import IR.IRProgram;
@@ -20,7 +20,9 @@ public class DomTreeBuilder {
         buildFunc(program.mainFunc);
     }
 
-    public void buildFunc(FuncDefMod func) {
+    private void clear() {}
+
+    private void buildFunc(FuncDefMod func) {
         boolean[] visited = new boolean[func.body.size()];
         ArrayList<IRBlock> ord = new ArrayList<>();
         IRBlock entry = func.body.getFirst();

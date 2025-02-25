@@ -4,6 +4,7 @@ import IR.Instruction.*;
 import IR.Module.FuncDefMod;
 import IR.IRBlock;
 import IR.IRProgram;
+import Midend.IROptimizer.Util.DomTreeBuilder;
 import Util.IRObject.IREntity.IREntity;
 import Util.IRObject.IREntity.IRLiteral;
 import Util.IRObject.IREntity.IRLocalVar;

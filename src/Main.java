@@ -6,6 +6,7 @@ import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.*;
 import Midend.IROptimizer.*;
+import Midend.IROptimizer.Util.IRCFGBuilder;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;

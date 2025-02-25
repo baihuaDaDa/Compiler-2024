@@ -1,4 +1,4 @@
-package Midend.IROptimizer;
+package Midend.IROptimizer.Util;
 
 import IR.IRBlock;
 import IR.IRProgram;

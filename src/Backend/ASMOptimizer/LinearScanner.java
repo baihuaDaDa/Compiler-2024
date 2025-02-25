@@ -1,5 +1,6 @@
 package Backend.ASMOptimizer;
 
+import Backend.ASMOptimizer.Util.LiveAnalyzer;
 import Util.PhysicalReg;
 import IR.IRProgram;
 import IR.Module.FuncDefMod;
