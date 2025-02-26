@@ -31,8 +31,6 @@ public class Mem2Reg {
     }
 
     public void run() {
-        DomTreeBuilder domTreeBuilder = new DomTreeBuilder(program);
-        domTreeBuilder.build();
         program.funcDefs.forEach(this::runFunc);
         if (program.initFunc != null) runFunc(program.initFunc);
         runFunc(program.mainFunc);

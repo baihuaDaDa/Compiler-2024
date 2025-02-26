@@ -6,6 +6,7 @@ import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.*;
 import Midend.IROptimizer.*;
+import Midend.IROptimizer.Util.DomTreeBuilder;
 import Midend.IROptimizer.Util.IRCFGBuilder;
 import Parser.MxParser;
 import Parser.MxLexer;
@@ -49,14 +50,22 @@ public class Main {
             irCFGBuilder.build();
             Global2Local global2Local = new Global2Local(irBuilder.program);
             global2Local.run();
+            DomTreeBuilder domTreeBuilder = new DomTreeBuilder(irBuilder.program);
+            domTreeBuilder.build();
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
+//            LCIM lcim = new LCIM(irBuilder.program);
+//            lcim.run();
             DCE dce = new DCE(irBuilder.program);
             dce.run();
             Inline inline = new Inline(irBuilder.program, 1);
             inline.run();
-            outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             irCFGBuilder.build(); // 更新 CFG
+            domTreeBuilder.build(); // 更新 DomTree
+            ADCE adce = new ADCE(irBuilder.program);
+            adce.run();
+            irCFGBuilder.build(); // 更新 CFG
+            outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             LinearScanner linearScanner = new LinearScanner(irBuilder.program);
             linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();

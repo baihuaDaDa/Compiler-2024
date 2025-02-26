@@ -28,6 +28,9 @@ public class IRBlock {
     public HashSet<IRBlock> children;
     public HashSet<IRBlock> domFrontier;
 
+    public IRBlock cdgIdom;
+    public HashSet<IRBlock> cdgDomFrontier;
+
     // SSA Solver
     public Block asmBlock;
 

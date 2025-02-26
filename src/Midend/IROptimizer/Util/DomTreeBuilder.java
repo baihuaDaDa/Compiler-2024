@@ -6,6 +6,7 @@ import IR.Module.FuncDefMod;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashSet;
 
 public class DomTreeBuilder {
     private final IRProgram program;
@@ -15,12 +16,26 @@ public class DomTreeBuilder {
     }
 
     public void build() {
+        clear();
         program.funcDefs.forEach(this::buildFunc);
         if (program.initFunc != null) buildFunc(program.initFunc);
         buildFunc(program.mainFunc);
     }
 
-    private void clear() {}
+    private void clear() {
+        program.funcDefs.forEach(this::clearFunc);
+        if (program.initFunc != null) clearFunc(program.initFunc);
+        clearFunc(program.mainFunc);
+    }
+
+    private void clearFunc(FuncDefMod func) {
+        for (var block : func.body) {
+            block.dom = null;
+            block.idom = null;
+            block.domFrontier = new HashSet<>();
+            block.children = new HashSet<>();
+        }
+    }
 
     private void buildFunc(FuncDefMod func) {
         boolean[] visited = new boolean[func.body.size()];

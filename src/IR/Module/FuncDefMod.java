@@ -20,12 +20,15 @@ public class FuncDefMod extends Module {
     public int anonymousVarCnt = 0;
     public int dotICnt = 0; // for NewEmptyArray
 
-    // Inline
-    public HashMap<FuncDefMod, Integer> inlineFuncCnt;
-
     // Global2Local
     public HashSet<FuncDefMod> callings;
     public HashSet<FuncDefMod> callers;
+
+    // ADCE
+    public HashMap<IRLocalVar, Instruction> defInstrMap;
+
+    // Inline
+    public HashMap<FuncDefMod, Integer> inlineFuncCnt;
 
     // Live Analysis
     public HashMap<Instruction, HashSet<IRLocalVar>> useMap, inMap, outMap;
@@ -66,6 +69,7 @@ public class FuncDefMod extends Module {
         this.inlineFuncCnt = new HashMap<>();
         this.callings = new HashSet<>();
         this.callers = new HashSet<>();
+        this.defInstrMap = new HashMap<>();
         this.useMap = new HashMap<>();
         this.defMap = new HashMap<>();
         this.inMap = new HashMap<>();
