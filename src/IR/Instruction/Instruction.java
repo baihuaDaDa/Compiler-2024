@@ -15,6 +15,10 @@ abstract public class Instruction {
         this.parent = parent;
     }
 
+    public boolean isPinned() {
+        return !(this instanceof BinaryInstr) && !(this instanceof IcmpInstr) && !(this instanceof GetelementptrInstr);
+    }
+
     @Override
     abstract public String toString();
 

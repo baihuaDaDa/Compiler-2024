@@ -61,8 +61,18 @@ public class Main {
             Inline inline = new Inline(irBuilder.program, 1);
             inline.run();
             irCFGBuilder.build(); // 更新 CFG
-            domTreeBuilder.build(); // 更新 DomTree
             ADCE adce = new ADCE(irBuilder.program);
+            adce.run();
+            irCFGBuilder.build(); // 更新 CFG
+            domTreeBuilder.build(); // 更新 DomTree
+            SCCP sccp = new SCCP(irBuilder.program);
+            sccp.run();
+            irCFGBuilder.build(); // 更新 CFG
+            adce.run();
+            irCFGBuilder.build(); // 更新 CFG
+            domTreeBuilder.build(); // 更新 DomTree
+            GCM gcm = new GCM(irBuilder.program);
+            gcm.run();
             adce.run();
             irCFGBuilder.build(); // 更新 CFG
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));

@@ -27,6 +27,8 @@ public class IRBlock {
     public IRBlock idom;
     public HashSet<IRBlock> children;
     public HashSet<IRBlock> domFrontier;
+    public int depth = 0; // for GCM
+    public int loopDepth = 0; // for GCM
 
     public IRBlock cdgIdom;
     public HashSet<IRBlock> cdgDomFrontier;
