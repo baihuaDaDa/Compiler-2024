@@ -41,6 +41,7 @@ public class LinearScanner {
         var active = new TreeMap<Integer, HashSet<Integer>>();
         for (var entry : intervals) {
             // TODO 可以让 a0-a7 也参与寄存器分配
+            // 此处指的是当有参数占用a0-a7时也可以在参数生命周期结束后重新分配出去，实际上如果参数不足8个，多余的参数寄存器也会参与分配
             if (func.params.contains(entry.getKey())) {
                 if (func.params.indexOf(entry.getKey()) < 8)
                     func.regMap.put(entry.getKey(), PhysicalReg.get("a" + func.params.indexOf(entry.getKey())));

@@ -8,9 +8,12 @@ out
 bin
 test.ll
 test-origin.ll
+test-before-inline.ll
+test-script.ll
 test.s
 builtin.s
 test.in
 test.out
 test-script.s
 debug.txt
+test.ans

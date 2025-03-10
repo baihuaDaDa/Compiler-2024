@@ -26,9 +26,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
 //        String testcaseName = "sema", packageName = "basic", ind = "71";
 //        InputStream input = new FileInputStream(STR."testcases/\{testcaseName}/\{packageName}-package/\{packageName}-\{ind}.mx");
-        InputStream input = new FileInputStream("testcases/optim/maxflow.mx");
+        InputStream input = new FileInputStream("testcases/optim/lca.mx");
         OutputStream outputIR = new FileOutputStream("test.ll");
         OutputStream outputIROrigin = new FileOutputStream("test-origin.ll");
+        OutputStream outputBeforeInline = new FileOutputStream("test-before-inline.ll");
         OutputStream outputASM = new FileOutputStream("test.s");
         try {
             MxLexer lexer = new MxLexer(CharStreams.fromStream(input));
@@ -54,28 +55,28 @@ public class Main {
             domTreeBuilder.build();
             Mem2Reg mem2Reg = new Mem2Reg(irBuilder.program);
             mem2Reg.run();
-//            LCIM lcim = new LCIM(irBuilder.program);
-//            lcim.run();
             DCE dce = new DCE(irBuilder.program);
             dce.run();
+            outputBeforeInline.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             Inline inline = new Inline(irBuilder.program, 1);
-            inline.run();
-            irCFGBuilder.build(); // 更新 CFG
-            ADCE adce = new ADCE(irBuilder.program);
-            adce.run();
-            irCFGBuilder.build(); // 更新 CFG
-            domTreeBuilder.build(); // 更新 DomTree
-            SCCP sccp = new SCCP(irBuilder.program);
-            sccp.run();
-            irCFGBuilder.build(); // 更新 CFG
-            adce.run();
-            irCFGBuilder.build(); // 更新 CFG
-            domTreeBuilder.build(); // 更新 DomTree
-            GCM gcm = new GCM(irBuilder.program);
-            gcm.run();
-            adce.run();
-            irCFGBuilder.build(); // 更新 CFG
+            inline.run(); // CFG already updated
+//            ADCE adce = new ADCE(irBuilder.program);
+//            adce.run();
+//            irCFGBuilder.build(); // 更新 CFG
+//            domTreeBuilder.build(); // 更新 DomTree
+//            SCCP sccp = new SCCP(irBuilder.program);
+//            sccp.run();
+//            irCFGBuilder.build(); // 更新 CFG
+//            adce.run();
+//            irCFGBuilder.build(); // 更新 CFG
+//            domTreeBuilder.build(); // 更新 DomTree
+//            GCM gcm = new GCM(irBuilder.program);
+//            gcm.run();
+//            adce.run();
+//            irCFGBuilder.build(); // 更新 CFG
             outputIR.write(irBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            irCFGBuilder.build();
+            domTreeBuilder.build();
             LinearScanner linearScanner = new LinearScanner(irBuilder.program);
             linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();

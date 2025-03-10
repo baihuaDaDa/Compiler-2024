@@ -27,8 +27,8 @@ public class FuncDefMod extends Module {
     // ADCE
     public HashMap<IRLocalVar, Instruction> defInstrMap;
 
-    // Inline
-    public HashMap<FuncDefMod, Integer> inlineFuncCnt;
+    // SCCP
+    public HashMap<IRLocalVar, HashSet<Instruction>> useInstrMap;
 
     // Live Analysis
     public HashMap<Instruction, HashSet<IRLocalVar>> useMap, inMap, outMap;
@@ -66,7 +66,6 @@ public class FuncDefMod extends Module {
         body = new ArrayList<>();
         localVars = new HashMap<>();
         addBlock(new IRBlock(this, "entry"));
-        this.inlineFuncCnt = new HashMap<>();
         this.callings = new HashSet<>();
         this.callers = new HashSet<>();
         this.defInstrMap = new HashMap<>();
