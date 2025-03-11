@@ -4,10 +4,9 @@ import IR.IRBlock;
 import IR.IRProgram;
 import IR.Module.FuncDefMod;
 
-import java.util.HashSet;
+import java.util.*;
 
 // 对 CFG 的反图建立支配树（控制依赖图）
-// 直接调用支配树，把块的前驱和后继交换即可
 
 public class CDGBuilder {
     private final IRProgram program;
@@ -19,11 +18,10 @@ public class CDGBuilder {
     public void build() {
         // 交换前驱和后继，构建反图
         reverse();
+        // 清空原有支配树信息
+        clear();
         // 建立反图的支配树
-        DomTreeBuilder domTreeBuilder = new DomTreeBuilder(program);
-        domTreeBuilder.build();
-        // 建立控制依赖图
-        loadCDG();
+        buildAntiDomTree();
         // 恢复 CFG
         reverse();
     }
@@ -42,16 +40,104 @@ public class CDGBuilder {
         }
     }
 
-    private void loadCDG() {
-        program.funcDefs.forEach(this::loadCDGFunc);
-        if (program.initFunc != null) loadCDGFunc(program.initFunc);
-        loadCDGFunc(program.mainFunc);
+    private void clear() {
+        program.funcDefs.forEach(this::clearFunc);
+        if (program.initFunc != null) clearFunc(program.initFunc);
+        clearFunc(program.mainFunc);
     }
 
-    private void loadCDGFunc(FuncDefMod func) {
+    private void clearFunc(FuncDefMod func) {
         for (var block : func.body) {
-            block.cdgDomFrontier = new HashSet<>(block.domFrontier);
-            block.cdgIdom = block.idom;
+            block.cdgDom = null;
+            block.cdgIdom = null;
+            block.cdgDomFrontier = new HashSet<>();
+            block.cdgChildren = new HashSet<>();
         }
+    }
+
+    private void buildAntiDomTree() {
+        program.funcDefs.forEach(this::buildAntiDomTreeFunc);
+        if (program.initFunc != null) buildAntiDomTreeFunc(program.initFunc);
+        buildAntiDomTreeFunc(program.mainFunc);
+    }
+
+    private void buildAntiDomTreeFunc(FuncDefMod func) {
+        boolean[] visited = new boolean[func.body.size()];
+        ArrayList<IRBlock> ord = new ArrayList<>();
+        // BFS
+        Traverse(func, ord, visited);
+        // Dominator Tree
+        boolean converge = false;
+        while (!converge) {
+            converge = true;
+            for (int i = 0; i < ord.size(); ++i) {
+                // Dominator Set
+                var block = ord.get(i);
+                BitSet dom = new BitSet(func.body.size());
+                BitSet self = new BitSet(func.body.size());
+                if (!block.pred.isEmpty()) dom.set(0, func.body.size(), true);
+                self.set(block.blockNo, true);
+                for (var pred : block.pred)
+                    if (pred.cdgDom != null) dom.and(pred.cdgDom);
+                dom.or(self);
+                if (!dom.equals(block.cdgDom)) {
+                    block.cdgDom = dom;
+                    converge = false;
+                }
+            }
+        }
+        // Immediate Dominator
+        for (var block : func.body) {
+            if (block.cdgDom == null) continue;
+            for (int j = 0; j < func.body.size(); ++j) {
+                if (func.body.get(j).cdgDom == null) continue;
+                if (block.cdgDom.get(j) && func.body.get(j).cdgDom.cardinality() == block.cdgDom.cardinality() - 1) {
+                    block.cdgIdom = func.body.get(j);
+                    break;
+                }
+            }
+        }
+        // 节点可以是自己的支配边界（循环支配的情况）
+        // Dominance Frontier and Children
+        for (var block : func.body) {
+            if (block.cdgDom == null) continue;
+            if (block.cdgIdom != null) block.cdgIdom.cdgChildren.add(block);
+            BitSet dominators = new BitSet(func.body.size());
+            BitSet self = new BitSet(func.body.size());
+            self.set(block.blockNo, true);
+            for (var pred : block.pred)
+                dominators.or(minusSet(pred.cdgDom, minusSet(block.cdgDom, self)));
+            for (int j = 0; j < func.body.size(); ++j) {
+                if (func.body.get(j).cdgDom == null) continue;
+                if (dominators.get(j)) func.body.get(j).cdgDomFrontier.add(block);
+            }
+        }
+    }
+
+    // BFS
+    private void Traverse(FuncDefMod func, ArrayList<IRBlock> ord, boolean[] visited) {
+        LinkedList<IRBlock> queue = new LinkedList<>();
+        for (var block : func.body)
+            if (block.pred.isEmpty()) {
+                queue.add(block);
+                visited[block.blockNo] = true;
+            }
+        while (!queue.isEmpty()) {
+            var block = queue.pop();
+            ord.add(block);
+            for (var suc : block.suc)
+                if (!visited[suc.blockNo]) {
+                    queue.add(suc);
+                    visited[suc.blockNo] = true;
+                }
+        }
+    }
+
+    private BitSet minusSet(BitSet a, BitSet b) {
+        // 00=0, 10=1, 01=0, 11=0
+        BitSet c = (BitSet) a.clone();
+        c.xor(b);
+        c.and(a);
+        return c;
     }
 }

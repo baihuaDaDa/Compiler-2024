@@ -5,12 +5,9 @@ import Frontend.ASTBuilder;
 import Frontend.SemanticChecker;
 import Frontend.SymbolCollector;
 import Midend.*;
-import Midend.IROptimizer.DCE;
-import Midend.IROptimizer.Global2Local;
-import Midend.IROptimizer.Inline;
+import Midend.IROptimizer.*;
 import Midend.IROptimizer.Util.DomTreeBuilder;
 import Midend.IROptimizer.Util.IRCFGBuilder;
-import Midend.IROptimizer.Mem2Reg;
 import Parser.MxParser;
 import Parser.MxLexer;
 import Util.Scope.GlobalScope;
@@ -57,9 +54,9 @@ public class Compiler {
             dce.run();
             Inline inline = new Inline(irBuilder.program, 1);
             inline.run(); // CFG already updated
-//            ADCE adce = new ADCE(irBuilder.program);
-//            adce.run();
-//            irCFGBuilder.build(); // 更新 CFG
+            ADCE adce = new ADCE(irBuilder.program);
+            adce.run();
+            irCFGBuilder.build(); // 更新 CFG
 //            domTreeBuilder.build(); // 更新 DomTree
 //            SCCP sccp = new SCCP(irBuilder.program);
 //            sccp.run();
@@ -78,8 +75,8 @@ public class Compiler {
             linearScanner.run();
             ASMBuilder asmBuilder = new ASMBuilder();
             asmBuilder.visit(irBuilder.program);
-            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
             foutputASM.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
+            output.write(asmBuilder.program.toString().getBytes(StandardCharsets.UTF_8));
         } catch (Util.Error.Error error) {
             System.err.println(error.toString());
             System.out.println(error.errorType());

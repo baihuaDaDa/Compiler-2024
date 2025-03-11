@@ -21,8 +21,9 @@ public class IRBlock {
     public HashSet<IRBlock> pred;
     public HashSet<IRBlock> suc;
 
-    // Dominator Tree
     public int blockNo;
+
+    // Dominator Tree
     public BitSet dom;
     public IRBlock idom;
     public HashSet<IRBlock> children;
@@ -30,7 +31,10 @@ public class IRBlock {
     public int depth = 0; // for GCM
     public int loopDepth = 0; // for GCM
 
+    // CDG
+    public BitSet cdgDom;
     public IRBlock cdgIdom;
+    public HashSet<IRBlock> cdgChildren;
     public HashSet<IRBlock> cdgDomFrontier;
 
     // SSA Solver
@@ -45,6 +49,8 @@ public class IRBlock {
         this.suc = new HashSet<>();
         this.children = new HashSet<>();
         this.domFrontier = new HashSet<>();
+        this.cdgChildren = new HashSet<>();
+        this.cdgDomFrontier = new HashSet<>();
     }
 
     public String toString() {

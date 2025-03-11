@@ -41,18 +41,16 @@ public class ADCE {
         while (!workList.isEmpty()) {
             var instr = workList.getFirst();
             workList.remove(instr);
-            if (!liveBlock.contains(instr.parent)) {
-                if (instr instanceof PhiInstr phiInstr)
-                    for (var pair : phiInstr.pairs)
-                        if (!liveInstr.contains(pair.b.instructions.getLast()))
-                            workList.add(pair.b.instructions.getLast());
-                for (var cdgPred : instr.parent.cdgDomFrontier)
-                    if (!liveInstr.contains(cdgPred.instructions.getLast()))
-                        workList.add(cdgPred.instructions.getLast());
-            }
+            if (instr instanceof PhiInstr phiInstr)
+                for (var pair : phiInstr.pairs)
+                    if (!liveInstr.contains(pair.b.instructions.getLast()))
+                        workList.add(pair.b.instructions.getLast());
+            for (var cdgPred : instr.parent.cdgDomFrontier)
+                if (!liveInstr.contains(cdgPred.instructions.getLast()))
+                    workList.add(cdgPred.instructions.getLast());
             for (var use : instr.getUse()) {
                 Instruction defInstr = instr.parent.parent.defInstrMap.get(use);
-                if (defInstr != null) workList.add(defInstr);
+                if (defInstr != null && !liveInstr.contains(defInstr)) workList.add(defInstr);
             }
             liveInstr.add(instr);
             liveBlock.add(instr.parent);
@@ -69,11 +67,13 @@ public class ADCE {
             block.instructions.removeAll(instrsToRemove);
             // 如果块的后继不活跃，那么找到的第一个活跃的后继就是新的后继
             // 只需一直迭代 anti_dom
-            if (!(block.instructions.getLast() instanceof BrInstr)) {
-                IRBlock newSuc = block.cdgIdom;
-                while (!liveBlock.contains(newSuc) && newSuc != newSuc.cdgIdom) newSuc = newSuc.cdgIdom;
+            if (block.instructions.isEmpty() || !(block.instructions.getLast() instanceof BrInstr || block.instructions.getLast() instanceof RetInstr)) {
+                IRBlock newSuc = block.cdgIdom == null ? block : block.cdgIdom;
+                while (!liveBlock.contains(newSuc) && newSuc != newSuc.cdgIdom)
+                    newSuc = newSuc.cdgIdom == null ? newSuc : newSuc.cdgIdom;
                 block.instructions.addLast(new BrInstr(block, null, newSuc, null));
             }
         }
+
     }
 }

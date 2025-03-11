@@ -25,7 +25,7 @@ public class IRCFGBuilder {
     private void clear() {
         program.funcDefs.forEach(this::clearFunc);
         if (program.initFunc != null) clearFunc(program.initFunc);
-        buildFunc(program.mainFunc);
+        clearFunc(program.mainFunc);
     }
 
     private void clearFunc(FuncDefMod func) {
@@ -38,8 +38,20 @@ public class IRCFGBuilder {
     private void buildFunc(FuncDefMod func) {
         HashSet<IRBlock> visited = new HashSet<>();
         buildBlock(func.body.getFirst(), visited);
-        // 此处直接删除了控制流图上没有的基本块
-        func.body.removeIf(block -> !visited.contains(block));
+        // 此处直接删除了控制流图上没有的基本块，记得删除phi语句里对应的前驱
+        HashSet<IRBlock> removeList = new HashSet<>();
+        for (var block : func.body)
+            if (!visited.contains(block)) {
+                if (block.instructions.getLast() instanceof BrInstr terminal) {
+                    for (var phiInstr : terminal.thenBlock.phiInstrs.values())
+                        phiInstr.pairs.removeIf(pair -> pair.b == block);
+                    if (terminal.elseBlock != null)
+                        for (var phiInstr : terminal.elseBlock.phiInstrs.values())
+                            phiInstr.pairs.removeIf(pair -> pair.b == block);
+                }
+                removeList.add(block);
+            }
+        func.body.removeAll(removeList);
         for (int i = 0; i < func.body.size(); ++i) {
             var block = func.body.get(i);
             block.blockNo = i;
