@@ -68,9 +68,8 @@ public class ADCE {
             // 如果块的后继不活跃，那么找到的第一个活跃的后继就是新的后继
             // 只需一直迭代 anti_dom
             if (block.instructions.isEmpty() || !(block.instructions.getLast() instanceof BrInstr || block.instructions.getLast() instanceof RetInstr)) {
-                IRBlock newSuc = block.cdgIdom == null ? block : block.cdgIdom;
-                while (!liveBlock.contains(newSuc) && newSuc != newSuc.cdgIdom)
-                    newSuc = newSuc.cdgIdom == null ? newSuc : newSuc.cdgIdom;
+                IRBlock newSuc = block.cdgFather;
+                while (!liveBlock.contains(newSuc) && newSuc != newSuc.cdgFather) newSuc = newSuc.cdgFather;
                 block.instructions.addLast(new BrInstr(block, null, newSuc, null));
             }
         }

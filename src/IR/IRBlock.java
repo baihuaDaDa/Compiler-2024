@@ -26,6 +26,7 @@ public class IRBlock {
     // Dominator Tree
     public BitSet dom;
     public IRBlock idom;
+    public IRBlock father;
     public HashSet<IRBlock> children;
     public HashSet<IRBlock> domFrontier;
     public int depth = 0; // for GCM
@@ -34,6 +35,7 @@ public class IRBlock {
     // CDG
     public BitSet cdgDom;
     public IRBlock cdgIdom;
+    public IRBlock cdgFather;
     public HashSet<IRBlock> cdgChildren;
     public HashSet<IRBlock> cdgDomFrontier;
 

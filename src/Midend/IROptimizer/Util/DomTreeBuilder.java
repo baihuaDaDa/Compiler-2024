@@ -74,6 +74,8 @@ public class DomTreeBuilder {
                 }
             }
         }
+        // Dominance Father
+        for (var block : func.body) block.father = block.idom == null ? block : block.idom;
         // 节点可以是自己的支配边界（循环支配的情况）
         // Dominance Frontier and Children
         for (var block : func.body) {

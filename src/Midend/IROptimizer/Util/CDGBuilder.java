@@ -97,6 +97,7 @@ public class CDGBuilder {
                 }
             }
         }
+        for (var block : func.body) block.cdgFather = block.cdgIdom == null ? block : block.cdgIdom;
         // 节点可以是自己的支配边界（循环支配的情况）
         // Dominance Frontier and Children
         for (var block : func.body) {
