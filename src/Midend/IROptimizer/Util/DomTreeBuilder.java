@@ -32,6 +32,7 @@ public class DomTreeBuilder {
         for (var block : func.body) {
             block.dom = null;
             block.idom = null;
+            block.father = null;
             block.domFrontier = new HashSet<>();
             block.children = new HashSet<>();
         }

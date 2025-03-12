@@ -50,6 +50,7 @@ public class CDGBuilder {
         for (var block : func.body) {
             block.cdgDom = null;
             block.cdgIdom = null;
+            block.cdgFather = null;
             block.cdgDomFrontier = new HashSet<>();
             block.cdgChildren = new HashSet<>();
         }

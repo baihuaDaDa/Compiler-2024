@@ -22,20 +22,20 @@ public class IRCFGBuilder {
         buildFunc(program.mainFunc);
     }
 
-    private void clear() {
+    public void clear() {
         program.funcDefs.forEach(this::clearFunc);
         if (program.initFunc != null) clearFunc(program.initFunc);
         clearFunc(program.mainFunc);
     }
 
-    private void clearFunc(FuncDefMod func) {
+    public void clearFunc(FuncDefMod func) {
         for (var block : func.body) {
             block.suc = new HashSet<>();
             block.pred = new HashSet<>();
         }
     }
 
-    private void buildFunc(FuncDefMod func) {
+    public void buildFunc(FuncDefMod func) {
         HashSet<IRBlock> visited = new HashSet<>();
         buildBlock(func.body.getFirst(), visited);
         // 此处直接删除了控制流图上没有的基本块，记得删除phi语句里对应的前驱

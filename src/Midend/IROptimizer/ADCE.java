@@ -5,15 +5,19 @@ import IR.IRProgram;
 import IR.Instruction.*;
 import IR.Module.FuncDefMod;
 import Midend.IROptimizer.Util.CDGBuilder;
+import Midend.IROptimizer.Util.IRCFGBuilder;
+import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class ADCE {
     private final IRProgram program;
+    private final IRCFGBuilder irCFGBuilder;
 
     public ADCE(IRProgram program) {
         this.program = program;
+        this.irCFGBuilder = new IRCFGBuilder(program);
     }
 
     public void run() {
@@ -73,6 +77,30 @@ public class ADCE {
                 block.instructions.addLast(new BrInstr(block, null, newSuc, null));
             }
         }
-
+        irCFGBuilder.clearFunc(func);
+        irCFGBuilder.buildFunc(func);
+        HashSet<IRBlock> removeBBList = new HashSet<>();
+        for (var block : func.body)
+            if (!liveBlock.contains(block)) {
+                if (block.suc.size() != 1) throw new RuntimeException("ADCE: deadBlock.suc.size() != 1");
+                IRBlock suc = block.suc.iterator().next();
+                for (var pred : block.pred) {
+                    BrInstr terminal = (BrInstr) pred.instructions.getLast();
+                    if (terminal.thenBlock == block) terminal.thenBlock = suc;
+                    if (terminal.elseBlock == block) terminal.elseBlock = suc;
+                    pred.suc.remove(block);
+                    pred.suc.add(suc);
+                }
+                for (var phiInstr : suc.phiInstrs.values())
+                    for (var pair : phiInstr.pairs)
+                        if (pair.b == block) {
+                            phiInstr.pairs.remove(pair);
+                            phiInstr.pairs.add(new Pair<>(pair.a, suc));
+                            break;
+                        }
+                suc.pred.remove(block);
+                removeBBList.add(block);
+            }
+        func.body.removeAll(removeBBList);
     }
 }
