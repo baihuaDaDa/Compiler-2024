@@ -40,6 +40,7 @@ public class GCM {
         // init
         visited = new HashSet<>();
         earlyBBMap = new HashMap<>();
+        bestBBMap = new HashMap<>();
         root = func.body.getFirst();
         curFunc = func;
         // early
@@ -47,37 +48,47 @@ public class GCM {
             for (var instr : block.instructions)
                 if (instr.isPinned()) {
                     visited.add(instr);
-                    for (var use : instr.getUse()) scheduleEarly(func.defInstrMap.get(use));
+                    earlyBBMap.put(instr, block);
                 }
             for (var phiInstr : block.phiInstrs.values()) {
                 visited.add(phiInstr);
-                for (var op : phiInstr.getUse()) scheduleEarly(func.defInstrMap.get(op));
+                earlyBBMap.put(phiInstr, block);
             }
+        }
+        for (var block : func.body) {
+            block.instructions.forEach(this::scheduleEarly);
+            block.phiInstrs.values().forEach(this::scheduleEarly);
         }
         // late
         visited = new HashSet<>();
         for (var block : func.body) {
-            for (var instr : block.instructions) {
+            for (var instr : block.instructions)
                 if (instr.isPinned()) {
                     visited.add(instr);
-                    for (var user : func.useInstrMap.get(instr.getDef())) scheduleLate(user);
+                    bestBBMap.put(instr, block);
                 }
-            }
             for (var phiInstr : block.phiInstrs.values()) {
                 visited.add(phiInstr);
-                for (var user : func.useInstrMap.get(phiInstr.getDef())) scheduleLate(user);
+                bestBBMap.put(phiInstr, block);
             }
+        }
+        for (var block : func.body) {
+            block.instructions.forEach(this::scheduleLate);
+            block.phiInstrs.values().forEach(this::scheduleLate);
         }
         // Motion
-        for (var entry : bestBBMap.entrySet()) {
-            Instruction instr = entry.getKey();
-            IRBlock bestBB = entry.getValue();
-            if (bestBB != instr.parent) {
-                instr.parent.instructions.remove(instr);
-                bestBB.instructions.add(instr);
-                instr.parent = bestBB;
+        visited = new HashSet<>();
+        HashSet<Instruction> instrSet = new HashSet<>();
+        for (var block : func.body) {
+            HashSet<Instruction> removeList = new HashSet<>();
+            for (var instr : block.instructions) {
+                instrSet.add(instr);
+                if (bestBBMap.get(instr) == block) visited.add(instr);
+                else removeList.add(instr);
             }
+            block.instructions.removeAll(removeList);
         }
+        for (var instr : instrSet) scheduleMotion(instr);
     }
 
     private void scheduleEarly(Instruction instr) {
@@ -86,10 +97,10 @@ public class GCM {
         IRBlock earlyBB = root;
         for (var op : instr.getUse()) {
             Instruction opDef = curFunc.defInstrMap.get(op);
+            if (opDef == null) continue; // def in params
             scheduleEarly(opDef);
             IRBlock opBB = earlyBBMap.get(opDef);
-            if (opBB.depth > earlyBB.depth)
-                earlyBB = opBB;
+            if (opBB.depth > earlyBB.depth) earlyBB = opBB;
         }
         earlyBBMap.put(instr, earlyBB);
     }
@@ -113,7 +124,8 @@ public class GCM {
         IRBlock bestBB = lca, curBB = lca, earlyBB = earlyBBMap.get(instr);
         while (curBB.depth >= earlyBB.depth) {
             if (curBB.loopDepth < bestBB.loopDepth) bestBB = curBB;
-            curBB = curBB.idom;
+            if (curBB == curBB.father) break;
+            else curBB = curBB.father;
         }
         bestBBMap.put(instr, bestBB);
     }
@@ -121,13 +133,27 @@ public class GCM {
     private IRBlock findLca(IRBlock a, IRBlock b) {
         // TODO 线性算法，有待提高，不过无伤大雅
         if (a == null) return b;
-        while (a.depth < b.depth) a = a.idom;
-        while (b.depth < a.depth) b = b.idom;
+        while (a.depth > b.depth) a = a.father;
+        while (b.depth > a.depth) b = b.father;
         while (a != b) {
-            a = a.idom;
-            b = b.idom;
+            a = a.father;
+            b = b.father;
         }
         return a;
+    }
+
+    private void scheduleMotion(Instruction instr) {
+        if (visited.contains(instr)) return;
+        visited.add(instr);
+        IRBlock bestBB = bestBBMap.get(instr);
+        boolean isSameBB = false;
+        for (var user : curFunc.useInstrMap.get(instr.getDef()))
+            if (!(user instanceof PhiInstr)) {
+                scheduleMotion(user);
+                isSameBB |= bestBBMap.get(user) == bestBB;
+            }
+        if (!isSameBB) bestBB.instructions.add(bestBB.instructions.size() - 1, instr);
+        else bestBB.instructions.addFirst(instr);
     }
 
     private void traverseDomTree(IRBlock cur) {
@@ -156,7 +182,6 @@ public class GCM {
             }
             if (!loopBody.isEmpty()) block.loopDepth++;
         }
-
     }
 
     private void buildDefUseChain(FuncDefMod func) {

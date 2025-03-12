@@ -10,6 +10,7 @@ test.ll
 test-origin.ll
 test-before-inline.ll
 test-before-ADCE.ll
+test-before-GCM.ll
 test-script.ll
 test.s
 builtin.s

@@ -24,10 +24,10 @@ public class FuncDefMod extends Module {
     public HashSet<FuncDefMod> callings;
     public HashSet<FuncDefMod> callers;
 
-    // ADCE
+    // ADCE & GCM
     public HashMap<IRLocalVar, Instruction> defInstrMap;
 
-    // SCCP
+    // SCCP & GCM
     public HashMap<IRLocalVar, HashSet<Instruction>> useInstrMap;
 
     // Live Analysis
@@ -69,6 +69,7 @@ public class FuncDefMod extends Module {
         this.callings = new HashSet<>();
         this.callers = new HashSet<>();
         this.defInstrMap = new HashMap<>();
+        this.useInstrMap = new HashMap<>();
         this.useMap = new HashMap<>();
         this.defMap = new HashMap<>();
         this.inMap = new HashMap<>();
